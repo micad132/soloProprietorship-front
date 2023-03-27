@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import {z} from 'zod';
 import {RegisterType} from "../types/authorization";
 
 const RegistrationSchema = z.object({
@@ -14,5 +14,13 @@ const RegistrationSchema = z.object({
 });
 
 
-export const validateRegister = (registerValues: RegisterType) => console.log(RegistrationSchema.safeParse(registerValues).success);
+export const validateRegister = (registerValues: RegisterType) => {
+    try {
+        RegistrationSchema.parse(registerValues);
+    } catch (e: any) {
+        if (e instanceof z.ZodError) {
+            console.log(e.issues);
+        }
+    }
+}
 

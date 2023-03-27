@@ -107,7 +107,6 @@ const Register = () => {
                         variant="contained"
                         type="submit"
                     >Zarejestruj się</Button>
-                    <NoAccount />
                 </form>
             </AuthorizationWrapper>
     )
