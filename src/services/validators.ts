@@ -1,8 +1,14 @@
 import {z} from 'zod';
-import {RegisterType} from "../types/authorization";
+import {LoginType, RegisterType} from "../types/authorization";
+import {sanitize} from "dompurify";
+
+
 
 const RegistrationSchema = z.object({
-    name: z.string().min(5).max(20),
+    name: z.string().min(5).max(20).refine((val) => !val.includes('&') && !val.includes('<'), {
+        message: 'Forbidden chars!',
+        path: ['forbiddenName']
+    }),
     surname: z.string().min(5).max(15),
     email: z.string().email(),
     password: z.string().min(5).max(20),
@@ -14,13 +20,35 @@ const RegistrationSchema = z.object({
 });
 
 
+const LoginSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(5).max(20),
+})
+
 export const validateRegister = (registerValues: RegisterType) => {
-    try {
-        RegistrationSchema.parse(registerValues);
-    } catch (e: any) {
-        if (e instanceof z.ZodError) {
-            console.log(e.issues);
-        }
-    }
+    // try {
+    //     RegistrationSchema.parse(registerValues);
+    // } catch (e: any) {
+    //     if (e instanceof z.ZodError) {
+    //         console.log(e.issues);
+    //     }
+    // }
+    return RegistrationSchema.safeParse(registerValues);
 }
+
+export const validateLogin = (loginValues: LoginType) => {
+    return LoginSchema.safeParse(loginValues);
+}
+
+export const sanitizeData = (value: string): string => sanitize(value, { USE_PROFILES: { html: false }});
+
+// export const validateLogin = (loginValues: LoginType) => {
+//     try {
+//         LoginSchema.parse(loginValues);
+//     } catch (e: any) {
+//         if(e instanceof z.ZodError) {
+//             throw e;
+//         }
+//     }
+// }
 

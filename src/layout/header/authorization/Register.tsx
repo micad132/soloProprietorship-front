@@ -4,6 +4,12 @@ import NoAccount from "./NoAccount";
 import AuthorizationWrapper from "../../../components/AuthorizationWrapper";
 import {validateRegister} from "../../../services/validators";
 import {RegisterType} from "../../../types/authorization";
+import ErrorComponent from "../../../components/ErrorComponent";
+import TextFieldComponent from "./components/TextField.component";
+import PasswordFieldComponent from "./components/PasswordField.component";
+import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
+import { sanitize } from 'dompurify';
 
 
 const initialRegisterValues: RegisterType = {
@@ -19,89 +25,111 @@ const initialRegisterValues: RegisterType = {
 const Register = () => {
 
     const [registerValues, setRegisterValues] = useState<RegisterType>(initialRegisterValues);
+    const [errorValues, setErrorValues] = useState<string[]>([]);
+    const navigate = useNavigate();
+
+    const sanitizeData = (value: string): string => sanitize(value, { USE_PROFILES: { html: false }});
+
+    const nameCheck = (name: string): boolean => name.includes('&');
 
     const submitForm = (e: any) => {
         e.preventDefault();
-        validateRegister(registerValues);
-        setRegisterValues(initialRegisterValues);
+
+        console.log('STAN', registerValues);
+        const result = validateRegister(registerValues);
+        if (result.success) {
+            console.log(registerValues.name);
+            if(nameCheck(registerValues.name)) {
+                console.log('WHAT');
+                toast.success("jd");
+            }
+            setRegisterValues(initialRegisterValues);
+            toast.success("Pomyślnie zarejestrowano, za chwilę nastąpi przekierowanie na stronę logowania!");
+            setTimeout(() => navigate('/login', { replace: true}), 1000);
+        } else {
+            console.log(result.error.errors);
+            const errorArray = result.error.errors.map(error => error.path);
+            console.log(errorArray.flat());
+            setErrorValues(errorArray.flat() as string[]);
+        }
     }
     const {name,surname,email,password,confirmPassword,postalCode,cityName} = registerValues;
     return(
             <AuthorizationWrapper>
                 <form onSubmit={(e) => submitForm(e)}>
                     <h1>Register</h1>
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Imię"
-                        value={name || ''}
-                        onChange={(e) => setRegisterValues((prevState) => ({
+                    <TextFieldComponent
+                        value={name}
+                        setLoginValues={({target: { value}}) => setRegisterValues((prevState) => ({
                             ...prevState,
-                            name: e.target.value,
+                            name: sanitizeData(value),
                         }))}
+                        isError={errorValues.includes('name')}
+                        label='Imię'
+                        errorMsg={errorValues.includes('forbiddenName') ?
+                            'Niewlasciwe znaki!'
+                            : errorValues.includes('name')
+                                ? 'Imię musi zawierać od 5 do 20 znaków!'
+                                : ''
+                            }
                     />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Nazwisko"
+                    <TextFieldComponent
                         value={surname}
-                        onChange={(e) => setRegisterValues((prevState) => ({
+                        setLoginValues={({target: { value}}) => setRegisterValues((prevState) => ({
                             ...prevState,
-                            surname: e.target.value,
+                            surname: value,
                         }))}
+                        isError={errorValues.includes('surname')}
+                        label='Nazwisko'
+                        errorMsg='Nazwisko musi zawierać od 5 do 20 znaków!'
                     />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="E-mail"
+                    <TextFieldComponent
                         value={email}
-                        onChange={(e) => setRegisterValues((prevState) => ({
+                        setLoginValues={({target: { value}}) => setRegisterValues((prevState) => ({
                             ...prevState,
-                            email: e.target.value,
+                            email: value,
                         }))}
-                        type="email"
+                        isError={errorValues.includes('email')}
+                        label='E-mail'
+                        errorMsg='E-mail nie zgadza się z poprawnym formatem!'
                     />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Hasło"
+                    <PasswordFieldComponent
                         value={password}
-                        type="password"
-                        onChange={(e) => setRegisterValues((prevState) => ({
+                        setPasswordValue={({target: { value}}) => setRegisterValues((prevState) => ({
                             ...prevState,
-                            password: e.target.value,
+                            password: value,
                         }))}
+                        isError={errorValues.includes('password')}
+                        errorMsg='Hasło musi zawierać od 5 do 20 znaków!'
                     />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Powtórz hasło"
+                    <PasswordFieldComponent
                         value={confirmPassword}
-                        type="password"
-                        onChange={(e) => setRegisterValues((prevState) => ({
+                        setPasswordValue={({target: { value}}) => setRegisterValues((prevState) => ({
                             ...prevState,
-                            confirmPassword: e.target.value,
+                            confirmPassword: value,
                         }))}
+                        isError={errorValues.includes('confirmPassword')}
+                        errorMsg='Hasło musi zawierać od 5 do 20 znaków!'
                     />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Kod pocztowy"
+                    <TextFieldComponent
                         value={postalCode}
-                        onChange={(e) => setRegisterValues((prevState) => ({
+                        setLoginValues={({target: { value}}) => setRegisterValues((prevState) => ({
                             ...prevState,
-                            postalCode: e.target.value,
+                            postalCode: value,
                         }))}
+                        isError={errorValues.includes('postalCode')}
+                        label='Kod pocztowy'
+                        errorMsg='Kod pocztowy nie zgadza się z poprawnym formatem!'
                     />
-                    <TextField
-                        required
-                        id="outlined-required"
-                        label="Miasto"
+                    <TextFieldComponent
                         value={cityName}
-                        onChange={(e) => setRegisterValues((prevState) => ({
+                        setLoginValues={({target: { value}}) => setRegisterValues((prevState) => ({
                             ...prevState,
-                            cityName: e.target.value,
+                            cityName: value,
                         }))}
+                        isError={errorValues.includes('cityName')}
+                        label='Miasto'
+                        errorMsg='Miasto musi zawierać od 5 do 20 znaków'
                     />
                     <Button
                         variant="contained"
