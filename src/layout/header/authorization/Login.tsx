@@ -4,7 +4,7 @@ import AuthorizationWrapper from "../../../components/AuthorizationWrapper";
 import NoAccount from "./NoAccount";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
-import {validateLogin} from "../../../services/validators";
+import {sanitizeData, validateLogin} from "../../../services/validators";
 import {LoginType} from "../../../types/authorization";
 import {useState} from "react";
 import ErrorComponent from "../../../components/ErrorComponent";
@@ -41,21 +41,28 @@ const Login = () => {
 
 
     }
+    const {email, password} = loginValues;
     return(
         <AuthorizationWrapper>
             <form onSubmit={(e) => onSubmit(e)}>
                 <h1>Login</h1>
-                {/*<TextFieldComponent*/}
-                {/*    setLoginValues={setLoginValues}*/}
-                {/*    value={loginValues.email}*/}
-                {/*    isError={errorValues.includes('email')}*/}
-                {/*    label='E-mail'*/}
-                {/*    errorMsg='Niepoprawny email!'*/}
-                {/*/>*/}
+                <TextFieldComponent
+                    setLoginValues={({target: { value}}) => setLoginValues((prevState) => ({
+                        ...prevState,
+                        email: sanitizeData(value),
+                    }))}
+                    value={email}
+                    isError={errorValues.includes('email')}
+                    label='E-mail'
+                    errorMsg='Niepoprawny email!'
+                />
 
                 <PasswordFieldComponent
-                    value={loginValues.password}
-                    setPasswordValue={setLoginValues}
+                    value={password}
+                    setPasswordValue={({target: { value}}) => setLoginValues((prevState) => ({
+                        ...prevState,
+                        password: sanitizeData(value),
+                    }))}
                     isError={errorValues.includes('password')}
                     errorMsg='Niepoprawne hasło!'
                 />

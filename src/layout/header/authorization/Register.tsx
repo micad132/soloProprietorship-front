@@ -54,6 +54,11 @@ const Register = () => {
         }
     }
     const {name,surname,email,password,confirmPassword,postalCode,cityName} = registerValues;
+    const registerNameError = errorValues.includes('forbiddenName') ?
+        'Niewlasciwe znaki!'
+        : errorValues.includes('name')
+            ? 'Imię musi zawierać od 5 do 20 znaków!'
+            : ''
     return(
             <AuthorizationWrapper>
                 <form onSubmit={(e) => submitForm(e)}>
@@ -66,12 +71,7 @@ const Register = () => {
                         }))}
                         isError={errorValues.includes('name')}
                         label='Imię'
-                        errorMsg={errorValues.includes('forbiddenName') ?
-                            'Niewlasciwe znaki!'
-                            : errorValues.includes('name')
-                                ? 'Imię musi zawierać od 5 do 20 znaków!'
-                                : ''
-                            }
+                        errorMsg={registerNameError}
                     />
                     <TextFieldComponent
                         value={surname}
