@@ -1,7 +1,7 @@
 import {TextField} from "@mui/material";
 import ErrorComponent from "./ErrorComponent";
 import {Dispatch, SetStateAction} from "react";
-import {LoginType} from "../types/authorization";
+import {LoginType} from "../types/Authorization";
 
 interface Props {
     value: string,

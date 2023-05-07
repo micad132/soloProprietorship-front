@@ -5,7 +5,7 @@ import NoAccount from "./NoAccount";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import {sanitizeData, validateLogin} from "../../../services/validators";
-import {LoginType} from "../../../types/authorization";
+import {LoginType} from "../../../types/Authorization";
 import {useState} from "react";
 import ErrorComponent from "../../../components/ErrorComponent";
 import TextFieldComponent from "../../../components/TextField.component";

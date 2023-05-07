@@ -3,7 +3,7 @@ import {Button, TextField} from "@mui/material";
 import NoAccount from "../login/NoAccount";
 import AuthorizationWrapper from "../../../components/AuthorizationWrapper";
 import {validateRegister} from "../../../services/validators";
-import {RegisterType} from "../../../types/authorization";
+import {RegisterType} from "../../../types/Authorization";
 import ErrorComponent from "../../../components/ErrorComponent";
 import TextFieldComponent from "../../../components/TextField.component";
 import PasswordFieldComponent from "../../../components/PasswordField.component";

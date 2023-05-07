@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {LoginType, RegisterType} from "../types/authorization";
+import {LoginType, RegisterType} from "../types/Authorization";
 import {sanitize} from "dompurify";
 
 
