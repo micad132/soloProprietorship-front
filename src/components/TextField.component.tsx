@@ -1,12 +1,12 @@
 import {TextField} from "@mui/material";
-import ErrorComponent from "./ErrorComponent";
+import ErrorComponentComponent from "./ErrorComponent.component";
 import {Dispatch, SetStateAction} from "react";
 import {sanitizeData} from "../services/validators";
 
 interface Props {
-    value: string,
-    setLoginValues: Dispatch<SetStateAction<any>>;
-    isError: boolean,
+    value: string | number,
+    setLoginValues?: Dispatch<SetStateAction<any>>;
+    isError?: boolean,
     label: string,
     errorMsg: string,
 }
@@ -21,7 +21,7 @@ const TextFieldComponent = ({value,setLoginValues, isError, label, errorMsg}: Pr
                 value={value}
                 onChange={setLoginValues}
             />
-            {isError && <ErrorComponent errorMsg={errorMsg} />}
+            {isError && <ErrorComponentComponent errorMsg={errorMsg} />}
         </>
     )
 }

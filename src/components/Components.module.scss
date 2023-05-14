@@ -24,3 +24,23 @@
   padding: 2px;
   font-weight: bold;
 }
+
+.tableWrapper{
+  width: 60%;
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: #cccccc;
+  border: 2px solid #000;
+}

@@ -1,5 +1,5 @@
 import {TextField} from "@mui/material";
-import ErrorComponent from "./ErrorComponent";
+import ErrorComponentComponent from "./ErrorComponent.component";
 import {Dispatch, SetStateAction} from "react";
 import {LoginType} from "../types/Authorization";
 
@@ -20,7 +20,7 @@ const PasswordFieldComponent = ({value,setPasswordValue, isError, errorMsg}: Pro
                 value={value}
                 onChange={setPasswordValue}
             />
-            {isError && <ErrorComponent errorMsg={errorMsg} />}
+            {isError && <ErrorComponentComponent errorMsg={errorMsg} />}
         </>
     )
 }

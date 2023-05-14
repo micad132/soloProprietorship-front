@@ -2,7 +2,7 @@
 .appWrapper{
   height: 100%;
   display: grid;
-  grid-template-rows: 130px 1fr 70px;
+  grid-template-rows: 150px 1fr 70px;
 }
 
 .header {
@@ -25,6 +25,25 @@ main {
   flex-wrap: wrap;
   color: #eee;
 }
+
+
+.linksWrapper {
+  margin: 20px 0;
+
+  .link {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 5px;
+    font-size: 18px;
+
+    &:hover {
+      color: #000;
+    }
+
+  }
+}
+
+
 
 
 

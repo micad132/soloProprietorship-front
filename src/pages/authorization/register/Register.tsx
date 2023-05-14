@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import {Button, TextField} from "@mui/material";
 import NoAccount from "../login/NoAccount";
-import AuthorizationWrapper from "../../../components/AuthorizationWrapper";
+import AuthorizationWrapperComponent from "../../../components/AuthorizationWrapper.component";
 import {validateRegister} from "../../../services/validators";
 import {RegisterType} from "../../../types/Authorization";
-import ErrorComponent from "../../../components/ErrorComponent";
+import ErrorComponentComponent from "../../../components/ErrorComponent.component";
 import TextFieldComponent from "../../../components/TextField.component";
 import PasswordFieldComponent from "../../../components/PasswordField.component";
 import {toast} from "react-toastify";
@@ -60,7 +60,7 @@ const Register = () => {
             ? 'Imię musi zawierać od 5 do 20 znaków!'
             : ''
     return(
-            <AuthorizationWrapper>
+            <AuthorizationWrapperComponent>
                 <form onSubmit={(e) => submitForm(e)}>
                     <h1>Register</h1>
                     <TextFieldComponent
@@ -136,7 +136,7 @@ const Register = () => {
                         type="submit"
                     >Zarejestruj się</Button>
                 </form>
-            </AuthorizationWrapper>
+            </AuthorizationWrapperComponent>
     )
 }
 

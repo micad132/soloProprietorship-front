@@ -1,6 +1,7 @@
 import styles from '../Layout.module.scss';
 import { Button } from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import NavigationComponent from "../nav/Navigation.component";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Header = () => {
                 variant="contained"
                 onClick={() => navigate('/login', { replace: true})}
             >Zaloguj się</Button>
+            <NavigationComponent />
         </div>
     )
 }

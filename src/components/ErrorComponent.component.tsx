@@ -3,7 +3,7 @@ import styles from './Components.module.scss';
 interface Props {
     errorMsg: string,
 }
-const ErrorComponent = ({errorMsg}: Props) => {
+const ErrorComponentComponent = ({errorMsg}: Props) => {
 
     return(
         <div className={styles.errorWrapper}>
@@ -12,4 +12,4 @@ const ErrorComponent = ({errorMsg}: Props) => {
     )
 }
 
-export default ErrorComponent;
+export default ErrorComponentComponent;
