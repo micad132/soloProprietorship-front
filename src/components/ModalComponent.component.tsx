@@ -15,6 +15,7 @@ const ModalComponentComponent = ({isOpen, onClose, children}: Props) => {
             onClose={onClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
+            data-testid='modal'
         >
             <div className={styles.modalContent}>
                 {children}

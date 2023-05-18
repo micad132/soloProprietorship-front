@@ -14,6 +14,7 @@ const TableButton = ({text,icon}: Props) => {
                 <Button
                     variant='contained'
                     startIcon={icon}
+                    data-testid='tableButton'
                 >
                     {text}
                 </Button>

@@ -8,7 +8,7 @@ const Header = () => {
     const navigate = useNavigate();
     return(
         <div className={styles.header}>
-            <h1>Witaj na portalu wlasnej firmy!</h1>
+            <h1 data-testid='header'>Witaj na portalu wlasnej firmy!</h1>
             <Button
                     variant="contained"
                     onClick={() => navigate('/login', { replace: true})}

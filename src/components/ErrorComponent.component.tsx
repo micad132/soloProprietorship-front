@@ -7,7 +7,7 @@ const ErrorComponentComponent = ({errorMsg}: Props) => {
 
     return(
         <div className={styles.errorWrapper}>
-            <p>{errorMsg}</p>
+            <p data-testid='errorMsg'>{errorMsg}</p>
         </div>
     )
 }
