@@ -25,6 +25,15 @@ const Login = () => {
     const [loginValues, setLoginValues] = useState<LoginType>(initialLoginValues);
     const [errorValues, setErrorValues] = useState<string[]>([]);
     const navigate = useNavigate();
+
+
+    const handleInputChange = (fieldName: string, value: string) => {
+        console.log('FIELDNAME', fieldName);
+        setLoginValues((prevValues) => ({
+            ...prevValues,
+            [fieldName]: sanitizeData(value),
+        }));
+    };
     const onSubmit = (e: any) => {
         e.preventDefault();
         const result = validateLogin(loginValues);
@@ -48,24 +57,22 @@ const Login = () => {
             <form onSubmit={(e) => onSubmit(e)}>
                 <h1>Login</h1>
                 <TextFieldComponent
-                    setLoginValues={({target: { value}}) => setLoginValues((prevState) => ({
-                        ...prevState,
-                        email: sanitizeData(value),
-                    }))}
+                    setValues={setLoginValues}
                     value={email}
                     isError={errorValues.includes('email')}
                     label='E-mail'
                     errorMsg='Niepoprawny email!'
+                    onInputChange={handleInputChange}
+                    fieldName={'email'}
                 />
 
                 <PasswordFieldComponent
                     value={password}
-                    setPasswordValue={({target: { value}}) => setLoginValues((prevState) => ({
-                        ...prevState,
-                        password: sanitizeData(value),
-                    }))}
+                    setPasswordValue={setLoginValues}
                     isError={errorValues.includes('password')}
                     errorMsg='Niepoprawne hasło!'
+                    fieldName={'password'}
+                    onInputChange={handleInputChange}
                 />
                 <Button variant="contained" type="submit">Zaloguj się</Button>
                 <NoAccount />

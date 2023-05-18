@@ -5,6 +5,7 @@ const NavigationComponent = () => {
 
     return(
         <nav className={styles.linksWrapper}>
+            <SingleLinkComponent path={'/'} text={'Strona główna'} />
             <SingleLinkComponent path='/customers' text='Klienci'/>
             <SingleLinkComponent path='/products' text='Produkty' />
             <SingleLinkComponent path='/jobs' text='Usługi' />

@@ -8,9 +8,22 @@ interface Props {
     setPasswordValue: Dispatch<SetStateAction<any>>;
     isError: boolean,
     errorMsg: string,
+    onInputChange?: any,
+    fieldName: string,
 }
-const PasswordFieldComponent = ({value,setPasswordValue, isError, errorMsg}: Props) => {
+const PasswordFieldComponent = ({value,setPasswordValue, isError, errorMsg, onInputChange, fieldName}: Props) => {
 
+    const handleInputChange = (e: any) => {
+        const {name, value} = e.target;
+
+        console.log('NAME', name);
+        console.log('VALUE', value);
+        // setLoginValues((prevState: any) => ({
+        //     ...prevState,
+        //     [name]: sanitizeData(value),
+        // }))
+        onInputChange(fieldName,value);
+    }
     return(
         <>
             <TextField
@@ -18,7 +31,7 @@ const PasswordFieldComponent = ({value,setPasswordValue, isError, errorMsg}: Pro
                 label="Hasło"
                 type="password"
                 value={value}
-                onChange={setPasswordValue}
+                onChange={(e) => handleInputChange(e)}
             />
             {isError && <ErrorComponentComponent errorMsg={errorMsg} />}
         </>

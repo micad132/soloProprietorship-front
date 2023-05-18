@@ -5,13 +5,29 @@ import {sanitizeData} from "../services/validators";
 
 interface Props {
     value: string | number,
-    setLoginValues?: Dispatch<SetStateAction<any>>;
+    setValues?: Dispatch<SetStateAction<any>>;
     isError?: boolean,
     label: string,
     errorMsg: string,
+    onInputChange?: any,
+    fieldName: string,
 }
 
-const TextFieldComponent = ({value,setLoginValues, isError, label, errorMsg}: Props) => {
+const TextFieldComponent = ({value,setValues, isError, label, errorMsg, onInputChange, fieldName}: Props) => {
+
+
+    const handleInputChange = (e: any) => {
+        const {value} = e.target;
+
+        console.log('VALUE', value);
+        if (setValues) {
+            setValues((prevState: any) => ({
+                ...prevState,
+                [fieldName]: sanitizeData(value),
+            }))
+        }
+        // onInputChange(fieldName,value);
+    }
 
     return(
         <>
@@ -19,7 +35,7 @@ const TextFieldComponent = ({value,setLoginValues, isError, label, errorMsg}: Pr
                 id="outlined-required"
                 label={label}
                 value={value}
-                onChange={setLoginValues}
+                onChange={(e) => handleInputChange(e)}
             />
             {isError && <ErrorComponentComponent errorMsg={errorMsg} />}
         </>

@@ -25,6 +25,16 @@ const LoginSchema = z.object({
     password: z.string().min(5).max(20),
 })
 
+
+const AddingUserSchema = z.object({
+    name: z.string().min(5).max(15),
+    surname: z.string().min(5).max(15),
+    cityName: z.string().min(5).max(20),
+    email: z.string().email(),
+    phoneNumber: z.string().min(5).max(15),
+})
+
+
 export const validateRegister = (registerValues: RegisterType) => {
     // try {
     //     RegistrationSchema.parse(registerValues);

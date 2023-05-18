@@ -32,6 +32,14 @@ const Register = () => {
 
     const nameCheck = (name: string): boolean => name.includes('&');
 
+    // const handleInputChange = (fieldName: string, value: string) => {
+    //     console.log('FIELDNAME', fieldName);
+    //     setRegisterValues((prevValues) => ({
+    //         ...prevValues,
+    //         [fieldName]: sanitizeData(value),
+    //     }));
+    // };
+
     const submitForm = (e: any) => {
         e.preventDefault();
 
@@ -65,71 +73,57 @@ const Register = () => {
                     <h1>Register</h1>
                     <TextFieldComponent
                         value={name}
-                        setLoginValues={({target: { value}}) => setRegisterValues((prevState) => ({
-                            ...prevState,
-                            name: sanitizeData(value),
-                        }))}
+                        setValues={setRegisterValues}
                         isError={errorValues.includes('name')}
                         label='Imię'
                         errorMsg={registerNameError}
+                        fieldName={'name'}
                     />
                     <TextFieldComponent
                         value={surname}
-                        setLoginValues={({target: { value}}) => setRegisterValues((prevState) => ({
-                            ...prevState,
-                            surname: value,
-                        }))}
+                        setValues={setRegisterValues}
                         isError={errorValues.includes('surname')}
                         label='Nazwisko'
                         errorMsg='Nazwisko musi zawierać od 5 do 20 znaków!'
+                        fieldName={'surname'}
                     />
                     <TextFieldComponent
                         value={email}
-                        setLoginValues={({target: { value}}) => setRegisterValues((prevState) => ({
-                            ...prevState,
-                            email: value,
-                        }))}
+                        setValues={setRegisterValues}
                         isError={errorValues.includes('email')}
                         label='E-mail'
                         errorMsg='E-mail nie zgadza się z poprawnym formatem!'
+                        fieldName='email'
                     />
                     <PasswordFieldComponent
                         value={password}
-                        setPasswordValue={({target: { value}}) => setRegisterValues((prevState) => ({
-                            ...prevState,
-                            password: value,
-                        }))}
+                        setPasswordValue={setRegisterValues}
                         isError={errorValues.includes('password')}
                         errorMsg='Hasło musi zawierać od 5 do 20 znaków!'
+                        fieldName={'password'}
                     />
                     <PasswordFieldComponent
                         value={confirmPassword}
-                        setPasswordValue={({target: { value}}) => setRegisterValues((prevState) => ({
-                            ...prevState,
-                            confirmPassword: value,
-                        }))}
+                        setPasswordValue={setRegisterValues}
                         isError={errorValues.includes('confirmPassword')}
                         errorMsg='Hasło musi zawierać od 5 do 20 znaków!'
+                        fieldName={'confirmPassword'}
                     />
                     <TextFieldComponent
                         value={postalCode}
-                        setLoginValues={({target: { value}}) => setRegisterValues((prevState) => ({
-                            ...prevState,
-                            postalCode: value,
-                        }))}
+                        setValues={setRegisterValues}
                         isError={errorValues.includes('postalCode')}
                         label='Kod pocztowy'
                         errorMsg='Kod pocztowy nie zgadza się z poprawnym formatem!'
+                        fieldName='postalCode'
                     />
                     <TextFieldComponent
                         value={cityName}
-                        setLoginValues={({target: { value}}) => setRegisterValues((prevState) => ({
-                            ...prevState,
-                            cityName: value,
-                        }))}
+                        setValues={setRegisterValues}
                         isError={errorValues.includes('cityName')}
                         label='Miasto'
                         errorMsg='Miasto musi zawierać od 5 do 20 znaków'
+                        fieldName='cityName'
                     />
                     <Button
                         variant="contained"

@@ -17,8 +17,20 @@ const AddingProductComponent = () => {
     const productModalContent = (
         <>
             <h3>Dodaj produkt</h3>
-            <TextFieldComponent value={name} label='Nazwa produktu'   errorMsg={""}/>
-            <TextFieldComponent value={price} label='Cena produktu' errorMsg={""}  />
+            <TextFieldComponent
+                value={name}
+                label='Nazwa produktu'
+                errorMsg={""}
+                setValues={setProductValues}
+                fieldName='name'
+            />
+            <TextFieldComponent
+                value={price}
+                label='Cena produktu'
+                errorMsg={""}
+                setValues={setProductValues}
+                fieldName='price'
+            />
             <Button
                 variant='contained'
             >
