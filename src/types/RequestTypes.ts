@@ -11,4 +11,5 @@ export interface CustomerRequestType  {
 export interface ProductRequestType {
     name: string,
     price: number,
+    weight: number,
 }

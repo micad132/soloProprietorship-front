@@ -1,6 +1,11 @@
-import AddingCustomerComponent from "./components/AddingCustomer.component";
 import TableComponentComponent from "../../components/TableComponent.component";
 import {CustomersTableColumns} from "../../utils/TableColumns";
+import TextFieldComponent from "../../components/TextField.component";
+import MultipleSelect from "../../components/MultipleSelectComponent.component";
+import {Button} from "@mui/material";
+import {useState} from "react";
+import {CustomerRequestType} from "../../types/RequestTypes";
+import AddingComponent from "../../components/AddingComponent";
 
 
 const customersMock =  [
@@ -15,12 +20,70 @@ const customersMock =  [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', email: 'test@test.pl',  phoneNumber: '123456789', cityName: 'Kielce' },
 ];
 
+const initialState = {
+    name: '',
+    surName: '',
+    address: '',
+    phoneNumber: '',
+    email: '',
+    idUser: 0,
+    idTransactions: [],
+}
+
 const CustomersPage = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [customerValues, setCustomerValues] = useState<CustomerRequestType>(initialState);
+    const {name, surName, address, phoneNumber, email, idUser, idTransactions} = customerValues;
+    const addingContent = (
+        <>
+            <h3>Dodaj klienta</h3>
+            <TextFieldComponent
+                value={name}
+                label='Imie'
+                errorMsg={""}
+                setValues={setCustomerValues}
+                fieldName={'name'}/>
+            <TextFieldComponent
+                value={surName}
+                label='Nazwisko'
+                errorMsg={""}
+                setValues={setCustomerValues}
+                fieldName={"surName"}/>
+            <TextFieldComponent
+                value={address}
+                label='Adres'
+                errorMsg={""}
+                setValues={setCustomerValues}
+                fieldName={'address'}
+            />
+            <TextFieldComponent
+                value={phoneNumber}
+                label='Numer telefonu'
+                errorMsg={""}
+                setValues={setCustomerValues}
+                fieldName={"phoneNumber"}
+            />
+            <TextFieldComponent
+                value={email}
+                label='Email'
+                errorMsg={""}
+                setValues={setCustomerValues}
+                fieldName={'email'}
+            />
+            <MultipleSelect />
+            <Button
+                variant='contained'
+            >
+                Dodaj
+            </Button>
+        </>
+    )
     return(
         <div>
             <h1>Klienci zalogowanego przedsiębiorcy: ({customersMock.length})</h1>
-            <AddingCustomerComponent />
             <TableComponentComponent  columns={CustomersTableColumns} rows={customersMock}/>
+            <AddingComponent isOpen={isModalOpen} setIsOpen={setIsModalOpen} modalContent={addingContent} />
         </div>
     )
 }

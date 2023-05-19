@@ -1,4 +1,5 @@
-import {JobType, ProductType} from "./DatabaseModels";
+import {JobType, ProductResponseType} from "./ResponseTypes";
+
 
 export interface ProductDTO {
     idProduct: number,
@@ -34,6 +35,6 @@ export interface TransactionDTO {
     customerName: string,
     numberOfProducts: number,
     numberOfJobs: number,
-    products: ProductType[],
+    products: ProductResponseType[],
     jobs: JobType[],
 }

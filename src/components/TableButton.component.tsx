@@ -1,5 +1,6 @@
 import {Button} from "@mui/material";
-import {ReactNode} from "react";
+import {ReactNode, useState} from "react";
+import ModalComponentComponent from "./ModalComponent.component";
 
 interface Props {
     text: string,
@@ -8,6 +9,7 @@ interface Props {
 
 const TableButton = ({text,icon}: Props) => {
 
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     return(
         <>
             <strong>
@@ -19,6 +21,7 @@ const TableButton = ({text,icon}: Props) => {
                     {text}
                 </Button>
             </strong>
+            {/*<ModalComponentComponent  isOpen={isOpen} onClose={() => setIsOpen(false)}  children={}/>*/}
         </>
     )
 }
