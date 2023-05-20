@@ -9,6 +9,7 @@ interface ProductReducerType {
     isProductsLoaded: boolean,
     singleProductRequest:ProductRequestType,
     products: ProductResponseType[],
+    isOpen: boolean,
 }
 
 const initialState: ProductReducerType = {
@@ -20,6 +21,7 @@ const initialState: ProductReducerType = {
         weight: 0,
     },
     products: [],
+    isOpen: false,
 }
 
 export const addingCarModelThunk = createAsyncThunk(
@@ -48,6 +50,7 @@ export const fetchingAllProductsThunk = createAsyncThunk(
 
 export const getErrorMsg = (state: RootState) => state.error.errorMsg;
 export const getIsProductsLoaded = (state: RootState) => state.product.isProductsLoaded;
+export const getIsOpen = (state: RootState) => state.product.isOpen;
 
 
 
@@ -57,6 +60,9 @@ const productSlice = createSlice({
     reducers: {
         setError(state, action: PayloadAction<string>) {
             state.errorMsg = action.payload;
+        },
+        setIsOpen(state, action: PayloadAction<boolean>) {
+            state.isOpen = action.payload;
         }
     },
     extraReducers(builder) {
@@ -64,4 +70,5 @@ const productSlice = createSlice({
     }
 })
 
+export const { setIsOpen } = productSlice.actions;
 export default productSlice.reducer;

@@ -1,6 +1,8 @@
 import {Button} from "@mui/material";
 import {ReactNode, useState} from "react";
 import ModalComponentComponent from "./ModalComponent.component";
+import {useAppDispatch} from "../utils/hooks";
+import {setIsModalOpen} from "../store/reducers/utilsReducer";
 
 interface Props {
     text: string,
@@ -8,8 +10,7 @@ interface Props {
 }
 
 const TableButton = ({text,icon}: Props) => {
-
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
     return(
         <>
             <strong>
@@ -17,11 +18,11 @@ const TableButton = ({text,icon}: Props) => {
                     variant='contained'
                     startIcon={icon}
                     data-testid='tableButton'
+                    onClick={() => dispatch(setIsModalOpen(true))}
                 >
                     {text}
                 </Button>
             </strong>
-            {/*<ModalComponentComponent  isOpen={isOpen} onClose={() => setIsOpen(false)}  children={}/>*/}
         </>
     )
 }

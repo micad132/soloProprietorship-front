@@ -6,6 +6,9 @@ import {Button} from "@mui/material";
 import {useState} from "react";
 import {CustomerRequestType} from "../../types/RequestTypes";
 import AddingComponent from "../../components/AddingComponent";
+import ModalComponentComponent from "../../components/ModalComponent.component";
+import {useAppDispatch, useAppSelector} from "../../utils/hooks";
+import {setIsModalOpen, getIsModalOpen} from "../../store/reducers/utilsReducer";
 
 
 const customersMock =  [
@@ -32,9 +35,11 @@ const initialState = {
 
 const CustomersPage = () => {
 
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false);
     const [customerValues, setCustomerValues] = useState<CustomerRequestType>(initialState);
     const {name, surName, address, phoneNumber, email, idUser, idTransactions} = customerValues;
+    const isModalOpen = useAppSelector(getIsModalOpen);
+    const dispatch = useAppDispatch();
     const addingContent = (
         <>
             <h3>Dodaj klienta</h3>
@@ -83,7 +88,8 @@ const CustomersPage = () => {
         <div>
             <h1>Klienci zalogowanego przedsiębiorcy: ({customersMock.length})</h1>
             <TableComponentComponent  columns={CustomersTableColumns} rows={customersMock}/>
-            <AddingComponent isOpen={isModalOpen} setIsOpen={setIsModalOpen} modalContent={addingContent} />
+            <AddingComponent isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingContent} />
+            <ModalComponentComponent isOpen={isModalOpen} onClose={() => dispatch(setIsModalOpen(false))}  children={<h1>TEST CUSTOMER</h1>}/>
         </div>
     )
 }

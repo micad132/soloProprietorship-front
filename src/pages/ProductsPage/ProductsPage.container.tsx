@@ -5,22 +5,28 @@ import {useState} from "react";
 import TextFieldComponent from "../../components/TextField.component";
 import {Button} from "@mui/material";
 import {ProductRequestType} from "../../types/RequestTypes";
+import ModalComponentComponent from "../../components/ModalComponent.component";
+import {useAppDispatch, useAppSelector} from "../../utils/hooks";
+import {setIsModalOpen, getIsModalOpen} from "../../store/reducers/utilsReducer";
 
 const productsMock = [
     {
         id: 1,
         productName: 'marchewka',
         productPrice: 235,
+        productWeight: 50,
     },
     {
         id: 2,
         productName: 'pomidorek',
         productPrice: 1238,
+        productWeight: 70,
     },
     {
         id: 3,
         productName: 'kawunia',
         productPrice: 123,
+        productWeight: 20
     }
 ]
 
@@ -32,13 +38,15 @@ const initialState = {
 
 const ProductsPage = () => {
 
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false);
     const [productValues, setProductValues] = useState<ProductRequestType>(initialState);
     const {name, price, weight} = productValues;
+    const isModalOpen = useAppSelector(getIsModalOpen);
+    const dispatch = useAppDispatch();
 
     const onClick = () => {
         setProductValues(initialState);
-        setIsOpen(false);
+        setIsAddingOpen(false);
     }
 
     const productModalContent = (
@@ -77,7 +85,8 @@ const ProductsPage = () => {
         <div>
             <h1>Produkty które oferuje zalogowany przedsiębiorca</h1>
             <TableComponentComponent  columns={ProductTableColumns} rows={productsMock}/>
-            <AddingComponent  isOpen={isOpen} setIsOpen={setIsOpen}  modalContent={productModalContent} />
+            <AddingComponent  isOpen={isAddingOpen} setIsOpen={setIsAddingOpen}  modalContent={productModalContent} />
+            <ModalComponentComponent isOpen={isModalOpen} onClose={() => dispatch(setIsModalOpen(false))}  children={<h1>TEST PRODUCT</h1>}/>
         </div>
     )
 }

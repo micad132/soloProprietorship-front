@@ -59,13 +59,19 @@ export const ProductTableColumns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
         field: 'productName',
-        headerName: 'Nazwa produktu',
+        headerName: 'Nazwa',
         width: 150,
         editable: true,
     },
     {
         field: 'productPrice',
-        headerName: 'Cena produktu',
+        headerName: 'Cena',
+        width: 150,
+        editable: true,
+    },
+    {
+        field: 'productWeight',
+        headerName: 'Waga(kg)',
         width: 150,
         editable: true,
     },
@@ -81,7 +87,7 @@ export const ProductTableColumns: GridColDef[] = [
         headerName: 'Usuń',
         width: 150,
         editable: true,
-        renderCell: (params) =>  <TableButton text='Edycja' icon={<DeleteIcon />} /> ,
+        renderCell: (params) =>  <TableButton text='Usuń' icon={<DeleteIcon />} /> ,
     },
 
 
