@@ -85,7 +85,7 @@ const ProductsPage = () => {
         <div>
             <h1>Produkty które oferuje zalogowany przedsiębiorca</h1>
             <TableComponentComponent  columns={ProductTableColumns} rows={productsMock}/>
-            <AddingComponent  isOpen={isAddingOpen} setIsOpen={setIsAddingOpen}  modalContent={productModalContent} />
+            <AddingComponent  text='Dodaj produkt' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen}  modalContent={productModalContent} />
             <ModalComponentComponent isOpen={isModalOpen} onClose={() => dispatch(setIsModalOpen(false))}  children={<h1>TEST PRODUCT</h1>}/>
         </div>
     )

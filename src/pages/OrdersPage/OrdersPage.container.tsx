@@ -1,5 +1,10 @@
 import TableComponentComponent from "../../components/TableComponent.component";
 import {OrdersTableColumns} from "../../utils/TableColumns";
+import ModalComponentComponent from "../../components/ModalComponent.component";
+import {useAppDispatch, useAppSelector} from "../../utils/hooks";
+import {getIsModalOpen, setIsModalOpen} from "../../store/reducers/utilsReducer";
+import PreviewJob from "./components/PreviewJob.component";
+import PreviewProduct from "./components/PreviewProduct.component";
 
 const mockedOrders = [
     {
@@ -18,6 +23,7 @@ const mockedOrders = [
 ]
 
 const OrdersPage = () => {
+
 
     return(
         <div>

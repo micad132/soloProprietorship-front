@@ -3,6 +3,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import TableButton from "../components/TableButton.component";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import PreviewOrderComponent from "../pages/OrdersPage/components/PreviewOrder.component";
 
 export const CustomersTableColumns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -116,6 +119,7 @@ export const JobsTableColumns: GridColDef[] = [
         headerName: 'Wykonana',
         width: 150,
         editable: true,
+        renderCell: (params) => <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
     },
     {
         field: 'editJob',
@@ -163,7 +167,7 @@ export const OrdersTableColumns: GridColDef[] = [
         headerName: 'Podgląd',
         width: 150,
         editable: true,
-        renderCell: (params) =>  <TableButton text='Podgląd' icon={<VisibilityIcon />} /> ,
+        renderCell: (params) =>  <PreviewOrderComponent id={params.row.id} /> ,
     }
 
 ]

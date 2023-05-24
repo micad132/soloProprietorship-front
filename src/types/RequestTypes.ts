@@ -13,3 +13,15 @@ export interface ProductRequestType {
     price: number,
     weight: number,
 }
+
+export interface JobRequestType {
+    name: string,
+    price: number,
+    isJobDone: boolean,
+}
+
+export const INITIAL_JOB_VALUES: JobRequestType = {
+    name: '',
+    price: 0,
+    isJobDone: false,
+}

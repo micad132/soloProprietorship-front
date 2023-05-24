@@ -3,16 +3,18 @@ import {Button} from "@mui/material";
 import ModalComponentComponent from "./ModalComponent.component";
 
 interface Props {
+    text: string,
     isOpen: boolean,
     setIsOpen: Dispatch<SetStateAction<any>>;
     modalContent: ReactNode
 }
 
 
-const AddingComponent = ({isOpen, setIsOpen, modalContent}: Props) => {
+const AddingComponent = ({text, isOpen, setIsOpen, modalContent}: Props) => {
 
     return(
         <div>
+            <p style={{ margin: '5px 0px', fontWeight: 'bold'}}>{text}</p>
             <Button
                 variant='contained'
                 onClick={() => setIsOpen(true)}

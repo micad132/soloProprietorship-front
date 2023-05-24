@@ -88,7 +88,7 @@ const CustomersPage = () => {
         <div>
             <h1>Klienci zalogowanego przedsiębiorcy: ({customersMock.length})</h1>
             <TableComponentComponent  columns={CustomersTableColumns} rows={customersMock}/>
-            <AddingComponent isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingContent} />
+            <AddingComponent text='Dodaj klienta' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingContent} />
             <ModalComponentComponent isOpen={isModalOpen} onClose={() => dispatch(setIsModalOpen(false))}  children={<h1>TEST CUSTOMER</h1>}/>
         </div>
     )

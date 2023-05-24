@@ -1,0 +1,26 @@
+
+.jobPreviewWrapper{
+  border: 2px solid #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 10px;
+  margin-top: 7px;
+  .icon {
+    transform: scale(1.2);
+
+    &:hover {
+      color: red;
+      cursor: pointer;
+    }
+  }
+
+}
+
+.previewWrapper {
+  padding: 10px;
+
+  .header{
+    padding: 5px 0;
+  }
+}

@@ -7,10 +7,12 @@ import {setIsModalOpen} from "../store/reducers/utilsReducer";
 interface Props {
     text: string,
     icon: ReactNode,
+    id?: number,
 }
 
-const TableButton = ({text,icon}: Props) => {
+const TableButton = ({text,icon,id}: Props) => {
     const dispatch = useAppDispatch();
+    console.log('PARAMSY', id);
     return(
         <>
             <strong>
