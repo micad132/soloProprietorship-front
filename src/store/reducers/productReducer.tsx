@@ -1,13 +1,13 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../index";
-import {ProductRequestType} from "../../types/RequestTypes";
+import {ProductAddRequestType} from "../../types/RequestTypes";
 import ProductService from "../../services/api/ProductService";
 import {ProductResponseType} from "../../types/ResponseTypes";
 
 interface ProductReducerType {
     errorMsg: string,
     isProductsLoaded: boolean,
-    singleProductRequest:ProductRequestType,
+    singleProductRequest:ProductAddRequestType,
     products: ProductResponseType[],
     isOpen: boolean,
 }
@@ -26,7 +26,7 @@ const initialState: ProductReducerType = {
 
 export const addingCarModelThunk = createAsyncThunk(
     'cars/addCarModel',
-    async (newData : ProductRequestType, { rejectWithValue }) => {
+    async (newData : ProductAddRequestType, { rejectWithValue }) => {
         try{
             await ProductService.addNewProduct(newData);
 

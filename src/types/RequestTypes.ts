@@ -8,20 +8,21 @@ export interface CustomerRequestType  {
     idTransactions: number[],
 }
 
-export interface ProductRequestType {
+export interface ProductAddRequestType {
     name: string,
     price: number,
     weight: number,
 }
 
-export interface JobRequestType {
-    name: string,
-    price: number,
-    isJobDone: boolean,
+export interface ProductEditRequestType extends  ProductAddRequestType{
+    id: number,
 }
 
-export const INITIAL_JOB_VALUES: JobRequestType = {
-    name: '',
-    price: 0,
-    isJobDone: false,
+export interface JobAddRequestType {
+    name: string,
+    price: number,
+}
+
+export interface JobEditRequestType extends JobAddRequestType {
+    id: number,
 }

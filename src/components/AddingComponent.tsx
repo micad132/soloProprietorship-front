@@ -21,7 +21,7 @@ const AddingComponent = ({text, isOpen, setIsOpen, modalContent}: Props) => {
             >
                 Dodaj
             </Button>
-            <ModalComponentComponent children={modalContent} isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            <ModalComponentComponent children={modalContent} isOpen={isOpen} onClose={() => setIsOpen(false)} text={text} />
         </div>
     )
 }

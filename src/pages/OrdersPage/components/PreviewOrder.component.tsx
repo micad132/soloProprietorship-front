@@ -6,17 +6,22 @@ import {useAppDispatch, useAppSelector} from "../../../utils/hooks";
 import {Button} from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import PreviewWrapper from "./PreviewWrapper.component";
+import {useState} from "react";
 
 interface Props {
     id: number,
 }
 const PreviewOrderComponent = ({id}: Props) => {
 
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [test, setTest] = useState('');
     const isModalOpen = useAppSelector(getIsModalOpen);
     const dispatch = useAppDispatch();
+    console.log("PREVIEW ORDER");
     const content = (
         <>
             <h4>Pogląd zamówienia</h4>
+            <input type="text" value={test} onChange={(e) => setTest(e.target.value)}/>
             <PreviewWrapper text='Usługi' >
                 <PreviewJob />
                 <PreviewJob />
@@ -35,14 +40,15 @@ const PreviewOrderComponent = ({id}: Props) => {
                     startIcon={<VisibilityIcon />}
                     data-testid='tableButton'
                     onClick={() => {
-                        dispatch(setIsModalOpen(true));
+                        // dispatch(setIsModalOpen(true));
+                        setIsOpen(true);
                         console.log('ID', id);
                     }}
                 >
                     Podlgad
                 </Button>
             </strong>
-            <ModalComponentComponent isOpen={isModalOpen} onClose={() => dispatch(setIsModalOpen(false))}  children={content} />
+            <ModalComponentComponent isOpen={isOpen} onClose={() => setIsOpen(false)}  children={content} />
         </div>
     )
 }

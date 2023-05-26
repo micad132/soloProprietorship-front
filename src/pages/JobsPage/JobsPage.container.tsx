@@ -4,12 +4,13 @@ import AddingComponent from "../../components/AddingComponent";
 import {useState} from "react";
 import TextFieldComponent from "../../components/TextField.component";
 import {Button} from "@mui/material";
-import {INITIAL_JOB_VALUES, JobRequestType} from "../../types/RequestTypes";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import ModalComponentComponent from "../../components/ModalComponent.component";
 import {useAppDispatch, useAppSelector} from "../../utils/hooks";
 import {getIsModalOpen, setIsModalOpen} from "../../store/reducers/utilsReducer";
+import {INITIAL_ADD_JOB_REQUEST_VALUES} from "../../types/InitialValues";
+import {JobAddRequestType} from "../../types/RequestTypes";
 
 const mockedJobs = [
     {
@@ -36,14 +37,14 @@ const mockedJobs = [
 const JobsPage = () => {
 
     const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false);
-    const [jobValues, setJobValues] = useState<JobRequestType>(INITIAL_JOB_VALUES);
-    const {name, price, isJobDone} = jobValues;
+    const [jobValues, setJobValues] = useState<JobAddRequestType>(INITIAL_ADD_JOB_REQUEST_VALUES);
+    const {name, price} = jobValues;
     const isModalOpen = useAppSelector(getIsModalOpen);
     const dispatch = useAppDispatch();
 
     const onClick = () => {
         setIsAddingOpen(false);
-        setJobValues(INITIAL_JOB_VALUES);
+        setJobValues(INITIAL_ADD_JOB_REQUEST_VALUES);
     }
 
     const addingJobContent = (
@@ -74,7 +75,6 @@ const JobsPage = () => {
             <h1>Usługi oferowane przez przedsiębiorce ({mockedJobs.length})</h1>
             <TableComponentComponent columns={JobsTableColumns} rows={mockedJobs} />
             <AddingComponent text='Dodaj usługę' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingJobContent} />
-            <ModalComponentComponent isOpen={isModalOpen} children={addingJobContent} onClose={() => dispatch(setIsModalOpen(false))} />
         </div>
     )
 }

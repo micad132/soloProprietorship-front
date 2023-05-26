@@ -5,9 +5,10 @@ interface Props {
     isOpen: boolean,
     onClose: any,
     children: any,
+    text?: string,
 }
 
-const ModalComponentComponent = ({isOpen, onClose, children}: Props) => {
+const ModalComponentComponent = ({isOpen, onClose, children, text}: Props) => {
 
     return(
         <Modal
@@ -18,6 +19,7 @@ const ModalComponentComponent = ({isOpen, onClose, children}: Props) => {
             data-testid='modal'
         >
             <div className={styles.modalContent}>
+                <h4>{text}</h4>
                 {children}
             </div>
         </Modal>

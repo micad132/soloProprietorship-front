@@ -60,6 +60,7 @@ const Register = () => {
             console.log(errorArray.flat());
             setErrorValues(errorArray.flat() as string[]);
         }
+
     }
     const {name,surname,email,password,confirmPassword,postalCode,cityName} = registerValues;
     const registerNameError = errorValues.includes('forbiddenName') ?

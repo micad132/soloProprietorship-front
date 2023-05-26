@@ -4,10 +4,12 @@ import {ProductTableColumns} from "../../utils/TableColumns";
 import {useState} from "react";
 import TextFieldComponent from "../../components/TextField.component";
 import {Button} from "@mui/material";
-import {ProductRequestType} from "../../types/RequestTypes";
+import {ProductAddRequestType, ProductEditRequestType} from "../../types/RequestTypes";
 import ModalComponentComponent from "../../components/ModalComponent.component";
 import {useAppDispatch, useAppSelector} from "../../utils/hooks";
 import {setIsModalOpen, getIsModalOpen} from "../../store/reducers/utilsReducer";
+import {INITIAL_ADD_PRODUCT_REQUEST_TYPE, INITIAL_EDIT_PRODUCT_REQUEST_TYPE} from "../../types/InitialValues";
+import ProductFieldsComponent from "./components/ProductFields.component";
 
 const productsMock = [
     {
@@ -30,63 +32,32 @@ const productsMock = [
     }
 ]
 
-const initialState = {
-    name: '',
-    price: 0,
-    weight: 0,
-}
-
 const ProductsPage = () => {
 
     const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false);
-    const [productValues, setProductValues] = useState<ProductRequestType>(initialState);
+    const [productValues, setProductValues] = useState<ProductAddRequestType>(INITIAL_ADD_PRODUCT_REQUEST_TYPE);
+
     const {name, price, weight} = productValues;
     const isModalOpen = useAppSelector(getIsModalOpen);
     const dispatch = useAppDispatch();
 
-    const onClick = () => {
-        setProductValues(initialState);
+    const onClickAdd = () => {
+        console.log("DANE ADD PRODUCT", productValues);
+        setProductValues(INITIAL_ADD_PRODUCT_REQUEST_TYPE);
         setIsAddingOpen(false);
     }
 
-    const productModalContent = (
-        <>
-            <h3>Dodaj produkt</h3>
-            <TextFieldComponent
-                value={name}
-                label='Nazwa produktu'
-                errorMsg={""}
-                setValues={setProductValues}
-                fieldName='name'
-            />
-            <TextFieldComponent
-                value={price}
-                label='Cena produktu'
-                errorMsg={""}
-                setValues={setProductValues}
-                fieldName='price'
-            />
-            <TextFieldComponent
-                value={weight}
-                label='Waga produktu'
-                errorMsg={""}
-                setValues={setProductValues}
-                fieldName='weight'
-            />
-            <Button
-                variant='contained'
-                onClick={onClick}
-            >
-                Dodaj
-            </Button>
-        </>
+
+
+    const productModalAddContent = (
+        <ProductFieldsComponent data={productValues} setProductValues={setProductValues} onClick={onClickAdd}  />
     )
+
     return(
         <div>
             <h1>Produkty które oferuje zalogowany przedsiębiorca</h1>
             <TableComponentComponent  columns={ProductTableColumns} rows={productsMock}/>
-            <AddingComponent  text='Dodaj produkt' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen}  modalContent={productModalContent} />
-            <ModalComponentComponent isOpen={isModalOpen} onClose={() => dispatch(setIsModalOpen(false))}  children={<h1>TEST PRODUCT</h1>}/>
+            <AddingComponent  text='Dodaj produkt' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen}  modalContent={productModalAddContent}/>
         </div>
     )
 }

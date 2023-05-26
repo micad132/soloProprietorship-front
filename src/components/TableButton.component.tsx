@@ -12,7 +12,6 @@ interface Props {
 
 const TableButton = ({text,icon,id}: Props) => {
     const dispatch = useAppDispatch();
-    console.log('PARAMSY', id);
     return(
         <>
             <strong>

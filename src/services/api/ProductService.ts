@@ -1,10 +1,10 @@
 import axios from "axios";
-import {ProductRequestType} from "../../types/RequestTypes";
+import {ProductAddRequestType} from "../../types/RequestTypes";
 import {API_REQUEST_PATH} from "../../utils/GlobalVariables";
 
 const ProductService = {
 
-    addNewProduct: (data: ProductRequestType) => {
+    addNewProduct: (data: ProductAddRequestType) => {
         return axios({
             method: 'POST',
             url: `${API_REQUEST_PATH}/product/`,

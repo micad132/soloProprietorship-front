@@ -6,6 +6,8 @@ import TableButton from "../components/TableButton.component";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import PreviewOrderComponent from "../pages/OrdersPage/components/PreviewOrder.component";
+import EditProductContainer from "../pages/ProductsPage/containers/EditProduct.container";
+import EditJobContainer from "../pages/JobsPage/containers/EditJob.container";
 
 export const CustomersTableColumns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -79,17 +81,17 @@ export const ProductTableColumns: GridColDef[] = [
         editable: true,
     },
     {
-        field: 'editProduct',
+        field: '',
         headerName: 'Edytuj',
         width: 150,
-        editable: true,
-        renderCell: (params) =>  <TableButton text='Edycja' icon={<EditIcon />} /> ,
+        editable: false,
+        renderCell: (params) =>   <EditProductContainer id={params.row.id}  />,
     },
     {
         field: 'deleteProduct',
         headerName: 'Usuń',
         width: 150,
-        editable: true,
+        editable: false,
         renderCell: (params) =>  <TableButton text='Usuń' icon={<DeleteIcon />} /> ,
     },
 
@@ -125,8 +127,8 @@ export const JobsTableColumns: GridColDef[] = [
         field: 'editJob',
         headerName: 'Edycja',
         width: 150,
-        editable: true,
-        renderCell: (params) =>  <TableButton text='Edycja' icon={<EditIcon />} /> ,
+        editable: false,
+        renderCell: (params) =>  <EditJobContainer  id={params.row.id}/> ,
     },
     {
         field: 'deleteJob',
@@ -166,7 +168,7 @@ export const OrdersTableColumns: GridColDef[] = [
         field: 'orderPreview',
         headerName: 'Podgląd',
         width: 150,
-        editable: true,
+        editable: false,
         renderCell: (params) =>  <PreviewOrderComponent id={params.row.id} /> ,
     }
 
