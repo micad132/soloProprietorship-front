@@ -15,6 +15,7 @@ import PasswordFieldComponent from "../../../components/PasswordField.component"
 const initialLoginValues: LoginType = {
     email: '',
     password: '',
+    code2FA: '',
 }
 
 
@@ -38,6 +39,8 @@ const Login = () => {
         e.preventDefault();
         const result = validateLogin(loginValues);
         console.log('WYNIKI', loginValues);
+        console.log('TYP', typeof loginValues.code2FA);
+        console.log('RESULT', result);
         if(result.success) {
             toast.success("Zalogowano");
             setLoginValues(initialLoginValues);
@@ -45,13 +48,14 @@ const Login = () => {
             setTimeout(() => navigate('/', { replace: true}), 1000);
         } else {
             const errorArray = result.error.errors.map(error => error.path[0]);
+            console.log(errorArray);
             setErrorValues(errorArray as string[]);
             toast.error("Podano niepoprawne dane!");
         }
 
 
     }
-    const {email, password} = loginValues;
+    const {email, password, code2FA} = loginValues;
     return(
         <AuthorizationWrapperComponent>
             <form onSubmit={(e) => onSubmit(e)}>
@@ -73,6 +77,15 @@ const Login = () => {
                     errorMsg='Niepoprawne hasło!'
                     fieldName={'password'}
                     onInputChange={handleInputChange}
+                />
+                <TextFieldComponent
+                    setValues={setLoginValues}
+                    value={code2FA}
+                    isError={errorValues.includes('code2FA')}
+                    label='Kod 2FA'
+                    errorMsg='Niepoprawny kod!'
+                    onInputChange={handleInputChange}
+                    fieldName={'code2FA'}
                 />
                 <Button variant="contained" type="submit">Zaloguj się</Button>
                 <NoAccount />

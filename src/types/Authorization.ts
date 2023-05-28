@@ -2,6 +2,7 @@
 export interface LoginType  {
     email: string,
     password: string,
+    code2FA: string,
 }
 
 export interface RegisterType extends LoginType  {

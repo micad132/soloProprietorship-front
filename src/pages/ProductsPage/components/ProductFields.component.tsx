@@ -6,9 +6,10 @@ interface Props {
     data: ProductAddRequestType,
     setProductValues: any,
     onClick: any,
+    errorValues: string[],
 }
 
-const ProductFieldsComponent = ({data, setProductValues, onClick}: Props) => {
+const ProductFieldsComponent = ({data, setProductValues, onClick, errorValues}: Props) => {
 
     const {name, price, weight} = data;
     return(
@@ -16,21 +17,24 @@ const ProductFieldsComponent = ({data, setProductValues, onClick}: Props) => {
                 <TextFieldComponent
                     value={name}
                     label='Nazwa produktu'
-                    errorMsg={""}
+                    isError={errorValues.includes('name')}
+                    errorMsg={"Niepoprawna nazwa"}
                     setValues={setProductValues}
                     fieldName='name'
                 />
                 <TextFieldComponent
                     value={price}
                     label='Cena produktu'
-                    errorMsg={""}
+                    isError={errorValues.includes('price')}
+                    errorMsg={"Niepoprawna cena"}
                     setValues={setProductValues}
                     fieldName='price'
                 />
                 <TextFieldComponent
                     value={weight}
                     label='Waga produktu'
-                    errorMsg={""}
+                    isError={errorValues.includes('weight')}
+                    errorMsg={"Niepoprawna waga"}
                     setValues={setProductValues}
                     fieldName='weight'
                 />

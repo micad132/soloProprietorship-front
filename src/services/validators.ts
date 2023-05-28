@@ -1,6 +1,7 @@
 import {z} from 'zod';
 import {LoginType, RegisterType} from "../types/Authorization";
 import {sanitize} from "dompurify";
+import {ProductAddRequestType} from "../types/RequestTypes";
 
 
 
@@ -23,6 +24,7 @@ const RegistrationSchema = z.object({
 const LoginSchema = z.object({
     email: z.string().email(),
     password: z.string().min(5).max(20),
+    code2FA: z.string().refine((value) => value.length === 6 && /^[0-9]+$/.test(value)),
 })
 
 
@@ -32,6 +34,18 @@ const AddingUserSchema = z.object({
     cityName: z.string().min(5).max(20),
     email: z.string().email(),
     phoneNumber: z.string().min(5).max(15),
+})
+
+const AddingProductSchema = z.object({
+    name: z.string().min(5).max(30),
+    price: z.string().refine(val => {
+        const parsedValue = parseFloat(val);
+        return parsedValue >= 0 && /^[0-9.]+$/.test(val);
+    }),
+    weight: z.string().refine(val => {
+        const parsedValue = parseFloat(val);
+        return parsedValue >= 0 && /^[0-9.]+$/.test(val);
+    }),
 })
 
 
@@ -47,8 +61,11 @@ export const validateRegister = (registerValues: RegisterType) => {
 }
 
 export const validateLogin = (loginValues: LoginType) => {
+    // loginValues.code2FA = Number(loginValues.code2FA);
     return LoginSchema.safeParse(loginValues);
 }
+
+export const validateAddProduct = (values: ProductAddRequestType) => AddingProductSchema.safeParse(values);
 
 export const sanitizeData = (value: string): string => sanitize(value, { USE_PROFILES: { html: false }});
 

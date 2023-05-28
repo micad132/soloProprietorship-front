@@ -19,7 +19,7 @@ const TextFieldComponent = ({value,setValues, isError, label, errorMsg, onInputC
     const handleInputChange = (e: any) => {
         const {value} = e.target;
 
-        console.log('VALUE', value);
+        console.log('VALUE', value, fieldName);
         if (setValues) {
             setValues((prevState: any) => ({
                 ...prevState,

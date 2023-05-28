@@ -10,6 +10,8 @@ import {useAppDispatch, useAppSelector} from "../../utils/hooks";
 import {setIsModalOpen, getIsModalOpen} from "../../store/reducers/utilsReducer";
 import {INITIAL_ADD_PRODUCT_REQUEST_TYPE, INITIAL_EDIT_PRODUCT_REQUEST_TYPE} from "../../types/InitialValues";
 import ProductFieldsComponent from "./components/ProductFields.component";
+import {validateAddProduct} from "../../services/validators";
+import {toast} from "react-toastify";
 
 const productsMock = [
     {
@@ -36,6 +38,7 @@ const ProductsPage = () => {
 
     const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false);
     const [productValues, setProductValues] = useState<ProductAddRequestType>(INITIAL_ADD_PRODUCT_REQUEST_TYPE);
+    const [errorValues, setErrorValues] = useState<string[]>([]);
 
     const {name, price, weight} = productValues;
     const isModalOpen = useAppSelector(getIsModalOpen);
@@ -43,14 +46,26 @@ const ProductsPage = () => {
 
     const onClickAdd = () => {
         console.log("DANE ADD PRODUCT", productValues);
-        setProductValues(INITIAL_ADD_PRODUCT_REQUEST_TYPE);
-        setIsAddingOpen(false);
+        const results = validateAddProduct(productValues);
+        if(results.success) {
+            toast.success("Dodano produkt!");
+            setProductValues(INITIAL_ADD_PRODUCT_REQUEST_TYPE);
+            setErrorValues([]);
+            setIsAddingOpen(false);
+        } else {
+            const errorArray = results.error.errors.map(error => error.path[0]);
+            console.log('ABC', errorArray);
+            setErrorValues(errorArray as string[]);
+            toast.error("Niepoprawne dane!");
+        }
+
+
     }
 
 
 
     const productModalAddContent = (
-        <ProductFieldsComponent data={productValues} setProductValues={setProductValues} onClick={onClickAdd}  />
+        <ProductFieldsComponent data={productValues} setProductValues={setProductValues} onClick={onClickAdd} errorValues={errorValues}  />
     )
 
     return(

@@ -7,6 +7,8 @@ import {RegisterType} from "../../../types/Authorization";
 import ErrorComponentComponent from "../../../components/ErrorComponent.component";
 import TextFieldComponent from "../../../components/TextField.component";
 import PasswordFieldComponent from "../../../components/PasswordField.component";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import { sanitize } from 'dompurify';
@@ -20,6 +22,7 @@ const initialRegisterValues: RegisterType = {
     confirmPassword: '',
     postalCode: '',
     cityName: '',
+    code2FA: '',
 }
 
 const Register = () => {
@@ -126,6 +129,7 @@ const Register = () => {
                         errorMsg='Miasto musi zawierać od 5 do 20 znaków'
                         fieldName='cityName'
                     />
+                    <FormControlLabel control={<Checkbox defaultChecked />} label="Czy zastosować 2FA?" />
                     <Button
                         variant="contained"
                         type="submit"
