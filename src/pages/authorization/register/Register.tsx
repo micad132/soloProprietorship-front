@@ -12,9 +12,11 @@ import Checkbox from '@mui/material/Checkbox';
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import { sanitize } from 'dompurify';
+import {AuthService} from "../../../services/api/AuthService";
 
 
 const initialRegisterValues: RegisterType = {
+    nick: '',
     name: '',
     surname: '',
     email: '',
@@ -22,7 +24,7 @@ const initialRegisterValues: RegisterType = {
     confirmPassword: '',
     postalCode: '',
     cityName: '',
-    code2FA: '',
+    code: '',
 }
 
 const Register = () => {
@@ -43,7 +45,7 @@ const Register = () => {
     //     }));
     // };
 
-    const submitForm = (e: any) => {
+    const submitForm = async (e: any) => {
         e.preventDefault();
 
         console.log('STAN', registerValues);
@@ -55,6 +57,17 @@ const Register = () => {
                 toast.success("jd");
             }
             setRegisterValues(initialRegisterValues);
+            const data = {
+                username: 'michal',
+                email: 'michal@michal.pl',
+                role: 'CUSTOMER',
+                userFirstName: 'michal',
+                userSecondName: 'mosiolek',
+                password: 'haslohaslo',
+                pesel: '12345678901',
+                use2FA: false,
+            }
+            const data2 = await AuthService.registerUser(data);
             toast.success("Pomyślnie zarejestrowano, za chwilę nastąpi przekierowanie na stronę logowania!");
             setTimeout(() => navigate('/login', { replace: true}), 1000);
         } else {
@@ -65,22 +78,38 @@ const Register = () => {
         }
 
     }
-    const {name,surname,email,password,confirmPassword,postalCode,cityName} = registerValues;
-    const registerNameError = errorValues.includes('forbiddenName') ?
-        'Niewlasciwe znaki!'
-        : errorValues.includes('name')
-            ? 'Imię musi zawierać od 5 do 20 znaków!'
-            : ''
+    const {nick,name,surname,email,password,confirmPassword,postalCode,cityName} = registerValues;
+    // const registerNameError = errorValues.includes('forbiddenName') ?
+    //     'Niewlasciwe znaki!'
+    //     : errorValues.includes('name')
+    //         ? 'Imię musi zawierać od 5 do 20 znaków!'
+    //         : ''
     return(
             <AuthorizationWrapperComponent>
                 <form onSubmit={(e) => submitForm(e)}>
                     <h1>Register</h1>
                     <TextFieldComponent
+                        value={nick}
+                        setValues={setRegisterValues}
+                        isError={errorValues.includes('nick')}
+                        label='Nick'
+                        errorMsg={'Niepoprawnie wprowadzony nick!'}
+                        fieldName={'nick'}
+                    />
+                    <TextFieldComponent
+                        value={email}
+                        setValues={setRegisterValues}
+                        isError={errorValues.includes('email')}
+                        label='E-mail'
+                        errorMsg='Niepoprawnie wprowadzony email!'
+                        fieldName='email'
+                    />
+                    <TextFieldComponent
                         value={name}
                         setValues={setRegisterValues}
                         isError={errorValues.includes('name')}
                         label='Imię'
-                        errorMsg={registerNameError}
+                        errorMsg={'Niepoprawnie wprowadzone imie!'}
                         fieldName={'name'}
                     />
                     <TextFieldComponent
@@ -88,37 +117,31 @@ const Register = () => {
                         setValues={setRegisterValues}
                         isError={errorValues.includes('surname')}
                         label='Nazwisko'
-                        errorMsg='Nazwisko musi zawierać od 5 do 20 znaków!'
+                        errorMsg='Niepoprawnie wprowadzone nazwisko!'
                         fieldName={'surname'}
-                    />
-                    <TextFieldComponent
-                        value={email}
-                        setValues={setRegisterValues}
-                        isError={errorValues.includes('email')}
-                        label='E-mail'
-                        errorMsg='E-mail nie zgadza się z poprawnym formatem!'
-                        fieldName='email'
                     />
                     <PasswordFieldComponent
                         value={password}
                         setPasswordValue={setRegisterValues}
                         isError={errorValues.includes('password')}
-                        errorMsg='Hasło musi zawierać od 5 do 20 znaków!'
-                        fieldName={'password'}
+                        errorMsg='Niepoprawnie wprowadzone haslo!'
+                        fieldName='password'
+                        label='Haslo'
                     />
                     <PasswordFieldComponent
                         value={confirmPassword}
                         setPasswordValue={setRegisterValues}
                         isError={errorValues.includes('confirmPassword')}
-                        errorMsg='Hasło musi zawierać od 5 do 20 znaków!'
-                        fieldName={'confirmPassword'}
+                        errorMsg='Niepoprawnie wprowadzone haslo!'
+                        fieldName='confirmPassword'
+                        label='Potwierdz haslo'
                     />
                     <TextFieldComponent
                         value={postalCode}
                         setValues={setRegisterValues}
                         isError={errorValues.includes('postalCode')}
                         label='Kod pocztowy'
-                        errorMsg='Kod pocztowy nie zgadza się z poprawnym formatem!'
+                        errorMsg='Niepoprawnie wprowadzony kod pocztowy!'
                         fieldName='postalCode'
                     />
                     <TextFieldComponent
@@ -126,7 +149,7 @@ const Register = () => {
                         setValues={setRegisterValues}
                         isError={errorValues.includes('cityName')}
                         label='Miasto'
-                        errorMsg='Miasto musi zawierać od 5 do 20 znaków'
+                        errorMsg='Niepoprawnie wprowadzona nazwa miasta!'
                         fieldName='cityName'
                     />
                     <FormControlLabel control={<Checkbox defaultChecked />} label="Czy zastosować 2FA?" />

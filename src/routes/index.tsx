@@ -6,6 +6,7 @@ import CustomersPage from "../pages/CustomersPage/CustomersPage.container";
 import ProductsPage from "../pages/ProductsPage/ProductsPage.container";
 import JobsPage from "../pages/JobsPage/JobsPage.container";
 import OrdersPage from "../pages/OrdersPage/OrdersPage.container";
+import ErrorPage from "../pages/ErrorPage";
 
 
 const routes = (
@@ -17,6 +18,7 @@ const routes = (
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/jobs" element={<JobsPage />} />
         <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/error" element={<ErrorPage />} />
 
     </Routes>
 );

@@ -7,11 +7,15 @@ import {Button} from "@mui/material";
 import {ProductAddRequestType, ProductEditRequestType} from "../../types/RequestTypes";
 import ModalComponentComponent from "../../components/ModalComponent.component";
 import {useAppDispatch, useAppSelector} from "../../utils/hooks";
-import {setIsModalOpen, getIsModalOpen} from "../../store/reducers/utilsReducer";
+import {setIsModalOpen, getIsModalOpen, getToken} from "../../store/reducers/utilsReducer";
 import {INITIAL_ADD_PRODUCT_REQUEST_TYPE, INITIAL_EDIT_PRODUCT_REQUEST_TYPE} from "../../types/InitialValues";
 import ProductFieldsComponent from "./components/ProductFields.component";
 import {validateAddProduct} from "../../services/validators";
 import {toast} from "react-toastify";
+import {fetchingAllProductsThunk} from "../../store/reducers/productReducer";
+import ProductService from "../../services/api/ProductService";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const productsMock = [
     {
@@ -42,7 +46,22 @@ const ProductsPage = () => {
 
     const {name, price, weight} = productValues;
     const isModalOpen = useAppSelector(getIsModalOpen);
+    // const products = useAppSelector(getAllProducts);
     const dispatch = useAppDispatch();
+    const token = useAppSelector(getToken);
+    const navigate = useNavigate();
+    const get = async () => {
+        console.log('CO JEST');
+        // dispatch(fetchingAllProductsThunk(token));
+        try {
+            const data = await ProductService.getAllProducts(token);
+            console.log('DEJTA', data);
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
 
     const onClickAdd = () => {
         console.log("DANE ADD PRODUCT", productValues);
@@ -71,6 +90,8 @@ const ProductsPage = () => {
     return(
         <div>
             <h1>Produkty które oferuje zalogowany przedsiębiorca</h1>
+            <button onClick={get}>GET</button>
+            <button onClick={() => window.location.replace("http://localhost:8080/logout")}>LOGOUT</button>
             <TableComponentComponent  columns={ProductTableColumns} rows={productsMock}/>
             <AddingComponent  text='Dodaj produkt' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen}  modalContent={productModalAddContent}/>
         </div>

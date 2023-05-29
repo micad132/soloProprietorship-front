@@ -10,12 +10,15 @@ import {useState} from "react";
 import ErrorComponentComponent from "../../../components/ErrorComponent.component";
 import TextFieldComponent from "../../../components/TextField.component";
 import PasswordFieldComponent from "../../../components/PasswordField.component";
+import {AuthService} from "../../../services/api/AuthService";
+import {setToken} from "../../../store/reducers/utilsReducer";
+import {useAppDispatch} from "../../../utils/hooks";
 
 
 const initialLoginValues: LoginType = {
-    email: '',
+    nick: '',
     password: '',
-    code2FA: '',
+    code: '',
 }
 
 
@@ -26,25 +29,43 @@ const Login = () => {
     const [loginValues, setLoginValues] = useState<LoginType>(initialLoginValues);
     const [errorValues, setErrorValues] = useState<string[]>([]);
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
 
-    const handleInputChange = (fieldName: string, value: string) => {
-        console.log('FIELDNAME', fieldName);
-        setLoginValues((prevValues) => ({
-            ...prevValues,
-            [fieldName]: sanitizeData(value),
-        }));
-    };
-    const onSubmit = (e: any) => {
+    // const handleInputChange = (fieldName: string, value: string) => {
+    //     console.log('FIELDNAME', fieldName);
+    //     setLoginValues((prevValues) => ({
+    //         ...prevValues,
+    //         [fieldName]: sanitizeData(value),
+    //     }));
+    // };
+    const onSubmit = async (e: any) => {
         e.preventDefault();
         const result = validateLogin(loginValues);
         console.log('WYNIKI', loginValues);
-        console.log('TYP', typeof loginValues.code2FA);
+        console.log('TYP', typeof loginValues.code);
         console.log('RESULT', result);
         if(result.success) {
             toast.success("Zalogowano");
             setLoginValues(initialLoginValues);
             setErrorValues([]);
+            const data = {
+                userName: loginValues.nick,
+                password: loginValues.password,
+                code: loginValues.code,
+            }
+            const userStr = localStorage.getItem("user");
+            let user = null;
+            if (userStr) {
+                user = JSON.parse(userStr);
+                console.log(user.accessToken);
+            }
+
+
+            const res = await AuthService.loginUser(data);
+            localStorage.setItem('ABC', JSON.stringify(res.token));
+            console.log('RES', res.token);
+            dispatch(setToken(res.token));
             setTimeout(() => navigate('/', { replace: true}), 1000);
         } else {
             const errorArray = result.error.errors.map(error => error.path[0]);
@@ -55,19 +76,18 @@ const Login = () => {
 
 
     }
-    const {email, password, code2FA} = loginValues;
+    const {nick, password, code} = loginValues;
     return(
         <AuthorizationWrapperComponent>
             <form onSubmit={(e) => onSubmit(e)}>
                 <h1>Login</h1>
                 <TextFieldComponent
                     setValues={setLoginValues}
-                    value={email}
-                    isError={errorValues.includes('email')}
-                    label='E-mail'
-                    errorMsg='Niepoprawny email!'
-                    onInputChange={handleInputChange}
-                    fieldName={'email'}
+                    value={nick}
+                    isError={errorValues.includes('nick')}
+                    label='Nick'
+                    errorMsg='Niepoprawny nick!'
+                    fieldName={'nick'}
                 />
 
                 <PasswordFieldComponent
@@ -76,16 +96,15 @@ const Login = () => {
                     isError={errorValues.includes('password')}
                     errorMsg='Niepoprawne hasło!'
                     fieldName={'password'}
-                    onInputChange={handleInputChange}
+                    label='Haslo'
                 />
                 <TextFieldComponent
                     setValues={setLoginValues}
-                    value={code2FA}
+                    value={code}
                     isError={errorValues.includes('code2FA')}
                     label='Kod 2FA'
                     errorMsg='Niepoprawny kod!'
-                    onInputChange={handleInputChange}
-                    fieldName={'code2FA'}
+                    fieldName={'code'}
                 />
                 <Button variant="contained" type="submit">Zaloguj się</Button>
                 <NoAccount />

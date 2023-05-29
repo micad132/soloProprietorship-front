@@ -6,6 +6,7 @@ import {ProductAddRequestType} from "../types/RequestTypes";
 
 
 const RegistrationSchema = z.object({
+    nick: z.string().min(5).max(30).refine(val => /^[a-zA-Z0-9]+$/.test(val)),
     name: z.string().min(5).max(20).refine((val) => !val.includes('&') && !val.includes('<'), {
         message: 'Forbidden chars!',
         path: ['forbiddenName']
@@ -22,11 +23,11 @@ const RegistrationSchema = z.object({
 
 
 const LoginSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(5).max(20),
-    code2FA: z.string().refine((value) => value.length === 6 && /^[0-9]+$/.test(value)),
+    nick: z.string().min(5).max(30).refine(val => /^[a-zA-Z0-9]+$/.test(val)),
+    password: z.string().min(5).max(20).refine(val => /^[a-zA-Z0-9]+$/.test(val)),
+    code: z.string(),
 })
-
+    // .refine((value) => /^[0-9]+$/.test(value))
 
 const AddingUserSchema = z.object({
     name: z.string().min(5).max(15),

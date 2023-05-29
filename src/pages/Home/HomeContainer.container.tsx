@@ -1,10 +1,9 @@
+import HomeComponent from "./components/HomeComponent.component";
 
 const Home = () => {
 
     return(
-        <div>
-            <h1>HOME</h1>
-        </div>
+            <HomeComponent isLogged={true} />
     )
 }
 

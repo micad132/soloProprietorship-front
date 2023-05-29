@@ -24,11 +24,13 @@ const initialState: ProductReducerType = {
     isOpen: false,
 }
 
-export const addingCarModelThunk = createAsyncThunk(
-    'cars/addCarModel',
+export const addingProductThunk = createAsyncThunk(
+    'api/productAdd',
     async (newData : ProductAddRequestType, { rejectWithValue }) => {
         try{
             await ProductService.addNewProduct(newData);
+            const data = await ProductService.getAllProducts();
+            return data.data;
 
         } catch (reason) {
             throw rejectWithValue(reason);
@@ -38,9 +40,10 @@ export const addingCarModelThunk = createAsyncThunk(
 
 export const fetchingAllProductsThunk = createAsyncThunk(
     'product/fetchAll',
-    async (_, { rejectWithValue}) => {
+    async (token: string, { rejectWithValue}) => {
         try {
-            const data = await ProductService.getAllProducts();
+            console.log('EJJ');
+            const data = await ProductService.getAllProducts(token);
             return data.data;
         } catch (e) {
             rejectWithValue(e);
@@ -51,6 +54,7 @@ export const fetchingAllProductsThunk = createAsyncThunk(
 export const getErrorMsg = (state: RootState) => state.error.errorMsg;
 export const getIsProductsLoaded = (state: RootState) => state.product.isProductsLoaded;
 export const getIsOpen = (state: RootState) => state.product.isOpen;
+export const getAllProducts = (state: RootState) => state.product.products;
 
 
 
@@ -66,7 +70,17 @@ const productSlice = createSlice({
         }
     },
     extraReducers(builder) {
-
+        builder.addCase(addingProductThunk.fulfilled, (state, action) => {
+            state.products = action.payload.data;
+            state.isProductsLoaded = true;
+        })
+        builder.addCase(fetchingAllProductsThunk.fulfilled, (state, action) => {
+            state.products = action.payload.data;
+            state.isProductsLoaded = true;
+        })
+        builder.addCase(fetchingAllProductsThunk.pending, (state, action) => {
+            state.isProductsLoaded = false;
+        })
     }
 })
 
