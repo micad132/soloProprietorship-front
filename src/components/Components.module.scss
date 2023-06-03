@@ -45,3 +45,10 @@
   background-color: #fff;
   border: 2px solid #000;
 }
+
+.deletingWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}

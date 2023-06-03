@@ -18,6 +18,7 @@ const AddingComponent = ({text, isOpen, setIsOpen, modalContent}: Props) => {
             <Button
                 variant='contained'
                 onClick={() => setIsOpen(true)}
+                data-testid='addingComponentButton'
             >
                 Dodaj
             </Button>

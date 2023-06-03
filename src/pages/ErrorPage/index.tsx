@@ -5,7 +5,7 @@ import styles from './ErrorPage.module.scss';
 const ErrorPage = () => {
     let navigate = useNavigate();
     return (
-        <div>
+        <div className={styles.wrapper}>
             <h1>Logowanie nieudane:</h1>
             <Button
                 variant="contained"

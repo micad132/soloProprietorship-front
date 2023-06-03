@@ -30,7 +30,7 @@ export const addingProductThunk = createAsyncThunk(
         try{
             await ProductService.addNewProduct(newData);
             const data = await ProductService.getAllProducts();
-            return data.data;
+            return { data };
 
         } catch (reason) {
             throw rejectWithValue(reason);
@@ -44,9 +44,20 @@ export const fetchingAllProductsThunk = createAsyncThunk(
         try {
             console.log('EJJ');
             const data = await ProductService.getAllProducts(token);
-            return data.data;
+            return { data };
         } catch (e) {
-            rejectWithValue(e);
+            return rejectWithValue(e);
+        }
+    }
+)
+
+export const deletingPartThunk = createAsyncThunk(
+    'product/deleteProduct',
+    async (data, { rejectWithValue}) => {
+        try {
+
+        } catch (e) {
+            return rejectWithValue(e);
         }
     }
 )

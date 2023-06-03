@@ -23,3 +23,20 @@ export const INITIAL_EDIT_PRODUCT_REQUEST_TYPE = {
     price: 0,
     weight: 0,
 }
+
+export const INITIAL_ADD_CUSTOMER_REQUEST_TYPE = {
+    name: '',
+    surname: '',
+    address: '',
+    phoneNumber: '',
+    email: '',
+}
+
+export const INITIAL_EDIT_CUSTOMER_REQUEST_TYPE = {
+    id: 0,
+    name: '',
+    surname: '',
+    address: '',
+    phoneNumber: '',
+    email: '',
+}

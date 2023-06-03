@@ -4,11 +4,15 @@ import TextFieldComponent from "../../components/TextField.component";
 import MultipleSelect from "../../components/MultipleSelectComponent.component";
 import {Button} from "@mui/material";
 import {useState} from "react";
-import {CustomerRequestType} from "../../types/RequestTypes";
+import {CustomerAddRequestType, CustomerRequestType} from "../../types/RequestTypes";
 import AddingComponent from "../../components/AddingComponent";
 import ModalComponentComponent from "../../components/ModalComponent.component";
 import {useAppDispatch, useAppSelector} from "../../utils/hooks";
 import {setIsModalOpen, getIsModalOpen} from "../../store/reducers/utilsReducer";
+import {validateAddUser} from "../../services/validators";
+import {toast} from "react-toastify";
+import CustomerFieldsComponent from "./components/CustomerFields.component";
+import {INITIAL_ADD_CUSTOMER_REQUEST_TYPE} from "../../types/InitialValues";
 
 
 const customersMock =  [
@@ -23,66 +27,31 @@ const customersMock =  [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', email: 'test@test.pl',  phoneNumber: '123456789', cityName: 'Kielce' },
 ];
 
-const initialState = {
-    name: '',
-    surName: '',
-    address: '',
-    phoneNumber: '',
-    email: '',
-    idUser: 0,
-    idTransactions: [],
-}
 
 const CustomersPage = () => {
 
     const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false);
-    const [customerValues, setCustomerValues] = useState<CustomerRequestType>(initialState);
-    const {name, surName, address, phoneNumber, email, idUser, idTransactions} = customerValues;
+    const [customerValues, setCustomerValues] = useState<CustomerAddRequestType>(INITIAL_ADD_CUSTOMER_REQUEST_TYPE);
+    const [errorValues, setErrorValues] = useState<string[]>([]);
+    const {name, surname, address, phoneNumber, email} = customerValues;
     const isModalOpen = useAppSelector(getIsModalOpen);
     const dispatch = useAppDispatch();
+
+    const onClick = () => {
+        const result = validateAddUser(customerValues);
+        if(result.success) {
+            toast.success("Dodano klienta!");
+            setCustomerValues(INITIAL_ADD_CUSTOMER_REQUEST_TYPE);
+            setIsAddingOpen(false);
+        } else {
+            const errorArray = result.error.errors.map(error => error.path[0]);
+            console.log('ABC', errorArray);
+            setErrorValues(errorArray as string[]);
+            toast.error("Niepoprawne dane!");
+        }
+    }
     const addingContent = (
-        <>
-            <h3>Dodaj klienta</h3>
-            <TextFieldComponent
-                value={name}
-                label='Imie'
-                errorMsg={""}
-                setValues={setCustomerValues}
-                fieldName={'name'}/>
-            <TextFieldComponent
-                value={surName}
-                label='Nazwisko'
-                errorMsg={""}
-                setValues={setCustomerValues}
-                fieldName={"surName"}/>
-            <TextFieldComponent
-                value={address}
-                label='Adres'
-                errorMsg={""}
-                setValues={setCustomerValues}
-                fieldName={'address'}
-            />
-            <TextFieldComponent
-                value={phoneNumber}
-                label='Numer telefonu'
-                errorMsg={""}
-                setValues={setCustomerValues}
-                fieldName={"phoneNumber"}
-            />
-            <TextFieldComponent
-                value={email}
-                label='Email'
-                errorMsg={""}
-                setValues={setCustomerValues}
-                fieldName={'email'}
-            />
-            <MultipleSelect />
-            <Button
-                variant='contained'
-            >
-                Dodaj
-            </Button>
-        </>
+        <CustomerFieldsComponent data={customerValues} setJobValues={setCustomerValues} onClick={onClick} errorValues={errorValues} />
     )
     return(
         <div>

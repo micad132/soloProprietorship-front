@@ -19,8 +19,6 @@ const EditProductContainer = ({id}: Props) => {
     const [editProductValue, setEditProductValues] = useState<ProductEditRequestType>(INITIAL_EDIT_PRODUCT_REQUEST_TYPE);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [errorValues, setErrorValues] = useState<string[]>([]);
-    const {name, price, weight} = editProductValue;
-    console.log(isOpen);
 
     const onClickEdit = () => {
         console.log("DANE ADD PRODUCT", editProductValue);
@@ -30,6 +28,8 @@ const EditProductContainer = ({id}: Props) => {
             const data = {...editProductValue, id};
             console.log("DANE EDIT PRODUCT", data);
             setEditProductValues(INITIAL_EDIT_PRODUCT_REQUEST_TYPE);
+            setErrorValues([]);
+            setIsOpen(false);
         } else {
             const errorArray = results.error.errors.map(error => error.path[0]);
             console.log('ABC', errorArray);
@@ -58,7 +58,7 @@ const EditProductContainer = ({id}: Props) => {
                     Edytuj
                 </Button>
             </strong>
-            <ModalComponentComponent isOpen={isOpen} onClose={() => setIsOpen(false)}  children={productModalEditContent} text='Edytuj' />
+            <ModalComponentComponent isOpen={isOpen} onClose={() => setIsOpen(false)}  children={productModalEditContent} text='Edytuj produkt' />
         </div>
     )
 }

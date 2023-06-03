@@ -1,9 +1,10 @@
 import styles from './Components.module.scss';
+import {ReactNode} from "react";
 
 interface Props {
-    children: JSX.Element[] | JSX.Element,
+    children: ReactNode,
 }
 
-const AuthorizationWrapperComponent = ({children}: Props) => <div className={styles.formWrapper}>{children}</div>
+const AuthorizationWrapperComponent = ({children}: Props) => <div data-testid='authorizationWrapper' className={styles.formWrapper}>{children}</div>
 
 export default AuthorizationWrapperComponent;

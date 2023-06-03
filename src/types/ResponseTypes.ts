@@ -3,8 +3,6 @@ export interface ProductResponseType {
     name: string,
     price: number,
     weight: number,
-    User: UserType,
-    transactions: TransactionType[],
 }
 
 export interface TransactionType {
@@ -22,8 +20,6 @@ export interface JobType {
     idJob: number,
     name: string,
     price: number,
-    user: UserType,
-    transactions: TransactionType[],
 }
 
 export interface CustomerType {

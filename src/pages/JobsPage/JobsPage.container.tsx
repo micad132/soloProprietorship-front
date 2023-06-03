@@ -11,25 +11,25 @@ import {useAppDispatch, useAppSelector} from "../../utils/hooks";
 import {getIsModalOpen, setIsModalOpen} from "../../store/reducers/utilsReducer";
 import {INITIAL_ADD_JOB_REQUEST_VALUES} from "../../types/InitialValues";
 import {JobAddRequestType} from "../../types/RequestTypes";
+import {validateAddJob} from "../../services/validators";
+import {toast} from "react-toastify";
+import JobFieldsComponent from "./components/JobFields.component";
 
 const mockedJobs = [
     {
         id: 1,
         jobName: 'koszenie',
         jobPrice: 2500,
-        isJobDone: true,
     },
     {
         id: 2,
         jobName: 'sprzatanie',
         jobPrice: 1320,
-        isJobDone: false,
     },
     {
         id: 3,
         jobName: 'podlewanie',
         jobPrice: 768,
-        isJobDone: true,
     },
 
 ]
@@ -38,38 +38,30 @@ const JobsPage = () => {
 
     const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false);
     const [jobValues, setJobValues] = useState<JobAddRequestType>(INITIAL_ADD_JOB_REQUEST_VALUES);
+    const [errorValues, setErrorValues] = useState<string[]>([]);
     const {name, price} = jobValues;
     const isModalOpen = useAppSelector(getIsModalOpen);
     const dispatch = useAppDispatch();
 
     const onClick = () => {
-        setIsAddingOpen(false);
+        console.log('TYP', jobValues.price as number);
+        const validateResult = validateAddJob(jobValues);
+        if(validateResult.success) {
+
+            toast.success("Dodano usluge!");
+            setIsAddingOpen(false);
+        } else {
+            const errorArray = validateResult.error.errors.map(error => error.path[0]);
+            console.log(errorArray);
+            setErrorValues(errorArray as string[]);
+            toast.error("Podano niepoprawne dane!");
+        }
         setJobValues(INITIAL_ADD_JOB_REQUEST_VALUES);
     }
 
     const addingJobContent = (
-        <>
-            <TextFieldComponent
-            value={name}
-            label='Nazwa'
-            errorMsg={""}
-            setValues={setJobValues}
-            fieldName='name'
-            />
-            <TextFieldComponent
-            value={price}
-            label='Koszt'
-            errorMsg={""}
-            setValues={setJobValues}
-            fieldName='price'
-            />
-            <Button
-            variant='contained'
-            onClick={onClick}
-        >
-            Dodaj
-        </Button>
-        </> )
+        <JobFieldsComponent data={jobValues} setJobValues={setJobValues} onClick={onClick} errorValues={errorValues} />
+        )
     return(
         <div>
             <h1>Usługi oferowane przez przedsiębiorce ({mockedJobs.length})</h1>

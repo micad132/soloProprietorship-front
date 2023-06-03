@@ -8,6 +8,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import PreviewOrderComponent from "../pages/OrdersPage/components/PreviewOrder.component";
 import EditProductContainer from "../pages/ProductsPage/containers/EditProduct.container";
 import EditJobContainer from "../pages/JobsPage/containers/EditJob.container";
+import DeletingContainer from "../containers/DeletingContainer.container";
+import EditCustomerContainer from "../pages/CustomersPage/containers/EditCustomer.container";
 
 export const CustomersTableColumns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 90 },
@@ -49,14 +51,14 @@ export const CustomersTableColumns: GridColDef[] = [
         headerName: 'Edycja',
         width: 150,
         editable: true,
-        renderCell: (params) =>  <TableButton text='Edycja' icon={<EditIcon />} /> ,
+        renderCell: (params) =>  <EditCustomerContainer  id={params.row.id}/>,
     },
     {
         field: 'deleteCustomer',
         headerName: 'Usuń',
         width: 150,
         editable: true,
-        renderCell: (params) =>  <TableButton text='Usuń' icon={<DeleteIcon />} /> ,
+        renderCell: (params) =>  <DeletingContainer  id={params.row.id} name={params.row.email} /> ,
     }
 ];
 
@@ -92,7 +94,7 @@ export const ProductTableColumns: GridColDef[] = [
         headerName: 'Usuń',
         width: 150,
         editable: false,
-        renderCell: (params) =>  <TableButton text='Usuń' icon={<DeleteIcon />} /> ,
+        renderCell: (params) =>  <DeletingContainer  id={params.row.id} name={params.row.productName}/> ,
     },
 
 
@@ -117,13 +119,6 @@ export const JobsTableColumns: GridColDef[] = [
         editable: true,
     },
     {
-        field: 'isJobDone',
-        headerName: 'Wykonana',
-        width: 150,
-        editable: true,
-        renderCell: (params) => <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
-    },
-    {
         field: 'editJob',
         headerName: 'Edycja',
         width: 150,
@@ -135,7 +130,7 @@ export const JobsTableColumns: GridColDef[] = [
         headerName: 'Usuń',
         width: 150,
         editable: true,
-        renderCell: (params) =>  <TableButton text='Usuń' icon={<DeleteIcon />} /> ,
+        renderCell: (params) =>  <DeletingContainer  id={params.row.id} name={params.row.jobName} /> ,
     }
 
 ]

@@ -26,3 +26,21 @@ export interface JobAddRequestType {
 export interface JobEditRequestType extends JobAddRequestType {
     id: number,
 }
+
+export interface CustomerAddRequestType {
+    name: string,
+    surname: string,
+    address: string,
+    phoneNumber: string,
+    email: string,
+}
+
+export interface CustomerEditRequestType extends CustomerAddRequestType {
+    id: number,
+}
+
+
+export interface DeletingType {
+    id: number,
+    code: string,
+}
