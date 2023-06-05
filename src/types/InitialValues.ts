@@ -40,3 +40,11 @@ export const INITIAL_EDIT_CUSTOMER_REQUEST_TYPE = {
     phoneNumber: '',
     email: '',
 }
+
+export const INITIAL_ADD_TRANSACTION_REQUEST_TYPE = {
+    price: 0,
+    description: '',
+    idCustomer: '',
+    idOfProducts: [],
+    idOfJobs: []
+}

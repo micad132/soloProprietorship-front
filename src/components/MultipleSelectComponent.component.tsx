@@ -1,5 +1,5 @@
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {useState} from "react";
+import {Dispatch, SetStateAction, useState} from "react";
 import {FormControl, InputLabel, MenuItem, OutlinedInput} from "@mui/material";
 
 const ITEM_HEIGHT = 48;
@@ -28,42 +28,37 @@ const names = [
 
 interface Props {
     label: string,
+    menuItems: any,
+    setValues: Dispatch<SetStateAction<any>>,
+    value: string[],
+    textField: string,
 }
 
-const MultipleSelect = () => {
-    const [personName, setPersonName] = useState<string[]>([]);
+const MultipleSelect = ({label, menuItems, setValues, textField, value}: Props) => {
 
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-        const {
-            target: { value },
-        } = event;
-        setPersonName(
-            // On autofill we get a stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        );
+    const handleChange = (event: SelectChangeEvent<any>) => {
+        const {target: { value }} = event;
+        setValues((prevState: any) => ({
+            ...prevState,
+            [textField]: typeof value === 'string' ? value.split(',') : value,
+        }))
     };
 
+    const menuItemsProper = menuItems.map((id: number) => <MenuItem key={id} value={id}>{id}</MenuItem>)
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+                <InputLabel id="demo-multiple-name-label">{label}</InputLabel>
                 <Select
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"
                     multiple
-                    value={personName}
+                    value={value}
                     onChange={handleChange}
-                    input={<OutlinedInput label="Name" />}
+                    input={<OutlinedInput label={label} />}
                     MenuProps={MenuProps}
                 >
-                    {names.map((name) => (
-                        <MenuItem
-                            key={name}
-                            value={name}
-                        >
-                            {name}
-                        </MenuItem>
-                    ))}
+                    {menuItemsProper}
                 </Select>
             </FormControl>
         </div>

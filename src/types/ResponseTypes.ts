@@ -7,10 +7,12 @@ export interface ProductResponseType {
 
 export interface TransactionType {
     idTransaction: number,
+    date: string,
     price: number,
     description: string,
-    user: UserType,
-    customer: CustomerType,
+    customerName: string,
+    numberOfProducts: number,
+    numberOfJobs: number,
     products: ProductResponseType[],
     jobs: JobType[],
 

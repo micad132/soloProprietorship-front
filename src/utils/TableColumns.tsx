@@ -2,7 +2,6 @@ import {GridColDef, GridValueGetterParams} from "@mui/x-data-grid";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import TableButton from "../components/TableButton.component";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import PreviewOrderComponent from "../pages/OrdersPage/components/PreviewOrder.component";

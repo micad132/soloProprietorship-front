@@ -4,12 +4,11 @@ import Header from "../layout/header";
 import {BrowserRouter} from "react-router-dom";
 import ErrorComponentComponent from "../components/ErrorComponent.component";
 import ModalComponentComponent from "../components/ModalComponent.component";
-import TableButton from "../components/TableButton.component";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeletingComponent from "../components/DeletingComponent.component";
 import AuthorizationWrapperComponent from "../components/AuthorizationWrapper.component";
 import AddingComponent from "../components/AddingComponent";
-
+import {API_REQUEST_PATH} from "../utils/GlobalVariables";
 
 const MockedHeaderPage = () => <BrowserRouter><Header /></BrowserRouter>
 
@@ -75,5 +74,5 @@ it('should adding component have proper content', () => {
     fireEvent.click(addingButton);
     expect(addingButton).toHaveTextContent('Dodaj');
     expect(modalComponent).toContainElement(heading);
-
 })
+

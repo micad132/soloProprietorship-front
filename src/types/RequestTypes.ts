@@ -44,3 +44,11 @@ export interface DeletingType {
     id: number,
     code: string,
 }
+
+export interface TransactionAddRequestType {
+    price: number,
+    description: string,
+    idCustomer: string,
+    idOfProducts: number[],
+    idOfJobs: number[],
+}
