@@ -7,8 +7,8 @@ interface Props {
 const SingleCard = ({text,amount}: Props) => {
     return(
         <div className={styles.singleCard}>
-            <p>{text}</p>
-            <p className={styles.amount}>{amount}</p>
+            <p data-testid='singleCard-text'>{text}</p>
+            <p data-testid='singleCard-amount' className={styles.amount}>{amount}</p>
         </div>
     )
 }

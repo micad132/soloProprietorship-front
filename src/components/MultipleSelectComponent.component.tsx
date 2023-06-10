@@ -1,6 +1,7 @@
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {Dispatch, SetStateAction, useState} from "react";
 import {FormControl, InputLabel, MenuItem, OutlinedInput} from "@mui/material";
+import ErrorComponentComponent from "./ErrorComponent.component";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -32,9 +33,11 @@ interface Props {
     setValues: Dispatch<SetStateAction<any>>,
     value: string[],
     textField: string,
+    isError: boolean,
+    errorMsg: string,
 }
 
-const MultipleSelect = ({label, menuItems, setValues, textField, value}: Props) => {
+const MultipleSelect = ({label, menuItems, setValues, textField, value, isError, errorMsg}: Props) => {
 
     const handleChange = (event: SelectChangeEvent<any>) => {
         const {target: { value }} = event;
@@ -60,6 +63,7 @@ const MultipleSelect = ({label, menuItems, setValues, textField, value}: Props) 
                 >
                     {menuItemsProper}
                 </Select>
+                {isError && <ErrorComponentComponent errorMsg={errorMsg} />}
             </FormControl>
         </div>
     );

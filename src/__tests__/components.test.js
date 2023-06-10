@@ -9,6 +9,9 @@ import DeletingComponent from "../components/DeletingComponent.component";
 import AuthorizationWrapperComponent from "../components/AuthorizationWrapper.component";
 import AddingComponent from "../components/AddingComponent";
 import {API_REQUEST_PATH} from "../utils/GlobalVariables";
+import HomeComponent from "../pages/Home/components/HomeComponent.component";
+import SingleCard from "../pages/Home/components/SingleCard.component";
+import exp from "constants";
 
 const MockedHeaderPage = () => <BrowserRouter><Header /></BrowserRouter>
 
@@ -74,5 +77,52 @@ it('should adding component have proper content', () => {
     fireEvent.click(addingButton);
     expect(addingButton).toHaveTextContent('Dodaj');
     expect(modalComponent).toContainElement(heading);
+    expect(modalComponent).toBeInTheDocument();
+})
+
+it('should display proper text when you are not logged', () => {
+    render(<HomeComponent  isLogged={false} itemsAmount={{}} />);
+    const homeComponent = screen.getByTestId('homeComponent');
+    expect(homeComponent).toHaveTextContent('Nie jesteś zalogowany. Zaloguj się aby w pełni korzystać z portalu!');
+})
+
+it('should display card wrapper', () => {
+    render(<HomeComponent isLogged={true}  itemsAmount={{}} />);
+    const cardWrapper = screen.getByTestId('cardWrapper');
+    expect(cardWrapper).toBeInTheDocument();
+    expect(cardWrapper).toHaveTextContent('Ilosc elementow na portalu:');
+})
+
+it('should display proper amount of procuts', () => {
+    const props = {
+        isLogged: true,
+        itemsAmount: {
+            products: 15,
+            jobs: 10,
+            customers: 7,
+            orders: 3,
+        }
+    };
+    render(<HomeComponent {...props} />);
+    const cardWrapper = screen.getByTestId('cardWrapper');
+    const amountElements = screen.getAllByTestId('singleCard-amount');
+    const textElements = screen.getAllByTestId('singleCard-text');
+
+    const amounts = [props.itemsAmount.products, props.itemsAmount.jobs, props.itemsAmount.customers, props.itemsAmount.orders];
+    const texts = ['Produkty', 'Uslugi', 'Klienci', 'Zamowienia'];
+
+    expect(cardWrapper).toBeInTheDocument();
+
+    expect(amountElements).toHaveLength(4);
+    expect(textElements).toHaveLength(4);
+
+
+    amountElements.forEach((element, index) => {
+        expect(element).toHaveTextContent(String(amounts[index]));
+    });
+
+    textElements.forEach((element, index) => {
+        expect(element).toHaveTextContent(texts[index]);
+    });
 })
 

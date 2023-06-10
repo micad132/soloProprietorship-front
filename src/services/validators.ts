@@ -1,7 +1,12 @@
 import {z} from 'zod';
 import {LoginType, RegisterType} from "../types/Authorization";
 import {sanitize} from "dompurify";
-import {CustomerAddRequestType, JobAddRequestType, ProductAddRequestType} from "../types/RequestTypes";
+import {
+    CustomerAddRequestType,
+    JobAddRequestType,
+    ProductAddRequestType,
+    TransactionAddRequestType
+} from "../types/RequestTypes";
 
 
 
@@ -48,6 +53,13 @@ const AddingJobSchema = z.object({
     price: z.number().refine(val => val > 0)
 })
 
+const AddingOrderSchema = z.object({
+    price: z.number().refine(val => val > 0),
+    description: z.string().min(5).max(30).refine(val => /^[a-zA-Z]+$/.test(val)),
+    idCustomer: z.string().min(1).max(1),
+    idOfProducts: z.array(z.string()).min(1),
+    idOfJobs: z.array(z.string()).min(1),
+})
 
 export const validateRegister = (registerValues: RegisterType) => {
     // try {
@@ -85,4 +97,16 @@ export const validateAddJob = (values: JobAddRequestType) => {
 export const validateAddUser = (values: CustomerAddRequestType) => {
     return AddingUserSchema.safeParse(values);
 }
+
+export const validateAddOrder = (values: TransactionAddRequestType) => {
+    const properData = {
+        price: Number(values.price),
+        description: values.description,
+        idCustomer: values.idCustomer,
+        idOfJobs: values.idOfJobs,
+        idOfProducts: values.idOfProducts,
+    }
+    return AddingOrderSchema.safeParse(properData);
+}
+
 export const sanitizeData = (value: string): string => sanitize(value, { USE_PROFILES: { html: false }});

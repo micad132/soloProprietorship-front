@@ -20,8 +20,7 @@ const PreviewOrderComponent = ({id}: Props) => {
     console.log("PREVIEW ORDER");
     const content = (
         <>
-            <h4>Pogląd zamówienia</h4>
-            <input type="text" value={test} onChange={(e) => setTest(e.target.value)}/>
+            <h4>Pogląd zamówienia nr {id}</h4>
             <PreviewWrapper text='Usługi' >
                 <PreviewJob />
                 <PreviewJob />

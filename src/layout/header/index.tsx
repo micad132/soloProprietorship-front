@@ -6,15 +6,30 @@ import HomeIcon from '@mui/icons-material/Home';
 
 const Header = () => {
     const navigate = useNavigate();
+    const isLogged = true;
+
+    const properButton = isLogged
+        ? (
+            <Button
+                variant="contained"
+                onClick={() => navigate('/login', { replace: true})}
+            >
+                Zaloguj się
+            </Button>
+        )
+        : (
+            <Button
+                variant="contained"
+                onClick={() => navigate('/logout', { replace: true})}
+            >
+                Wyloguj się
+            </Button>
+        );
+
     return(
         <div className={styles.header}>
             <h1 data-testid='header'>Witaj na portalu wlasnej firmy!</h1>
-            <Button
-                    variant="contained"
-                    onClick={() => navigate('/login', { replace: true})}
-                >
-                Zaloguj się
-            </Button>
+            {properButton}
             <NavigationComponent />
         </div>
     )

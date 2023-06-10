@@ -6,7 +6,7 @@ interface Props {
 }
 const CardWrapper = ({children}: Props) => {
     return(
-    <div className={styles.cardWrapper}>
+    <div className={styles.cardWrapper} data-testid='cardWrapper'>
         <h1>Ilosc elementow na portalu:</h1>
         {children}
     </div>

@@ -5,6 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {Dispatch, SetStateAction, useState} from "react";
 import {TransactionAddRequestType} from "../types/RequestTypes";
+import ErrorComponentComponent from "./ErrorComponent.component";
 
 interface Props {
     text: string,
@@ -13,9 +14,11 @@ interface Props {
     setValues: Dispatch<SetStateAction<any>>,
     menuItems: any,
     textField: string,
+    isError: boolean,
+    errorMsg: string,
 }
 
-const SelectComponent = ({text, value, label, setValues, menuItems, textField}: Props) => {
+const SelectComponent = ({text, value, label, setValues, menuItems, textField, isError, errorMsg}: Props) => {
 
 
     const handleChange = (event: SelectChangeEvent) => {
@@ -32,6 +35,7 @@ const SelectComponent = ({text, value, label, setValues, menuItems, textField}: 
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">{text}</InputLabel>
                 <Select
+                    required
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={value}
@@ -40,6 +44,7 @@ const SelectComponent = ({text, value, label, setValues, menuItems, textField}: 
                 >
                     {menuItemsProper}
                 </Select>
+                {isError && <ErrorComponentComponent errorMsg={errorMsg} />}
             </FormControl>
         </Box>
     )

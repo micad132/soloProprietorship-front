@@ -90,8 +90,6 @@ const ProductsPage = () => {
     return(
         <div>
             <h1>Produkty które oferuje zalogowany przedsiębiorca</h1>
-            <button onClick={get}>GET</button>
-            <button onClick={() => window.location.replace("http://localhost:8080/logout")}>LOGOUT</button>
             <TableComponentComponent  columns={ProductTableColumns} rows={productsMock}/>
             <AddingComponent  text='Dodaj produkt' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen}  modalContent={productModalAddContent}/>
         </div>

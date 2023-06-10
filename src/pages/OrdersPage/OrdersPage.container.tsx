@@ -10,6 +10,8 @@ import {useState} from "react";
 import OrderFieldsComponent from "./components/OrderFields.component";
 import {TransactionAddRequestType} from "../../types/RequestTypes";
 import {INITIAL_ADD_TRANSACTION_REQUEST_TYPE} from "../../types/InitialValues";
+import {validateAddOrder} from "../../services/validators";
+import {toast} from "react-toastify";
 
 const mockedOrders = [
     {
@@ -38,7 +40,20 @@ const OrdersPage = () => {
     const [addingOrderValues, setAddingOrderValues] = useState<TransactionAddRequestType>(INITIAL_ADD_TRANSACTION_REQUEST_TYPE);
 
     const onClick = () => {
-        console.log('abc', addingOrderValues);
+
+        const result = validateAddOrder(addingOrderValues);
+        console.log(result);
+        if(result.success) {
+            toast.success('Dodano');
+            setAddingOrderValues(INITIAL_ADD_TRANSACTION_REQUEST_TYPE);
+            setErrorValues([]);
+            setIsAddingOpen(false);
+        } else {
+            toast.error('Niepoprawne dane!');
+            const errorArray = result.error.errors.map(error => error.path[0]);
+            console.log('ABC', errorArray);
+            setErrorValues(errorArray as string[]);
+        }
     }
 
     const menuItems = {
@@ -59,7 +74,7 @@ const OrdersPage = () => {
         <div>
             <h1>Zamówienia przedsiębiorcy:</h1>
             <TableComponentComponent columns={OrdersTableColumns} rows={mockedOrders} />
-            <AddingComponent text='Dodaj klienta' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingContent} />
+            <AddingComponent text='Dodaj zamówienie' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingContent} />
         </div>
     )
 }

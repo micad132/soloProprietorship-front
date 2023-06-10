@@ -22,6 +22,7 @@ const OrderFieldsComponent = ({values, onClick, errorValues, setValues, menuItem
                 value={price}
                 label='Cena'
                 errorMsg='Niepoprawna cena!'
+                isError={errorValues.includes('price')}
                 fieldName='price'
                 setValues={setValues}
             />
@@ -29,6 +30,7 @@ const OrderFieldsComponent = ({values, onClick, errorValues, setValues, menuItem
                 value={description}
                 label='Opis'
                 errorMsg='Niepoprawny opis!'
+                isError={errorValues.includes('description')}
                 fieldName='description'
                 setValues={setValues}
             />
@@ -39,6 +41,8 @@ const OrderFieldsComponent = ({values, onClick, errorValues, setValues, menuItem
                 text='Id klienta dodaj'
                 value={idCustomer}
                 textField='idCustomer'
+                errorMsg='ID nie moze byc puste!'
+                isError={errorValues.includes('idCustomer')}
             />
             <MultipleSelect
                 label='Id produktow'
@@ -46,6 +50,8 @@ const OrderFieldsComponent = ({values, onClick, errorValues, setValues, menuItem
                 setValues={setValues}
                 textField='idOfProducts'
                 value={idOfProducts}
+                errorMsg='ID nie moze byc puste!'
+                isError={errorValues.includes('idOfProducts')}
             />
             <MultipleSelect
                 label='Id uslug'
@@ -53,6 +59,8 @@ const OrderFieldsComponent = ({values, onClick, errorValues, setValues, menuItem
                 setValues={setValues}
                 textField='idOfJobs'
                 value={idOfJobs}
+                errorMsg='ID nie moze byc puste!'
+                isError={errorValues.includes('idOfJobs')}
             />
             <Button
                 variant='contained'
