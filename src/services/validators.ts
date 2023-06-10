@@ -61,6 +61,8 @@ const AddingOrderSchema = z.object({
     idOfJobs: z.array(z.string()).min(1),
 })
 
+const DeletingCodeSchema = z.string().min(6).max(6).refine(val => /^[0-9]+$/.test(val))
+
 export const validateRegister = (registerValues: RegisterType) => {
     // try {
     //     RegistrationSchema.parse(registerValues);
@@ -108,5 +110,7 @@ export const validateAddOrder = (values: TransactionAddRequestType) => {
     }
     return AddingOrderSchema.safeParse(properData);
 }
+
+export const validateCode = (code: string) => DeletingCodeSchema.safeParse(code);
 
 export const sanitizeData = (value: string): string => sanitize(value, { USE_PROFILES: { html: false }});

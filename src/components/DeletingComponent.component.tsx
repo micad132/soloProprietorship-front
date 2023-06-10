@@ -10,12 +10,14 @@ interface Props {
     id: number,
     name: string,
     onClick: () => void,
+    code: string,
+    setCode: any,
 
 }
 
-const DeletingComponent = ({id, name, onClick}: Props) => {
+const DeletingComponent = ({id, name, onClick,code, setCode}: Props) => {
 
-    const [code, setCode] = useState<string>('');
+
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);

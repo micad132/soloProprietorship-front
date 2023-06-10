@@ -49,15 +49,15 @@ export const CustomersTableColumns: GridColDef[] = [
         field: 'editCustomer',
         headerName: 'Edycja',
         width: 150,
-        editable: true,
+        editable: false,
         renderCell: (params) =>  <EditCustomerContainer  id={params.row.id}/>,
     },
     {
         field: 'deleteCustomer',
         headerName: 'Usuń',
         width: 150,
-        editable: true,
-        renderCell: (params) =>  <DeletingContainer  id={params.row.id} name={params.row.email} /> ,
+        editable: false,
+        renderCell: (params) =>  <DeletingContainer  id={params.row.id} name={params.row.email}  operationName='customer' /> ,
     }
 ];
 
@@ -93,7 +93,7 @@ export const ProductTableColumns: GridColDef[] = [
         headerName: 'Usuń',
         width: 150,
         editable: false,
-        renderCell: (params) =>  <DeletingContainer  id={params.row.id} name={params.row.productName}/> ,
+        renderCell: (params) =>  <DeletingContainer  id={params.row.id} name={params.row.productName} operationName='product' /> ,
     },
 
 
@@ -128,8 +128,8 @@ export const JobsTableColumns: GridColDef[] = [
         field: 'deleteJob',
         headerName: 'Usuń',
         width: 150,
-        editable: true,
-        renderCell: (params) =>  <DeletingContainer  id={params.row.id} name={params.row.jobName} /> ,
+        editable: false,
+        renderCell: (params) =>  <DeletingContainer  id={params.row.id} name={params.row.jobName}  operationName='job' /> ,
     }
 
 ]
