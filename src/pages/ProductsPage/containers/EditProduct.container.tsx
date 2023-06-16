@@ -10,6 +10,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import TextFieldComponent from "../../../components/TextField.component";
 import {validateAddProduct} from "../../../services/validators";
 import {toast} from "react-toastify";
+import ProductService from "../../../services/api/ProductService";
 
 interface Props {
     id: number,
@@ -24,12 +25,16 @@ const EditProductContainer = ({id}: Props) => {
         console.log("DANE ADD PRODUCT", editProductValue);
         const results = validateAddProduct(editProductValue);
         if( results.success) {
-            toast.success("Edytowano produkt!");
-            const data = {...editProductValue, id};
-            console.log("DANE EDIT PRODUCT", data);
-            setEditProductValues(INITIAL_EDIT_PRODUCT_REQUEST_TYPE);
-            setErrorValues([]);
-            setIsOpen(false);
+            // @ts-ignore
+            const data = {id, ...editProductValue};
+            ProductService.editProduct(data)
+                .then(() => {
+                    toast.success("Edytowano produkt!");
+                    console.log("DANE EDIT PRODUCT", data);
+                    setEditProductValues(INITIAL_EDIT_PRODUCT_REQUEST_TYPE);
+                    setErrorValues([]);
+                    setIsOpen(false);
+                })
         } else {
             const errorArray = results.error.errors.map(error => error.path[0]);
             console.log('ABC', errorArray);
@@ -52,7 +57,6 @@ const EditProductContainer = ({id}: Props) => {
                     data-testid='tableButton'
                     onClick={() => {
                         setIsOpen(true);
-                        console.log('ID', id);
                     }}
                 >
                     Edytuj

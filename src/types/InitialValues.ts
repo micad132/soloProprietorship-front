@@ -26,7 +26,7 @@ export const INITIAL_EDIT_PRODUCT_REQUEST_TYPE = {
 
 export const INITIAL_ADD_CUSTOMER_REQUEST_TYPE = {
     name: '',
-    surname: '',
+    surName: '',
     address: '',
     phoneNumber: '',
     email: '',
@@ -35,7 +35,7 @@ export const INITIAL_ADD_CUSTOMER_REQUEST_TYPE = {
 export const INITIAL_EDIT_CUSTOMER_REQUEST_TYPE = {
     id: 0,
     name: '',
-    surname: '',
+    surName: '',
     address: '',
     phoneNumber: '',
     email: '',

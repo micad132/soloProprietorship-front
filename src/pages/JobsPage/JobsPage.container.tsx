@@ -14,6 +14,7 @@ import {JobAddRequestType} from "../../types/RequestTypes";
 import {validateAddJob} from "../../services/validators";
 import {toast} from "react-toastify";
 import JobFieldsComponent from "./components/JobFields.component";
+import JobService from "../../services/api/JobService";
 
 const mockedJobs = [
     {
@@ -48,8 +49,13 @@ const JobsPage = () => {
         const validateResult = validateAddJob(jobValues);
         if(validateResult.success) {
 
-            toast.success("Dodano usluge!");
-            setIsAddingOpen(false);
+            JobService.addJob(jobValues)
+                .then(() => {
+                    toast.success("Dodano usluge!");
+                    setIsAddingOpen(false);
+                    setJobValues(INITIAL_ADD_JOB_REQUEST_VALUES);
+                })
+
         } else {
             const errorArray = validateResult.error.errors.map(error => error.path[0]);
             console.log(errorArray);

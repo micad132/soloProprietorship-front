@@ -29,7 +29,7 @@ export interface JobEditRequestType extends JobAddRequestType {
 
 export interface CustomerAddRequestType {
     name: string,
-    surname: string,
+    surName: string,
     address: string,
     phoneNumber: string,
     email: string,

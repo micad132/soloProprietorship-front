@@ -36,7 +36,7 @@ const LoginSchema = z.object({
 
 const AddingUserSchema = z.object({
     name: z.string().min(5).max(15).refine(val => /^[a-zA-Z0-9]+$/.test(val)),
-    surname: z.string().min(5).max(15).refine(val => /^[a-zA-Z0-9]+$/.test(val)),
+    surName: z.string().min(5).max(15).refine(val => /^[a-zA-Z0-9]+$/.test(val)),
     address: z.string().min(5).max(20).refine(val => /^[a-zA-Z0-9]+$/.test(val)),
     email: z.string().email(),
     phoneNumber: z.string().min(9).max(9),

@@ -13,6 +13,7 @@ import {validateAddUser} from "../../services/validators";
 import {toast} from "react-toastify";
 import CustomerFieldsComponent from "./components/CustomerFields.component";
 import {INITIAL_ADD_CUSTOMER_REQUEST_TYPE} from "../../types/InitialValues";
+import CustomerService from "../../services/api/CustomerService";
 
 
 const customersMock =  [
@@ -33,16 +34,19 @@ const CustomersPage = () => {
     const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false);
     const [customerValues, setCustomerValues] = useState<CustomerAddRequestType>(INITIAL_ADD_CUSTOMER_REQUEST_TYPE);
     const [errorValues, setErrorValues] = useState<string[]>([]);
-    const {name, surname, address, phoneNumber, email} = customerValues;
+    const {name, surName, address, phoneNumber, email} = customerValues;
     const isModalOpen = useAppSelector(getIsModalOpen);
     const dispatch = useAppDispatch();
 
     const onClick = () => {
         const result = validateAddUser(customerValues);
         if(result.success) {
-            toast.success("Dodano klienta!");
-            setCustomerValues(INITIAL_ADD_CUSTOMER_REQUEST_TYPE);
-            setIsAddingOpen(false);
+            CustomerService.addCustomer(customerValues)
+                .then(() => {
+                    toast.success("Dodano klienta!");
+                    setCustomerValues(INITIAL_ADD_CUSTOMER_REQUEST_TYPE);
+                    setIsAddingOpen(false);
+                })
         } else {
             const errorArray = result.error.errors.map(error => error.path[0]);
             console.log('ABC', errorArray);

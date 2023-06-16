@@ -67,10 +67,14 @@ const ProductsPage = () => {
         console.log("DANE ADD PRODUCT", productValues);
         const results = validateAddProduct(productValues);
         if(results.success) {
-            toast.success("Dodano produkt!");
-            setProductValues(INITIAL_ADD_PRODUCT_REQUEST_TYPE);
-            setErrorValues([]);
-            setIsAddingOpen(false);
+            ProductService.addNewProduct(productValues)
+                .then(() => {
+                        toast.success("Dodano produkt!");
+                        setProductValues(INITIAL_ADD_PRODUCT_REQUEST_TYPE);
+                        setErrorValues([]);
+                        setIsAddingOpen(false);
+                    })
+
         } else {
             const errorArray = results.error.errors.map(error => error.path[0]);
             console.log('ABC', errorArray);

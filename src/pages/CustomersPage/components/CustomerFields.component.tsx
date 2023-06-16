@@ -11,7 +11,7 @@ interface Props {
 
 const CustomerFieldsComponent = ({data, setJobValues, onClick, errorValues}: Props) => {
 
-    const {name,surname,address,phoneNumber,email} = data;
+    const {name,surName,address,phoneNumber,email} = data;
     return(
         <>
             <TextFieldComponent
@@ -22,12 +22,12 @@ const CustomerFieldsComponent = ({data, setJobValues, onClick, errorValues}: Pro
                 setValues={setJobValues}
                 fieldName={'name'}/>
             <TextFieldComponent
-                value={surname}
+                value={surName}
                 label='Nazwisko'
                 errorMsg='Niepoprawne nazwisko!'
-                isError={errorValues.includes('surname')}
+                isError={errorValues.includes('surName')}
                 setValues={setJobValues}
-                fieldName={"surname"}/>
+                fieldName={"surName"}/>
             <TextFieldComponent
                 value={address}
                 label='Miasto'
