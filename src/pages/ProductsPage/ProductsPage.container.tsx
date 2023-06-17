@@ -7,15 +7,16 @@ import {Button} from "@mui/material";
 import {ProductAddRequestType, ProductEditRequestType} from "../../types/RequestTypes";
 import ModalComponentComponent from "../../components/ModalComponent.component";
 import {useAppDispatch, useAppSelector} from "../../utils/hooks";
-import {setIsModalOpen, getIsModalOpen, getToken} from "../../store/reducers/utilsReducer";
-import {INITIAL_ADD_PRODUCT_REQUEST_TYPE, INITIAL_EDIT_PRODUCT_REQUEST_TYPE} from "../../types/InitialValues";
+import {setIsModalOpen, getIsModalOpen, getToken, getUserDetails} from "../../store/reducers/utilsReducer";
+import {INITIAL_ADD_PRODUCT_REQUEST_TYPE, INITIAL_FULL_PRODUCT_TYPE} from "../../types/InitialValues";
 import ProductFieldsComponent from "./components/ProductFields.component";
 import {validateAddProduct} from "../../services/validators";
 import {toast} from "react-toastify";
-import {fetchingAllProductsThunk} from "../../store/reducers/productReducer";
+import {addingProductThunk, fetchingAllProductsThunk, getAllProducts} from "../../store/reducers/productReducer";
 import ProductService from "../../services/api/ProductService";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import NotLoggedComponent from "../../components/NotLogged.component";
 
 const productsMock = [
     {
@@ -49,32 +50,28 @@ const ProductsPage = () => {
     // const products = useAppSelector(getAllProducts);
     const dispatch = useAppDispatch();
     const token = useAppSelector(getToken);
-    const navigate = useNavigate();
-    const get = async () => {
-        console.log('CO JEST');
-        // dispatch(fetchingAllProductsThunk(token));
-        try {
-            const data = await ProductService.getAllProducts(token);
-            console.log('DEJTA', data);
-        } catch (e) {
-            console.log(e);
-        }
+    const userDetails = useAppSelector(getUserDetails);
+    const products = useAppSelector(getAllProducts);
 
-    }
+    const properProducts = products.map(product => ({
+        id: product.idProduct,
+        productName: product.name,
+        productPrice: product.price,
+        productWeight: product.weight,
+    }))
+    console.log('PRODUKTY', products);
+    const navigate = useNavigate();
 
 
     const onClickAdd = () => {
         console.log("DANE ADD PRODUCT", productValues);
         const results = validateAddProduct(productValues);
         if(results.success) {
-            ProductService.addNewProduct(productValues)
-                .then(() => {
-                        toast.success("Dodano produkt!");
-                        setProductValues(INITIAL_ADD_PRODUCT_REQUEST_TYPE);
-                        setErrorValues([]);
-                        setIsAddingOpen(false);
-                    })
-
+            dispatch(addingProductThunk(productValues));
+            toast.success("Dodano produkt!");
+            setProductValues(INITIAL_ADD_PRODUCT_REQUEST_TYPE);
+            setErrorValues([]);
+            setIsAddingOpen(false);
         } else {
             const errorArray = results.error.errors.map(error => error.path[0]);
             console.log('ABC', errorArray);
@@ -85,18 +82,26 @@ const ProductsPage = () => {
 
     }
 
-
-
     const productModalAddContent = (
         <ProductFieldsComponent data={productValues} setProductValues={setProductValues} onClick={onClickAdd} errorValues={errorValues}  />
     )
 
+    const properContent =
+        userDetails
+            ? (
+                <div>
+                    <h1>Produkty które oferuje zalogowany przedsiębiorca</h1>
+                    <TableComponentComponent  columns={ProductTableColumns} rows={properProducts}/>
+                    <AddingComponent  text='Dodaj produkt' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen}  modalContent={productModalAddContent}/>
+                </div>
+            )
+            : <NotLoggedComponent />;
+
+
     return(
-        <div>
-            <h1>Produkty które oferuje zalogowany przedsiębiorca</h1>
-            <TableComponentComponent  columns={ProductTableColumns} rows={productsMock}/>
-            <AddingComponent  text='Dodaj produkt' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen}  modalContent={productModalAddContent}/>
-        </div>
+        <>
+            {properContent}
+        </>
     )
 }
 

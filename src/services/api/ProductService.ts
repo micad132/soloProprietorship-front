@@ -18,14 +18,9 @@ const ProductService = {
         })
     },
 
-    getAllProducts: async (token?: string): Promise<ProductResponseType[]> => {
-        const res = await axios.get(`${PRODUCT_URL}/products`, {
-            headers: {
-                 // Authorization: 'Bearer ' + test,
-                'Content-Type': 'application/json',
-            }
-        })
-        return res.data;
+    getAllProducts: async (): Promise<ProductResponseType[]> => {
+        const data = await axios.get(`${PRODUCT_URL}/products`);
+        return data.data;
     },
 
     deleteProduct: async (deletingData: DeletingType) => {
@@ -35,7 +30,7 @@ const ProductService = {
 
     editProduct: async (editProduct: ProductEditRequestType) => {
         return axios({
-            method: 'PUT',
+            method: 'PATCH',
             url: `${PRODUCT_URL}`,
             data: editProduct,
         })

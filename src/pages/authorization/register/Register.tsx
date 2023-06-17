@@ -3,7 +3,7 @@ import {Button, TextField} from "@mui/material";
 import NoAccount from "../login/NoAccount";
 import AuthorizationWrapperComponent from "../../../components/AuthorizationWrapper.component";
 import {validateRegister} from "../../../services/validators";
-import {RegisterType} from "../../../types/Authorization";
+import {INITIAL_REGISTER_TYPE_VALUES, RegisterCreationType, RegisterType} from "../../../types/Authorization";
 import ErrorComponentComponent from "../../../components/ErrorComponent.component";
 import TextFieldComponent from "../../../components/TextField.component";
 import PasswordFieldComponent from "../../../components/PasswordField.component";
@@ -15,27 +15,19 @@ import { sanitize } from 'dompurify';
 import {AuthService} from "../../../services/api/AuthService";
 
 
-const initialRegisterValues: RegisterType = {
-    nick: '',
-    name: '',
-    surname: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    postalCode: '',
-    cityName: '',
-    code: '',
-}
+
 
 const Register = () => {
 
-    const [registerValues, setRegisterValues] = useState<RegisterType>(initialRegisterValues);
+    const [registerValues, setRegisterValues] = useState<RegisterType>(INITIAL_REGISTER_TYPE_VALUES);
     const [errorValues, setErrorValues] = useState<string[]>([]);
     const navigate = useNavigate();
 
     const sanitizeData = (value: string): string => sanitize(value, { USE_PROFILES: { html: false }});
 
     const nameCheck = (name: string): boolean => name.includes('&');
+
+    const {username, email, userFirstName, userSecondName, password,confirmPassword, pesel, address, phoneNumber, use2FA, postalCode} = registerValues;
 
     // const handleInputChange = (fieldName: string, value: string) => {
     //     console.log('FIELDNAME', fieldName);
@@ -51,21 +43,22 @@ const Register = () => {
         console.log('STAN', registerValues);
         const result = validateRegister(registerValues);
         if (result.success) {
-            console.log(registerValues.name);
-            if(nameCheck(registerValues.name)) {
+            console.log(registerValues.username);
+            if(nameCheck(registerValues.username)) {
                 console.log('WHAT');
                 toast.success("jd");
             }
-            setRegisterValues(initialRegisterValues);
-            const data = {
-                username: 'michal',
-                email: 'michal@michal.pl',
-                role: 'CUSTOMER',
-                userFirstName: 'michal',
-                userSecondName: 'mosiolek',
-                password: 'haslohaslo',
-                pesel: '12345678901',
-                use2FA: false,
+            setRegisterValues(INITIAL_REGISTER_TYPE_VALUES);
+            const data: any = {
+                username: username,
+                email: email,
+                userFirstName: userFirstName,
+                userSecondName: userSecondName,
+                password: password,
+                pesel: pesel,
+                address: address,
+                phoneNumber: phoneNumber,
+                use2FA: use2FA,
             }
             const data2 = await AuthService.registerUser(data);
             toast.success("Pomyślnie zarejestrowano, za chwilę nastąpi przekierowanie na stronę logowania!");
@@ -78,7 +71,6 @@ const Register = () => {
         }
 
     }
-    const {nick,name,surname,email,password,confirmPassword,postalCode,cityName} = registerValues;
     // const registerNameError = errorValues.includes('forbiddenName') ?
     //     'Niewlasciwe znaki!'
     //     : errorValues.includes('name')
@@ -89,12 +81,12 @@ const Register = () => {
                 <form onSubmit={(e) => submitForm(e)}>
                     <h1>Register</h1>
                     <TextFieldComponent
-                        value={nick}
+                        value={username}
                         setValues={setRegisterValues}
-                        isError={errorValues.includes('nick')}
+                        isError={errorValues.includes('username')}
                         label='Nick'
                         errorMsg={'Niepoprawnie wprowadzony nick!'}
-                        fieldName={'nick'}
+                        fieldName={'username'}
                     />
                     <TextFieldComponent
                         value={email}
@@ -105,20 +97,20 @@ const Register = () => {
                         fieldName='email'
                     />
                     <TextFieldComponent
-                        value={name}
+                        value={userFirstName}
                         setValues={setRegisterValues}
-                        isError={errorValues.includes('name')}
+                        isError={errorValues.includes('userFirstName')}
                         label='Imię'
                         errorMsg={'Niepoprawnie wprowadzone imie!'}
-                        fieldName={'name'}
+                        fieldName={'userFirstName'}
                     />
                     <TextFieldComponent
-                        value={surname}
+                        value={userSecondName}
                         setValues={setRegisterValues}
-                        isError={errorValues.includes('surname')}
+                        isError={errorValues.includes('userSecondName')}
                         label='Nazwisko'
                         errorMsg='Niepoprawnie wprowadzone nazwisko!'
-                        fieldName={'surname'}
+                        fieldName={'userSecondName'}
                     />
                     <PasswordFieldComponent
                         value={password}
@@ -137,6 +129,22 @@ const Register = () => {
                         label='Potwierdz haslo'
                     />
                     <TextFieldComponent
+                        value={phoneNumber}
+                        setValues={setRegisterValues}
+                        isError={errorValues.includes('phoneNumber')}
+                        label='Numer telefonu'
+                        errorMsg='Niepoprawnie wprowadzony numer telefonu!'
+                        fieldName='phoneNumber'
+                    />
+                    <TextFieldComponent
+                        value={pesel}
+                        setValues={setRegisterValues}
+                        isError={errorValues.includes('pesel')}
+                        label='Pesel'
+                        errorMsg='Niepoprawnie wprowadzony pesel!'
+                        fieldName='pesel'
+                    />
+                    <TextFieldComponent
                         value={postalCode}
                         setValues={setRegisterValues}
                         isError={errorValues.includes('postalCode')}
@@ -145,12 +153,12 @@ const Register = () => {
                         fieldName='postalCode'
                     />
                     <TextFieldComponent
-                        value={cityName}
+                        value={address}
                         setValues={setRegisterValues}
-                        isError={errorValues.includes('cityName')}
+                        isError={errorValues.includes('address')}
                         label='Miasto'
                         errorMsg='Niepoprawnie wprowadzona nazwa miasta!'
-                        fieldName='cityName'
+                        fieldName='address'
                     />
                     <FormControlLabel control={<Checkbox defaultChecked />} label="Czy zastosować 2FA?" />
                     <Button

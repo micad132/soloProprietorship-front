@@ -15,6 +15,7 @@ function App() {
     //     dispatch(fetchingAllProductsThunk());
     // })
     // console.log('PRODUKTY', products);
+    console.log('HALUWINA');
   return (
 
     <div className="App">

@@ -2,6 +2,8 @@ import {configureStore} from "@reduxjs/toolkit";
 import errorReducer from "./reducers/errorReducer";
 import productReducer from "./reducers/productReducer";
 import utilsReducer from "./reducers/utilsReducer";
+import jobReducer from "./reducers/jobReducer";
+import customerReducer from "./reducers/customerReducer";
 
 
 export const store = configureStore({
@@ -9,6 +11,8 @@ export const store = configureStore({
         error: errorReducer,
         product: productReducer,
         utils: utilsReducer,
+        job: jobReducer,
+        customer: customerReducer,
     }
 })
 

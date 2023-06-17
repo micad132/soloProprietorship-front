@@ -1,8 +1,10 @@
 import SingleCard from "./SingleCard.component";
 import CardWrapper from "./CardWrapper.component";
+import NotLoggedComponent from "../../../components/NotLogged.component";
+import {UserDetailsDTO} from "../../../types/ResponseTypes";
 
 interface Props {
-    isLogged: boolean,
+    isLogged: UserDetailsDTO,
     itemsAmount: any,
 }
 const HomeComponent = ({isLogged, itemsAmount}: Props) => {
@@ -14,7 +16,7 @@ const HomeComponent = ({isLogged, itemsAmount}: Props) => {
             <SingleCard  amount={itemsAmount.customers} text={'Klienci'}/>
             <SingleCard  amount={itemsAmount.orders} text={'Zamowienia'}/>
         </CardWrapper>
-        : <h1>Nie jesteś zalogowany. Zaloguj się aby w pełni korzystać z portalu!</h1>;
+        : <NotLoggedComponent />;
 
     return(
         <div data-testid='homeComponent'>

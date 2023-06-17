@@ -18,8 +18,8 @@ const JobService = {
     },
 
     getAllJobs: async (): Promise<JobType[]> => {
-        const res = await axios.get(`${JOB_URL}/jobs`);
-        return res.data;
+       const data = await axios.get(`${JOB_URL}/jobs`);
+       return data.data;
     },
 
     editJob: (editData: JobEditRequestType) => {

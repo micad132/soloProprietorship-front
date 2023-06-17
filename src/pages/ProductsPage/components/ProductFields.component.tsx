@@ -7,10 +7,12 @@ interface Props {
     setProductValues: any,
     onClick: any,
     errorValues: string[],
+    id?: number,
 }
 
-const ProductFieldsComponent = ({data, setProductValues, onClick, errorValues}: Props) => {
+const ProductFieldsComponent = ({data, setProductValues, onClick, errorValues, id}: Props) => {
 
+    console.log('ID', id);
     const {name, price, weight} = data;
     return(
         <>

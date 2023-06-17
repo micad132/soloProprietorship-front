@@ -31,12 +31,19 @@ export interface CustomerType {
     address: string,
     phoneNumber: string,
     email: string,
-    user: UserType,
-    transactions: TransactionType[],
 }
 
 export interface UserType {
     idUser: number,
+    phoneNumber: string,
+    pesel: string,
+    firstName: string,
+    surName: string,
+    address: string,
+}
+
+export interface UserDetailsDTO {
+    email: string,
     phoneNumber: string,
     pesel: string,
     firstName: string,

@@ -1,18 +1,37 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../index";
+import {UserDetailsDTO} from "../../types/ResponseTypes";
+import {INITIAL_USER_DETAILS_DTO} from "../../types/InitialValues";
+import {AuthService} from "../../services/api/AuthService";
 
 interface UtilsReducerType {
     isModalOpen: boolean,
     token: string,
+    userDetails: UserDetailsDTO
 }
 
 const initialState: UtilsReducerType = {
     isModalOpen: false,
     token: '',
+    userDetails: INITIAL_USER_DETAILS_DTO
 }
+
+export const fetchUserDetails = createAsyncThunk(
+    '/api/user',
+    async (_, { rejectWithValue}) => {
+        try {
+            const data = await AuthService.getLoggedUser();
+            console.log('DATA', data);
+            return data.data;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+)
 
 export const getIsModalOpen = (state: RootState) => state.utils.isModalOpen;
 export const getToken = (state: RootState) => state.utils.token;
+export const getUserDetails = (state: RootState) => state.utils.userDetails;
 
 const utilsSlice = createSlice({
     name: 'utils',
@@ -26,7 +45,10 @@ const utilsSlice = createSlice({
         }
     },
     extraReducers(builder) {
-
+        builder.addCase(fetchUserDetails.fulfilled, (state, action) => {
+            console.log('PAYLOAD', action.payload);
+            state.userDetails = action.payload;
+        })
     }
 })
 

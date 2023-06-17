@@ -46,7 +46,6 @@ const Login = () => {
         console.log('TYP', typeof loginValues.code);
         console.log('RESULT', result);
         if(result.success) {
-            toast.success("Zalogowano");
             setLoginValues(initialLoginValues);
             setErrorValues([]);
             const data = {
@@ -61,12 +60,19 @@ const Login = () => {
                 console.log(user.accessToken);
             }
 
+            try {
+                const res = await AuthService.loginUser(data);
+                toast.success("Zalogowano!");
+                setTimeout(() => navigate('/', { replace: true}), 1000);
+                
+            } catch (e) {
+               toast.error('Niepoprawne dane logowania!');
+            }
+            
+            // localStorage.setItem('ABC', JSON.stringify(res.token));
+            // console.log('RES', res.token);
+            // dispatch(setToken(res.token));
 
-            const res = await AuthService.loginUser(data);
-            localStorage.setItem('ABC', JSON.stringify(res.token));
-            console.log('RES', res.token);
-            dispatch(setToken(res.token));
-            setTimeout(() => navigate('/', { replace: true}), 1000);
         } else {
             const errorArray = result.error.errors.map(error => error.path[0]);
             console.log(errorArray);
@@ -79,7 +85,7 @@ const Login = () => {
     const {nick, password, code} = loginValues;
     return(
         <AuthorizationWrapperComponent>
-            <form onSubmit={(e) => onSubmit(e)}>
+            <form  onSubmit={(e) => onSubmit(e)}>
                 <h1>Login</h1>
                 <TextFieldComponent
                     setValues={setLoginValues}

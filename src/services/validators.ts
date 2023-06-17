@@ -1,5 +1,5 @@
 import {z} from 'zod';
-import {LoginType, RegisterType} from "../types/Authorization";
+import {LoginType, RegisterCreationType, RegisterType} from "../types/Authorization";
 import {sanitize} from "dompurify";
 import {
     CustomerAddRequestType,
@@ -11,17 +11,18 @@ import {
 
 
 const RegistrationSchema = z.object({
-    nick: z.string().min(5).max(30).refine(val => /^[a-zA-Z0-9]+$/.test(val)),
-    name: z.string().min(5).max(20).refine((val) => !val.includes('&') && !val.includes('<'), {
+    username: z.string().min(5).max(30).refine(val => /^[a-zA-Z0-9]+$/.test(val)),
+    userFirstName: z.string().min(5).max(20).refine((val) => !val.includes('&') && !val.includes('<'), {
         message: 'Forbidden chars!',
         path: ['forbiddenName']
     }),
-    surname: z.string().min(5).max(15),
+    userSecondName: z.string().min(5).max(15),
     email: z.string().email(),
     password: z.string().min(5).max(20),
     confirmPassword: z.string().min(5).max(20),
     postalCode: z.string().regex(/^\d{2}-\d{3}$/),
-    cityName: z.string().min(5).max(20),
+    phoneNumber: z.string().min(9).max(9).refine(val => /^[0-9]+$/.test(val)),
+    address: z.string().min(5).max(20),
 }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match"
 });
@@ -63,7 +64,7 @@ const AddingOrderSchema = z.object({
 
 const DeletingCodeSchema = z.string().min(6).max(6).refine(val => /^[0-9]+$/.test(val))
 
-export const validateRegister = (registerValues: RegisterType) => {
+export const validateRegister = (registerValues: RegisterCreationType) => {
     // try {
     //     RegistrationSchema.parse(registerValues);
     // } catch (e: any) {

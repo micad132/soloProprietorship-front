@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../index";
-import {ProductAddRequestType} from "../../types/RequestTypes";
+import {ProductAddRequestType, ProductEditRequestType} from "../../types/RequestTypes";
 import ProductService from "../../services/api/ProductService";
 import {ProductResponseType} from "../../types/ResponseTypes";
 
@@ -38,12 +38,13 @@ export const addingProductThunk = createAsyncThunk(
     }
 )
 
+
 export const fetchingAllProductsThunk = createAsyncThunk(
     'product/fetchAll',
-    async (token: string, { rejectWithValue}) => {
+    async (_, { rejectWithValue}) => {
         try {
             console.log('EJJ');
-            const data = await ProductService.getAllProducts(token);
+            const data = await ProductService.getAllProducts();
             return { data };
         } catch (e) {
             return rejectWithValue(e);
@@ -51,11 +52,24 @@ export const fetchingAllProductsThunk = createAsyncThunk(
     }
 )
 
-export const deletingPartThunk = createAsyncThunk(
+export const deletingProductThunk = createAsyncThunk(
     'product/deleteProduct',
     async (data, { rejectWithValue}) => {
         try {
+        } catch (e) {
+            return rejectWithValue(e);
+        }
+    }
+)
 
+export const editingProductThunk = createAsyncThunk(
+    'product/editProduct',
+    async (editData: ProductEditRequestType, { rejectWithValue}) => {
+        try {
+            console.log('DANE', editData);
+            await ProductService.editProduct(editData);
+            const data = await ProductService.getAllProducts();
+            return { data };
         } catch (e) {
             return rejectWithValue(e);
         }
@@ -91,6 +105,9 @@ const productSlice = createSlice({
         })
         builder.addCase(fetchingAllProductsThunk.pending, (state, action) => {
             state.isProductsLoaded = false;
+        })
+        builder.addCase(editingProductThunk.fulfilled, (state, action) => {
+            state.products = action.payload.data;
         })
     }
 })

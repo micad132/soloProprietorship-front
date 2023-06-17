@@ -14,6 +14,7 @@ import {toast} from "react-toastify";
 import CustomerFieldsComponent from "./components/CustomerFields.component";
 import {INITIAL_ADD_CUSTOMER_REQUEST_TYPE} from "../../types/InitialValues";
 import CustomerService from "../../services/api/CustomerService";
+import {addingCustomerThunk, getAllCustomers} from "../../store/reducers/customerReducer";
 
 
 const customersMock =  [
@@ -37,16 +38,24 @@ const CustomersPage = () => {
     const {name, surName, address, phoneNumber, email} = customerValues;
     const isModalOpen = useAppSelector(getIsModalOpen);
     const dispatch = useAppDispatch();
+    const customers = useAppSelector(getAllCustomers);
+
+    const properCustomers = customers.map(customer => ({
+        id: customer.idCustomer,
+        firstName: customer.name,
+        lastName: customer.surName,
+        cityName: customer.address,
+        phoneNumber: customer.phoneNumber,
+        email: customer.email,
+    }))
 
     const onClick = () => {
         const result = validateAddUser(customerValues);
         if(result.success) {
-            CustomerService.addCustomer(customerValues)
-                .then(() => {
-                    toast.success("Dodano klienta!");
-                    setCustomerValues(INITIAL_ADD_CUSTOMER_REQUEST_TYPE);
-                    setIsAddingOpen(false);
-                })
+            dispatch(addingCustomerThunk(customerValues));
+            toast.success("Dodano klienta!");
+            setCustomerValues(INITIAL_ADD_CUSTOMER_REQUEST_TYPE);
+            setIsAddingOpen(false);
         } else {
             const errorArray = result.error.errors.map(error => error.path[0]);
             console.log('ABC', errorArray);
@@ -59,8 +68,8 @@ const CustomersPage = () => {
     )
     return(
         <div>
-            <h1>Klienci zalogowanego przedsiębiorcy: ({customersMock.length})</h1>
-            <TableComponentComponent  columns={CustomersTableColumns} rows={customersMock}/>
+            <h1>Klienci zalogowanego przedsiębiorcy: ({customers.length})</h1>
+            <TableComponentComponent  columns={CustomersTableColumns} rows={properCustomers} />
             <AddingComponent text='Dodaj klienta' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingContent} />
             <ModalComponentComponent isOpen={isModalOpen} onClose={() => dispatch(setIsModalOpen(false))}  children={<h1>TEST CUSTOMER</h1>}/>
         </div>

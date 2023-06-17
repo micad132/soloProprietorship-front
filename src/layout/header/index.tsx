@@ -3,28 +3,35 @@ import { Button } from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import NavigationComponent from "../nav/Navigation.component";
 import HomeIcon from '@mui/icons-material/Home';
+import {useAppSelector} from "../../utils/hooks";
+import {getUserDetails} from "../../store/reducers/utilsReducer";
 
 const Header = () => {
     const navigate = useNavigate();
-    const isLogged = true;
+    const isLogged = useAppSelector(getUserDetails);
+    console.log(isLogged);
 
     const properButton = isLogged
         ? (
-            <Button
-                variant="contained"
-                onClick={() => navigate('/login', { replace: true})}
-            >
-                Zaloguj się
-            </Button>
+            <form method='post' action='http://localhost:8080/logout'>
+                <Button
+                    variant="contained"
+                    type='submit'
+                >
+                    Wyloguj się
+                </Button>
+            </form>
         )
         : (
-            <Button
-                variant="contained"
-                onClick={() => navigate('/logout', { replace: true})}
-            >
-                Wyloguj się
-            </Button>
+        <Button
+            variant="contained"
+            onClick={() => navigate('/login', { replace: true})}
+        >
+            Zaloguj się
+        </Button>
         );
+
+
 
     return(
         <div className={styles.header}>
