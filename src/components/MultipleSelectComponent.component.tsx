@@ -46,8 +46,7 @@ const MultipleSelect = ({label, menuItems, setValues, textField, value, isError,
             [textField]: typeof value === 'string' ? value.split(',') : value,
         }))
     };
-
-    const menuItemsProper = menuItems.map((id: number) => <MenuItem key={id} value={id}>{id}</MenuItem>)
+    const menuItemsProper = menuItems.map((item: any) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>

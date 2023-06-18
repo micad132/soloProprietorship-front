@@ -17,6 +17,7 @@ const CustomerService = {
 
     getAllCustomers: async (): Promise<CustomerType[]> => {
         const data = await axios.get(`${CUSTOMER_URL}/user`);
+        console.log('DATA DATA', data.data);
         return data.data;
     }
 

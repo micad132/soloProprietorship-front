@@ -28,7 +28,8 @@ const SelectComponent = ({text, value, label, setValues, menuItems, textField, i
         }))
     };
 
-    const menuItemsProper = menuItems.map((id: number) => <MenuItem value={id}>{id}</MenuItem>)
+    console.log('MENU ITEMS SELECT', menuItems);
+    const menuItemsProper = menuItems.map((item: any) => <MenuItem value={item.id}>{item.surName}</MenuItem>)
 
     return(
         <Box sx={{ minWidth: 120 }}>

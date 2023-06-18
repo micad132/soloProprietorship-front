@@ -3,6 +3,7 @@ import {useAppDispatch} from "../utils/hooks";
 import {fetchingAllProductsThunk, getAllProducts} from "../store/reducers/productReducer";
 import {fetchAllJobsThunk} from "../store/reducers/jobReducer";
 import {fetchAllCustomersThunk} from "../store/reducers/customerReducer";
+import {fetchingTransactionsThunk} from "../store/reducers/transactionReducer";
 
 const useFetchAllData = () => {
 
@@ -10,7 +11,8 @@ const useFetchAllData = () => {
     useEffect(() => {
         dispatch(fetchingAllProductsThunk());
         dispatch(fetchAllJobsThunk());
-        dispatch(fetchAllCustomersThunk);
+        dispatch(fetchAllCustomersThunk());
+        dispatch(fetchingTransactionsThunk());
 
     }, [dispatch])
 

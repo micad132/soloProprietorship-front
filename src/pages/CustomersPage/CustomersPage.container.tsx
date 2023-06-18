@@ -8,13 +8,14 @@ import {CustomerAddRequestType, CustomerRequestType} from "../../types/RequestTy
 import AddingComponent from "../../components/AddingComponent";
 import ModalComponentComponent from "../../components/ModalComponent.component";
 import {useAppDispatch, useAppSelector} from "../../utils/hooks";
-import {setIsModalOpen, getIsModalOpen} from "../../store/reducers/utilsReducer";
+import {setIsModalOpen, getIsModalOpen, getUserDetails} from "../../store/reducers/utilsReducer";
 import {validateAddUser} from "../../services/validators";
 import {toast} from "react-toastify";
 import CustomerFieldsComponent from "./components/CustomerFields.component";
 import {INITIAL_ADD_CUSTOMER_REQUEST_TYPE} from "../../types/InitialValues";
 import CustomerService from "../../services/api/CustomerService";
 import {addingCustomerThunk, getAllCustomers} from "../../store/reducers/customerReducer";
+import NotLoggedComponent from "../../components/NotLogged.component";
 
 
 const customersMock =  [
@@ -39,6 +40,8 @@ const CustomersPage = () => {
     const isModalOpen = useAppSelector(getIsModalOpen);
     const dispatch = useAppDispatch();
     const customers = useAppSelector(getAllCustomers);
+    const userDetails = useAppSelector(getUserDetails);
+    console.log('CUSTOMERS', customers);
 
     const properCustomers = customers.map(customer => ({
         id: customer.idCustomer,
@@ -66,13 +69,21 @@ const CustomersPage = () => {
     const addingContent = (
         <CustomerFieldsComponent data={customerValues} setJobValues={setCustomerValues} onClick={onClick} errorValues={errorValues} />
     )
+
+    const properContent = userDetails
+        ? (
+            <div>
+                <h1>Klienci zalogowanego przedsiębiorcy: ({customers.length})</h1>
+                <TableComponentComponent  columns={CustomersTableColumns} rows={properCustomers} />
+                <AddingComponent text='Dodaj klienta' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingContent} />
+                <ModalComponentComponent isOpen={isModalOpen} onClose={() => dispatch(setIsModalOpen(false))}  children={<h1>TEST CUSTOMER</h1>}/>
+            </div>
+        )
+        : <NotLoggedComponent />;
     return(
-        <div>
-            <h1>Klienci zalogowanego przedsiębiorcy: ({customers.length})</h1>
-            <TableComponentComponent  columns={CustomersTableColumns} rows={properCustomers} />
-            <AddingComponent text='Dodaj klienta' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingContent} />
-            <ModalComponentComponent isOpen={isModalOpen} onClose={() => dispatch(setIsModalOpen(false))}  children={<h1>TEST CUSTOMER</h1>}/>
-        </div>
+        <>
+            {properContent}
+        </>
     )
 }
 

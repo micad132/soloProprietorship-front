@@ -56,7 +56,7 @@ const AddingJobSchema = z.object({
 
 const AddingOrderSchema = z.object({
     price: z.number().refine(val => val > 0),
-    description: z.string().min(5).max(30).refine(val => /^[a-zA-Z]+$/.test(val)),
+    description: z.string().min(5).max(30).refine(val => !/^[0-9]+$/.test(val)),
     idCustomer: z.string().min(1).max(1),
     idOfProducts: z.array(z.string()).min(1),
     idOfJobs: z.array(z.string()).min(1),
@@ -105,10 +105,11 @@ export const validateAddOrder = (values: TransactionAddRequestType) => {
     const properData = {
         price: Number(values.price),
         description: values.description,
-        idCustomer: values.idCustomer,
-        idOfJobs: values.idOfJobs,
-        idOfProducts: values.idOfProducts,
+        idCustomer: String(values.idCustomer),
+        idOfJobs: values.idOfJobs.map(value => value.toString()),
+        idOfProducts: values.idOfProducts.map(value => value.toString())
     }
+    console.log(properData);
     return AddingOrderSchema.safeParse(properData);
 }
 

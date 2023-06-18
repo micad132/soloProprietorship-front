@@ -5,6 +5,7 @@ import NavigationComponent from "../nav/Navigation.component";
 import HomeIcon from '@mui/icons-material/Home';
 import {useAppSelector} from "../../utils/hooks";
 import {getUserDetails} from "../../store/reducers/utilsReducer";
+import LoggedUserData from "./components/LoggedUserData";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -36,6 +37,7 @@ const Header = () => {
     return(
         <div className={styles.header}>
             <h1 data-testid='header'>Witaj na portalu wlasnej firmy!</h1>
+            <LoggedUserData />
             {properButton}
             <NavigationComponent />
         </div>

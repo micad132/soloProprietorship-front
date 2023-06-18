@@ -4,6 +4,7 @@ import productReducer from "./reducers/productReducer";
 import utilsReducer from "./reducers/utilsReducer";
 import jobReducer from "./reducers/jobReducer";
 import customerReducer from "./reducers/customerReducer";
+import transactionReducer from "./reducers/transactionReducer";
 
 
 export const store = configureStore({
@@ -13,6 +14,7 @@ export const store = configureStore({
         utils: utilsReducer,
         job: jobReducer,
         customer: customerReducer,
+        transaction: transactionReducer,
     }
 })
 

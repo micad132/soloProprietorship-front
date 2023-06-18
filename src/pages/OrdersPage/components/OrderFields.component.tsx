@@ -16,6 +16,7 @@ interface Props {
 const OrderFieldsComponent = ({values, onClick, errorValues, setValues, menuItems}: Props) => {
 
     const {price, description, idCustomer, idOfProducts, idOfJobs} = values;
+    console.log('MENU ITEMS', menuItems);
     return(
         <>
             <TextFieldComponent
@@ -36,7 +37,7 @@ const OrderFieldsComponent = ({values, onClick, errorValues, setValues, menuItem
             />
             <SelectComponent
                 label='Id klienta'
-                menuItems={menuItems.customerIds}
+                menuItems={menuItems.customer}
                 setValues={setValues}
                 text='Id klienta dodaj'
                 value={idCustomer}
@@ -46,7 +47,7 @@ const OrderFieldsComponent = ({values, onClick, errorValues, setValues, menuItem
             />
             <MultipleSelect
                 label='Id produktow'
-                menuItems={menuItems.productsIds}
+                menuItems={menuItems.products}
                 setValues={setValues}
                 textField='idOfProducts'
                 value={idOfProducts}
@@ -55,7 +56,7 @@ const OrderFieldsComponent = ({values, onClick, errorValues, setValues, menuItem
             />
             <MultipleSelect
                 label='Id uslug'
-                menuItems={menuItems.jobsIds}
+                menuItems={menuItems.jobs}
                 setValues={setValues}
                 textField='idOfJobs'
                 value={idOfJobs}

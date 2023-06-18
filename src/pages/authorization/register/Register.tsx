@@ -61,8 +61,9 @@ const Register = () => {
                 use2FA: use2FA,
             }
             const data2 = await AuthService.registerUser(data);
+            console.log('RES', data2);
             toast.success("Pomyślnie zarejestrowano, za chwilę nastąpi przekierowanie na stronę logowania!");
-            setTimeout(() => navigate('/login', { replace: true}), 1000);
+            // setTimeout(() => navigate('/login', { replace: true}), 1000);
         } else {
             console.log(result.error.errors);
             const errorArray = result.error.errors.map(error => error.path);
@@ -160,7 +161,10 @@ const Register = () => {
                         errorMsg='Niepoprawnie wprowadzona nazwa miasta!'
                         fieldName='address'
                     />
-                    <FormControlLabel control={<Checkbox defaultChecked />} label="Czy zastosować 2FA?" />
+                    <FormControlLabel control={<Checkbox onChange={(e) => setRegisterValues((prevState) => ({
+                        ...prevState,
+                        use2FA: e.target.checked
+                    })) } />} label="Czy zastosować 2FA?" />
                     <Button
                         variant="contained"
                         type="submit"
