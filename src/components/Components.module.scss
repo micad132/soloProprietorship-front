@@ -3,7 +3,8 @@
 
   background-color: #eee;
   max-width: 600px;
-  margin: 50px auto 0 auto;
+  width: 60%;
+  margin: 50px auto 50px auto;
   border: 2px solid #000;
   border-radius: 5px;
 
@@ -27,9 +28,12 @@
 }
 
 .tableWrapper{
-  width: 60%;
+  width: 80%;
   margin: 20px auto;
   max-width: 1200px;
+  border: 2px solid red;
+  min-height: min-content;
+  max-height: 700px;
 }
 
 .modalContent {

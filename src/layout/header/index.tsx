@@ -18,6 +18,7 @@ const Header = () => {
                 <Button
                     variant="contained"
                     type='submit'
+                    style={{ width: '10rem'}}
                 >
                     Wyloguj się
                 </Button>
@@ -35,12 +36,12 @@ const Header = () => {
 
 
     return(
-        <div className={styles.header}>
-            <h1 data-testid='header'>Witaj na portalu wlasnej firmy!</h1>
+        <header className={styles.header}>
+            <h1 data-testid='header' className={styles.title}>Witaj na portalu wlasnej firmy!</h1>
             <LoggedUserData />
             {properButton}
             <NavigationComponent />
-        </div>
+        </header>
     )
 }
 

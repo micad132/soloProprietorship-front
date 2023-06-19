@@ -23,9 +23,10 @@ const TableComponentComponent = ({columns, rows}: Props) => {
                         },
                     },
                 }}
-                pageSizeOptions={[5]}
                 checkboxSelection
                 disableRowSelectionOnClick
+                autoPageSize={true}
+                autoHeight={true}
             />
         </div>
     )

@@ -1,5 +1,6 @@
 import {useAppSelector} from "../../../utils/hooks";
 import {getUserDetails} from "../../../store/reducers/utilsReducer";
+import styles from '../../Layout.module.scss';
 
 const LoggedUserData = () => {
 
@@ -8,10 +9,10 @@ const LoggedUserData = () => {
     const properContent = userDetails
         ? (
             <div style={{margin: '5px 0'}}>
-                <h3>Jesteś zalogowany jako {userDetails.firstName} {userDetails.email}</h3>
+                <h3 className={styles.loggedUserInfo}>Jesteś zalogowany jako {userDetails.firstName} {userDetails.email}</h3>
             </div>
         )
-        : <h3>Nie jesteś zalogowany!</h3>
+        : <h3 className={styles.loggedUserInfo}>Nie jesteś zalogowany!</h3>
 
     return(
         <div>
