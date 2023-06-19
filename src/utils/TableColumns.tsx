@@ -122,7 +122,7 @@ export const JobsTableColumns: GridColDef[] = [
         headerName: 'Edycja',
         width: 150,
         editable: false,
-        renderCell: (params) =>  <EditJobContainer  id={params.row.id}/> ,
+        renderCell: (params) =>  <EditJobContainer  idd={params.row.id}/> ,
     },
     {
         field: 'deleteJob',

@@ -1,4 +1,4 @@
-import {CustomerAddRequestType} from "../../types/RequestTypes";
+import {CustomerAddRequestType, CustomerEditRequestType} from "../../types/RequestTypes";
 import axios from "axios";
 import {API_REQUEST_PATH} from "../../utils/GlobalVariables";
 import {CustomerType} from "../../types/ResponseTypes";
@@ -19,7 +19,13 @@ const CustomerService = {
         const data = await axios.get(`${CUSTOMER_URL}/user`);
         console.log('DATA DATA', data.data);
         return data.data;
-    }
+    },
+
+    editCustomer: async(editData: CustomerEditRequestType) => axios({
+        method: 'PATCH',
+        url: CUSTOMER_URL,
+        data: editData,
+    })
 
 }
 

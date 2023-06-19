@@ -5,6 +5,8 @@ import DeletingComponent from "../components/DeletingComponent.component";
 import ModalComponentComponent from "../components/ModalComponent.component";
 import {validateCode} from "../services/validators";
 import {toast} from "react-toastify";
+import {useAppSelector} from "../utils/hooks";
+import {getQRURL} from "../store/reducers/utilsReducer";
 
 interface Props {
     id: number,
@@ -16,6 +18,7 @@ const DeletingContainer = ({id, name, operationName}: Props) => {
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [code, setCode] = useState<string>('');
+    const qrURL = useAppSelector(getQRURL);
 
     const onClick = () => {
 
@@ -24,7 +27,7 @@ const DeletingContainer = ({id, name, operationName}: Props) => {
         if(result.success) {
             switch(operationName) {
                 case 'job':
-                    console.log('JOB');
+                    console.log('JOB', id);
                     break;
                 case 'product':
                     console.log('product');
@@ -40,7 +43,7 @@ const DeletingContainer = ({id, name, operationName}: Props) => {
     }
 
     const modalContent = (
-        <DeletingComponent  id={id} name={name}  onClick={onClick} code={code} setCode={setCode} />
+        <DeletingComponent  id={id} name={name}  onClick={onClick} code={code} setCode={setCode}  qrURL={qrURL} />
     )
     return(
         <div>

@@ -67,7 +67,7 @@ const CustomersPage = () => {
         }
     }
     const addingContent = (
-        <CustomerFieldsComponent data={customerValues} setJobValues={setCustomerValues} onClick={onClick} errorValues={errorValues} />
+        <CustomerFieldsComponent data={customerValues} setJobValues={setCustomerValues} onClick={onClick} errorValues={errorValues} buttonText='Dodaj' />
     )
 
     const properContent = userDetails

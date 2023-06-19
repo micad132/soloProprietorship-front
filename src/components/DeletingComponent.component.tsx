@@ -12,10 +12,11 @@ interface Props {
     onClick: () => void,
     code: string,
     setCode: any,
+    qrURL: string,
 
 }
 
-const DeletingComponent = ({id, name, onClick,code, setCode}: Props) => {
+const DeletingComponent = ({id, name, onClick,code, setCode, qrURL}: Props) => {
 
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -24,7 +25,7 @@ const DeletingComponent = ({id, name, onClick,code, setCode}: Props) => {
 
     return(
         <div className={styles.deletingWrapper}>
-            <p data-testid='deletingWrapperText'>Aby usunac <span style={{ fontWeight: 'bold'}}> {name} </span> wpisz odpowiedni kod </p>
+            <p data-testid='deletingWrapperText'>Aby usunac<span style={{ fontWeight: 'bold'}}> {name} </span> wpisz odpowiedni kod </p>
             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
@@ -47,6 +48,7 @@ const DeletingComponent = ({id, name, onClick,code, setCode}: Props) => {
                     }
                 />
             </FormControl>
+            {qrURL && <img src={qrURL} />}
             <Button
                 variant='contained'
                 onClick={onClick}

@@ -13,6 +13,8 @@ import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import { sanitize } from 'dompurify';
 import {AuthService} from "../../../services/api/AuthService";
+import {useAppDispatch} from "../../../utils/hooks";
+import {setqrURL} from "../../../store/reducers/utilsReducer";
 
 
 
@@ -22,6 +24,7 @@ const Register = () => {
     const [registerValues, setRegisterValues] = useState<RegisterType>(INITIAL_REGISTER_TYPE_VALUES);
     const [errorValues, setErrorValues] = useState<string[]>([]);
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const sanitizeData = (value: string): string => sanitize(value, { USE_PROFILES: { html: false }});
 
@@ -62,6 +65,7 @@ const Register = () => {
             }
             const data2 = await AuthService.registerUser(data);
             console.log('RES', data2);
+            dispatch(setqrURL(data2.message));
             toast.success("Pomyślnie zarejestrowano, za chwilę nastąpi przekierowanie na stronę logowania!");
             // setTimeout(() => navigate('/login', { replace: true}), 1000);
         } else {

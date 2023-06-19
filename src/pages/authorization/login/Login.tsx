@@ -11,8 +11,8 @@ import ErrorComponentComponent from "../../../components/ErrorComponent.componen
 import TextFieldComponent from "../../../components/TextField.component";
 import PasswordFieldComponent from "../../../components/PasswordField.component";
 import {AuthService} from "../../../services/api/AuthService";
-import {setToken} from "../../../store/reducers/utilsReducer";
-import {useAppDispatch} from "../../../utils/hooks";
+import {getQRURL, setToken} from "../../../store/reducers/utilsReducer";
+import {useAppDispatch, useAppSelector} from "../../../utils/hooks";
 
 
 const initialLoginValues: LoginType = {
@@ -30,7 +30,8 @@ const Login = () => {
     const [errorValues, setErrorValues] = useState<string[]>([]);
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-
+    const qrURL = useAppSelector(getQRURL);
+    console.log(qrURL);
 
     // const handleInputChange = (fieldName: string, value: string) => {
     //     console.log('FIELDNAME', fieldName);
@@ -112,6 +113,7 @@ const Login = () => {
                     errorMsg='Niepoprawny kod!'
                     fieldName={'code'}
                 />
+                {qrURL && <img src={qrURL}  alt='QR CODE' />}
                 <Button variant="contained" type="submit">Zaloguj się</Button>
                 <NoAccount />
             </form>

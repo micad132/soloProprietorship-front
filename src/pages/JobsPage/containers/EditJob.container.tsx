@@ -3,23 +3,28 @@ import {Button} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import ModalComponentComponent from "../../../components/ModalComponent.component";
 import JobFieldsComponent from "../components/JobFields.component";
-import {JobEditRequestType} from "../../../types/RequestTypes";
+import {JobAddRequestType, JobEditRequestType} from "../../../types/RequestTypes";
 import {INITIAL_FULL_JOB_TYPE} from "../../../types/InitialValues";
 import {validateAddJob} from "../../../services/validators";
 import {toast} from "react-toastify";
+import {useAppDispatch} from "../../../utils/hooks";
+import {editingJobThunk} from "../../../store/reducers/jobReducer";
 
 interface Props {
-    id: number,
+    idd: number,
 }
-const EditJobContainer = ({id}: Props) => {
+const EditJobContainer = ({idd}: Props) => {
 
-    const [jodEditValues, setJobEditValues] = useState<JobEditRequestType>(INITIAL_FULL_JOB_TYPE);
+    const [jodEditValues, setJobEditValues] = useState<JobAddRequestType>(INITIAL_FULL_JOB_TYPE);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [errorValues, setErrorValues] = useState<string[]>([]);
+    const dispatch = useAppDispatch();
 
     const onClick = () => {
         const res = validateAddJob(jodEditValues);
+        const idJob = idd;
         if(res.success) {
+            dispatch(editingJobThunk({...jodEditValues, idJob}));
             toast.success('Pomyślnie edytowano usluge!');
             setJobEditValues(INITIAL_FULL_JOB_TYPE);
             setIsOpen(false);
@@ -43,10 +48,7 @@ const EditJobContainer = ({id}: Props) => {
                     variant='contained'
                     startIcon={<EditIcon />}
                     data-testid='tableButton'
-                    onClick={() => {
-                        setIsOpen(true);
-                        console.log('ID', id);
-                    }}
+                    onClick={() => setIsOpen(true)}
                 >
                     Edytuj
                 </Button>

@@ -24,7 +24,7 @@ const JobService = {
 
     editJob: (editData: JobEditRequestType) => {
         return axios({
-            method: 'PUT',
+            method: 'PATCH',
             url: `${JOB_URL}`,
             data: editData,
         })

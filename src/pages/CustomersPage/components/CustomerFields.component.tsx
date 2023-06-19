@@ -7,9 +7,10 @@ interface Props {
     setJobValues: any,
     onClick: () => void,
     errorValues: string[],
+    buttonText: string,
 }
 
-const CustomerFieldsComponent = ({data, setJobValues, onClick, errorValues}: Props) => {
+const CustomerFieldsComponent = ({data, setJobValues, onClick, errorValues, buttonText}: Props) => {
 
     const {name,surName,address,phoneNumber,email} = data;
     return(
@@ -56,7 +57,7 @@ const CustomerFieldsComponent = ({data, setJobValues, onClick, errorValues}: Pro
                 variant='contained'
                 onClick={onClick}
             >
-                Dodaj
+                {buttonText}
             </Button>
         </>
     )

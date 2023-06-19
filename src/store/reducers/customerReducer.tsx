@@ -6,7 +6,7 @@ import ProductService from "../../services/api/ProductService";
 import {RootState} from "../index";
 import JobService from "../../services/api/JobService";
 import CustomerService from "../../services/api/CustomerService";
-import {CustomerAddRequestType} from "../../types/RequestTypes";
+import {CustomerAddRequestType, CustomerEditRequestType} from "../../types/RequestTypes";
 
 interface CustomerReducerType  {
     isLoaded: boolean,
@@ -45,6 +45,18 @@ export const addingCustomerThunk = createAsyncThunk(
     }
 )
 
+export const editingCustomerThunk = createAsyncThunk(
+    'api/editCustomer',
+    async (newData: CustomerEditRequestType, { rejectWithValue}) => {
+        try {
+            await CustomerService.editCustomer(newData);
+            const data = await CustomerService.getAllCustomers();
+            return { data };
+        } catch (e) {
+            return rejectWithValue(e);
+        }
+    }
+)
 
 
 export const getAllCustomers = (state: RootState) => state.customer.customers;
@@ -59,6 +71,9 @@ const customerSlice = createSlice({
             state.customers = action.payload.data;
         })
         builder.addCase(addingCustomerThunk.fulfilled, (state, action) => {
+            state.customers = action.payload.data;
+        })
+        builder.addCase(editingCustomerThunk.fulfilled, (state, action) => {
             state.customers = action.payload.data;
         })
 

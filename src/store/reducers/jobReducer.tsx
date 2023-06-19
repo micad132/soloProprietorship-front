@@ -4,7 +4,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import ProductService from "../../services/api/ProductService";
 import {RootState} from "../index";
 import JobService from "../../services/api/JobService";
-import {JobAddRequestType} from "../../types/RequestTypes";
+import {JobAddRequestType, JobEditRequestType} from "../../types/RequestTypes";
 
 interface JobReducerType  {
     isLoaded: boolean,
@@ -44,6 +44,20 @@ export const addingJobThunk = createAsyncThunk(
     }
 )
 
+export const editingJobThunk = createAsyncThunk(
+    'api/editJob',
+    async (newData: JobEditRequestType, { rejectWithValue}) => {
+        try {
+            console.log('DATA EDIT JOB', newData);
+            await JobService.editJob(newData);
+            const data = await JobService.getAllJobs();
+            return { data };
+        } catch (e) {
+            return rejectWithValue(e);
+        }
+    }
+)
+
 
 export const getAllJobs = (state: RootState) => state.job.jobs;
 
@@ -57,6 +71,9 @@ const jobSlice = createSlice({
             state.jobs = action.payload.data;
         })
         builder.addCase(addingJobThunk.fulfilled, (state, action) => {
+            state.jobs = action.payload.data;
+        })
+        builder.addCase(editingJobThunk.fulfilled, (state, action) => {
             state.jobs = action.payload.data;
         })
 

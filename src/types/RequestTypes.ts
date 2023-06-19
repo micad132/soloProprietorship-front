@@ -15,7 +15,7 @@ export interface ProductAddRequestType {
 }
 
 export interface ProductEditRequestType extends  ProductAddRequestType{
-    id: number,
+    idProduct: number,
 }
 
 export interface JobAddRequestType {
@@ -24,7 +24,7 @@ export interface JobAddRequestType {
 }
 
 export interface JobEditRequestType extends JobAddRequestType {
-    id: number,
+    idJob: number,
 }
 
 export interface CustomerAddRequestType {
@@ -36,7 +36,7 @@ export interface CustomerAddRequestType {
 }
 
 export interface CustomerEditRequestType extends CustomerAddRequestType {
-    id: number,
+    idCustomer: number,
 }
 
 

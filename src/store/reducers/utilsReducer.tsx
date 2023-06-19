@@ -7,13 +7,15 @@ import {AuthService} from "../../services/api/AuthService";
 interface UtilsReducerType {
     isModalOpen: boolean,
     token: string,
-    userDetails: UserDetailsDTO
+    userDetails: UserDetailsDTO,
+    qrURL: string,
 }
 
 const initialState: UtilsReducerType = {
     isModalOpen: false,
     token: '',
-    userDetails: INITIAL_USER_DETAILS_DTO
+    userDetails: INITIAL_USER_DETAILS_DTO,
+    qrURL: '',
 }
 
 export const fetchUserDetails = createAsyncThunk(
@@ -32,6 +34,7 @@ export const fetchUserDetails = createAsyncThunk(
 export const getIsModalOpen = (state: RootState) => state.utils.isModalOpen;
 export const getToken = (state: RootState) => state.utils.token;
 export const getUserDetails = (state: RootState) => state.utils.userDetails;
+export const getQRURL = (state: RootState) => state.utils.qrURL;
 
 const utilsSlice = createSlice({
     name: 'utils',
@@ -42,6 +45,9 @@ const utilsSlice = createSlice({
         },
         setToken(state, action: PayloadAction<string>) {
             state.token = action.payload;
+        },
+        setqrURL(state, action: PayloadAction<string>) {
+            state.qrURL = action.payload;
         }
     },
     extraReducers(builder) {
@@ -52,5 +58,5 @@ const utilsSlice = createSlice({
     }
 })
 
-export const { setIsModalOpen, setToken } = utilsSlice.actions;
+export const { setIsModalOpen, setToken, setqrURL } = utilsSlice.actions;
 export default utilsSlice.reducer;

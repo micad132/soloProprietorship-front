@@ -4,7 +4,7 @@ import ModalComponentComponent from "../../../components/ModalComponent.componen
 import {useAppDispatch, useAppSelector} from "../../../utils/hooks";
 import ProductFieldsComponent from "../components/ProductFields.component";
 import {useState} from "react";
-import {ProductEditRequestType} from "../../../types/RequestTypes";
+import {ProductAddRequestType, ProductEditRequestType} from "../../../types/RequestTypes";
 import {INITIAL_FULL_PRODUCT_TYPE} from "../../../types/InitialValues";
 import EditIcon from "@mui/icons-material/Edit";
 import TextFieldComponent from "../../../components/TextField.component";
@@ -18,7 +18,7 @@ interface Props {
 }
 const EditProductContainer = ({id}: Props) => {
 
-    const [editProductValue, setEditProductValues] = useState<ProductEditRequestType>(INITIAL_FULL_PRODUCT_TYPE);
+    const [editProductValue, setEditProductValues] = useState<ProductAddRequestType>(INITIAL_FULL_PRODUCT_TYPE);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [errorValues, setErrorValues] = useState<string[]>([]);
     const dispatch = useAppDispatch();
@@ -27,11 +27,9 @@ const EditProductContainer = ({id}: Props) => {
         console.log("DANE ADD PRODUCT", editProductValue);
         const results = validateAddProduct(editProductValue);
         if( results.success) {
-            // @ts-ignore
-            const data = {id, ...editProductValue};
+            const data = {...editProductValue, idProduct: id};
             dispatch(editingProductThunk(data));
             toast.success("Edytowano produkt!");
-            console.log("DANE EDIT PRODUCT", data);
             setEditProductValues(INITIAL_FULL_PRODUCT_TYPE);
             setErrorValues([]);
             setIsOpen(false);
@@ -55,9 +53,7 @@ const EditProductContainer = ({id}: Props) => {
                     variant='contained'
                     startIcon={<EditIcon />}
                     data-testid='tableButton'
-                    onClick={() => {
-                        setIsOpen(true);
-                    }}
+                    onClick={() => setIsOpen(true)}
                 >
                     Edytuj
                 </Button>
