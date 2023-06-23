@@ -100,7 +100,11 @@ const ProductsPage = () => {
 
     return(
         <>
-            {properContent}
+            <div>
+                <h1>Produkty które oferuje zalogowany przedsiębiorca</h1>
+                <TableComponentComponent  columns={ProductTableColumns} rows={properProducts}/>
+                <AddingComponent  text='Dodaj produkt' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen}  modalContent={productModalAddContent}/>
+            </div>
         </>
     )
 }
