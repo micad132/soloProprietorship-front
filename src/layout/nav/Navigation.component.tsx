@@ -1,9 +1,9 @@
-import SingleLinkComponent from "./SingleLink.component";
-import styles from '../Layout.module.scss';
+import SingleLinkComponent from './SingleLink.component'
+import styles from '../Layout.module.scss'
+import React, { type ReactElement } from 'react'
 
-const NavigationComponent = () => {
-
-    return(
+const NavigationComponent = (): ReactElement => {
+  return (
         <nav className={styles.linksWrapper}>
             <SingleLinkComponent path={'/'} text={'Strona główna'} />
             <SingleLinkComponent path='/customers' text='Klienci'/>
@@ -11,7 +11,7 @@ const NavigationComponent = () => {
             <SingleLinkComponent path='/jobs' text='Usługi' />
             <SingleLinkComponent path='/orders' text='Zamówienia' />
         </nav>
-    )
+  )
 }
 
-export default  NavigationComponent;
+export default NavigationComponent

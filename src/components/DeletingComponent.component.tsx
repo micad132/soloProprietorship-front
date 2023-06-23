@@ -1,31 +1,29 @@
-import {Button, FormControl, InputAdornment, InputLabel, TextField} from "@mui/material";
-import {useState} from "react";
-import styles from './Components.module.scss';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import IconButton from '@mui/material/IconButton';
-import OutlinedInput from '@mui/material/OutlinedInput';
+import { Button, FormControl, InputAdornment, InputLabel } from '@mui/material'
+import React, { type ReactElement, useState } from 'react'
+import styles from './Components.module.scss'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
+import IconButton from '@mui/material/IconButton'
+import OutlinedInput from '@mui/material/OutlinedInput'
 
 interface Props {
-    id: number,
-    name: string,
-    onClick: () => void,
-    code: string,
-    setCode: any,
-    qrURL: string,
+  id: number
+  name: string
+  onClick: () => void
+  code: string
+  setCode: any
+  qrURL: string
 
 }
 
-const DeletingComponent = ({id, name, onClick,code, setCode, qrURL}: Props) => {
+const DeletingComponent = ({ id, name, onClick, code, setCode, qrURL }: Props): ReactElement => {
+  const [showPassword, setShowPassword] = useState<boolean>(false)
 
+  const handleClickShowPassword = (): void => { setShowPassword((show) => !show) }
 
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-    return(
+  return (
         <div className={styles.deletingWrapper}>
-            <p data-testid='deletingWrapperText'>Aby usunac<span style={{ fontWeight: 'bold'}}> {name} </span> wpisz odpowiedni kod </p>
+            <p data-testid='deletingWrapperText'>Aby usunac<span style={{ fontWeight: 'bold' }}> {name} </span> wpisz odpowiedni kod </p>
             <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
@@ -33,7 +31,7 @@ const DeletingComponent = ({id, name, onClick,code, setCode, qrURL}: Props) => {
                     label="Podaj kod"
                     type={showPassword ? 'text' : 'password'}
                     value={code}
-                    onChange={({ target: { value }}) => setCode(value)}
+                    onChange={({ target: { value } }) => setCode(value)}
                     inputProps={{ maxLength: 6 }}
                     endAdornment={
                         <InputAdornment position="end">
@@ -56,7 +54,7 @@ const DeletingComponent = ({id, name, onClick,code, setCode, qrURL}: Props) => {
                 Usuń
             </Button>
         </div>
-    )
+  )
 }
 
-export default DeletingComponent;
+export default DeletingComponent

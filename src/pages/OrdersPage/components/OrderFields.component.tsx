@@ -1,23 +1,21 @@
-import TextFieldComponent from "../../../components/TextField.component";
-import SelectComponent from "../../../components/SelectComponent.component";
-import MultipleSelect from "../../../components/MultipleSelectComponent.component";
-import {Button} from "@mui/material";
+import TextFieldComponent from '../../../components/TextField.component'
+import SelectComponent from '../../../components/SelectComponent.component'
+import MultipleSelect from '../../../components/MultipleSelectComponent.component'
+import { Button } from '@mui/material'
+import React, { type ReactElement } from 'react'
 
 interface Props {
-    values: any,
-    onClick: () => void,
-    errorValues: string[],
-    setValues: any,
-    menuItems: any,
-
+  values: any
+  onClick: () => void
+  errorValues: string[]
+  setValues: any
+  menuItems: any
 
 }
 
-const OrderFieldsComponent = ({values, onClick, errorValues, setValues, menuItems}: Props) => {
-
-    const {price, description, idCustomer, idOfProducts, idOfJobs} = values;
-    console.log('MENU ITEMS', menuItems);
-    return(
+const OrderFieldsComponent = ({ values, onClick, errorValues, setValues, menuItems }: Props): ReactElement => {
+  const { price, description, idCustomer, idOfProducts, idOfJobs } = values
+  return (
         <>
             <TextFieldComponent
                 value={price}
@@ -70,7 +68,7 @@ const OrderFieldsComponent = ({values, onClick, errorValues, setValues, menuItem
                 Dodaj
             </Button>
         </>
-    )
+  )
 }
 
-export default OrderFieldsComponent;
+export default OrderFieldsComponent

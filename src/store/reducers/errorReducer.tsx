@@ -1,27 +1,27 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {RootState} from "../index";
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import { type RootState } from '../index'
 
 interface ErrorReducerType {
-    errorMsg: string,
+  errorMsg: string
 }
 
 const initialState: ErrorReducerType = {
-    errorMsg: '',
+  errorMsg: ''
 }
 
-export const getErrorMsg = (state: RootState) => state.error.errorMsg;
+export const getErrorMsg = (state: RootState): string => state.error.errorMsg
 
 const errorSlice = createSlice({
-    name: 'errors',
-    initialState,
-    reducers: {
-        setRegisterError(state, action: PayloadAction<string>) {
-            state.errorMsg = action.payload;
-        }
-    },
-    extraReducers(builder) {
-
+  name: 'errors',
+  initialState,
+  reducers: {
+    setRegisterError (state, action: PayloadAction<string>) {
+      state.errorMsg = action.payload
     }
+  },
+  extraReducers (builder) {
+
+  }
 })
 
-export default errorSlice.reducer;
+export default errorSlice.reducer

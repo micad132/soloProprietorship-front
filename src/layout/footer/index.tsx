@@ -1,12 +1,12 @@
-import styles from '../Layout.module.scss';
+import styles from '../Layout.module.scss'
+import React, { type ReactElement } from 'react'
 
-const Footer = () => {
-
-    return(
+const Footer = (): ReactElement => {
+  return (
         <footer className={styles.footer}>
             <h4 data-testid='footer'>Projekt wykonany przez Michala, Daniela, Karola</h4>
         </footer>
-    )
+  )
 }
 
-export default Footer;
+export default Footer

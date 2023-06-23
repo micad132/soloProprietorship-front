@@ -1,19 +1,19 @@
-import TextFieldComponent from "../../../components/TextField.component";
-import {Button} from "@mui/material";
-import { CustomerAddRequestType } from "../../../types/RequestTypes";
+import TextFieldComponent from '../../../components/TextField.component'
+import { Button } from '@mui/material'
+import { type CustomerAddRequestType } from '../../../types/RequestTypes'
+import React, { type ReactElement } from 'react'
 
 interface Props {
-    data: CustomerAddRequestType,
-    setJobValues: any,
-    onClick: () => void,
-    errorValues: string[],
-    buttonText: string,
+  data: CustomerAddRequestType
+  setJobValues: any
+  onClick: () => void
+  errorValues: string[]
+  buttonText: string
 }
 
-const CustomerFieldsComponent = ({data, setJobValues, onClick, errorValues, buttonText}: Props) => {
-
-    const {name,surName,address,phoneNumber,email} = data;
-    return(
+const CustomerFieldsComponent = ({ data, setJobValues, onClick, errorValues, buttonText }: Props): ReactElement => {
+  const { name, surName, address, phoneNumber, email } = data
+  return (
         <>
             <TextFieldComponent
                 value={name}
@@ -28,7 +28,7 @@ const CustomerFieldsComponent = ({data, setJobValues, onClick, errorValues, butt
                 errorMsg='Niepoprawne nazwisko!'
                 isError={errorValues.includes('surName')}
                 setValues={setJobValues}
-                fieldName={"surName"}/>
+                fieldName={'surName'}/>
             <TextFieldComponent
                 value={address}
                 label='Miasto'
@@ -43,7 +43,7 @@ const CustomerFieldsComponent = ({data, setJobValues, onClick, errorValues, butt
                 errorMsg='Niepoprawny numer telefonu!'
                 isError={errorValues.includes('phoneNumber')}
                 setValues={setJobValues}
-                fieldName={"phoneNumber"}
+                fieldName={'phoneNumber'}
             />
             <TextFieldComponent
                 value={email}
@@ -60,7 +60,7 @@ const CustomerFieldsComponent = ({data, setJobValues, onClick, errorValues, butt
                 {buttonText}
             </Button>
         </>
-    )
+  )
 }
 
-export default CustomerFieldsComponent;
+export default CustomerFieldsComponent

@@ -1,37 +1,33 @@
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {Dispatch, SetStateAction, useState} from "react";
-import {TransactionAddRequestType} from "../types/RequestTypes";
-import ErrorComponentComponent from "./ErrorComponent.component";
+import Box from '@mui/material/Box'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select, { type SelectChangeEvent } from '@mui/material/Select'
+import React, { type Dispatch, type ReactElement, type SetStateAction } from 'react'
+import ErrorComponentComponent from './ErrorComponent.component'
 
 interface Props {
-    text: string,
-    value: string,
-    label: string,
-    setValues: Dispatch<SetStateAction<any>>,
-    menuItems: any,
-    textField: string,
-    isError: boolean,
-    errorMsg: string,
+  text: string
+  value: string
+  label: string
+  setValues: Dispatch<SetStateAction<any>>
+  menuItems: any
+  textField: string
+  isError: boolean
+  errorMsg: string
 }
 
-const SelectComponent = ({text, value, label, setValues, menuItems, textField, isError, errorMsg}: Props) => {
+const SelectComponent = ({ text, value, label, setValues, menuItems, textField, isError, errorMsg }: Props): ReactElement => {
+  const handleChange = (event: SelectChangeEvent): void => {
+    setValues((prevState: any) => ({
+      ...prevState,
+      [textField]: event.target.value
+    }))
+  }
 
+  const menuItemsProper = menuItems.map((item: any) => <MenuItem key={item.id} value={item.id}>{item.surName}</MenuItem>)
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setValues((prevState: any) => ({
-            ...prevState,
-            [textField]: event.target.value as string,
-        }))
-    };
-
-    console.log('MENU ITEMS SELECT', menuItems);
-    const menuItemsProper = menuItems.map((item: any) => <MenuItem value={item.id}>{item.surName}</MenuItem>)
-
-    return(
+  return (
         <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">{text}</InputLabel>
@@ -48,7 +44,7 @@ const SelectComponent = ({text, value, label, setValues, menuItems, textField, i
                 {isError && <ErrorComponentComponent errorMsg={errorMsg} />}
             </FormControl>
         </Box>
-    )
+  )
 }
 
-export default SelectComponent;
+export default SelectComponent

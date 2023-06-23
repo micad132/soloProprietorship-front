@@ -1,11 +1,10 @@
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import styles from '../OrdersPage.module.scss';
-import SinglePreviewWrapper from "./SinglePreviewWrapper.component";
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import SinglePreviewWrapper from './SinglePreviewWrapper.component'
+import React, { type ReactElement } from 'react'
 
-const PreviewJob = () => {
-
-    return(
+const PreviewJob = (): ReactElement => {
+  return (
         <SinglePreviewWrapper>
             <div>
                 <p>ID: 1</p>
@@ -14,7 +13,7 @@ const PreviewJob = () => {
                 <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
             </div>
         </SinglePreviewWrapper>
-    )
+  )
 }
 
-export default  PreviewJob;
+export default PreviewJob

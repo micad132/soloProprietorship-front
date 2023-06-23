@@ -1,17 +1,17 @@
-import TextFieldComponent from "../../../components/TextField.component";
-import {Button} from "@mui/material";
-import {JobAddRequestType} from "../../../types/RequestTypes";
+import React, { type ReactElement } from 'react'
+import TextFieldComponent from '../../../components/TextField.component'
+import { Button } from '@mui/material'
+import { type JobAddRequestType } from '../../../types/RequestTypes'
 
 interface Props {
-    data: JobAddRequestType,
-    setJobValues: any,
-    onClick: () => void,
-    errorValues: string[],
+  data: JobAddRequestType
+  setJobValues: any
+  onClick: () => void
+  errorValues: string[]
 }
-const JobFieldsComponent = ({data, setJobValues, onClick, errorValues}: Props) => {
-
-    const {name, price} = data;
-    return(
+const JobFieldsComponent = ({ data, setJobValues, onClick, errorValues }: Props): ReactElement => {
+  const { name, price } = data
+  return (
         <>
             <TextFieldComponent
                 value={name}
@@ -36,7 +36,7 @@ const JobFieldsComponent = ({data, setJobValues, onClick, errorValues}: Props) =
                 Dodaj
             </Button>
         </>
-    )
+  )
 }
 
-export default JobFieldsComponent;
+export default JobFieldsComponent

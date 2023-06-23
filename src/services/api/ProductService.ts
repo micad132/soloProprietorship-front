@@ -1,41 +1,41 @@
-import axios from "axios";
-import {DeletingType, ProductAddRequestType, ProductEditRequestType} from "../../types/RequestTypes";
-import {API_REQUEST_PATH} from "../../utils/GlobalVariables";
-import {ProductResponseType} from "../../types/ResponseTypes";
+import axios from 'axios'
+import { type DeletingType, type ProductAddRequestType, type ProductEditRequestType } from '../../types/RequestTypes'
+import { API_REQUEST_PATH } from '../../utils/GlobalVariables'
+import { type ProductResponseType } from '../../types/ResponseTypes'
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true
 
-const PRODUCT_URL = `${API_REQUEST_PATH}/product`;
+const PRODUCT_URL = `${API_REQUEST_PATH}/product`
 
 const ProductService = {
 
-    addNewProduct: (data: ProductAddRequestType) => {
-        return axios({
-            method: 'POST',
-            url: PRODUCT_URL,
-            data,
-            headers: {},
-        })
-    },
+  addNewProduct: async (data: ProductAddRequestType) => {
+    return await axios({
+      method: 'POST',
+      url: PRODUCT_URL,
+      data,
+      headers: {}
+    })
+  },
 
-    getAllProducts: async (): Promise<ProductResponseType[]> => {
-        const data = await axios.get(`${PRODUCT_URL}/products`);
-        return data.data;
-    },
+  getAllProducts: async (): Promise<ProductResponseType[]> => {
+    const data = await axios.get(`${PRODUCT_URL}/products`)
+    return data.data
+  },
 
-    deleteProduct: async (deletingData: DeletingType) => {
-        const res = await axios.delete(PRODUCT_URL);
-        return res.data;
-    },
+  deleteProduct: async (deletingData: DeletingType) => {
+    const res = await axios.delete(PRODUCT_URL)
+    return res.data
+  },
 
-    editProduct: async (editProduct: ProductEditRequestType) => {
-        return axios({
-            method: 'PATCH',
-            url: `${PRODUCT_URL}`,
-            data: editProduct,
-        })
-    }
+  editProduct: async (editProduct: ProductEditRequestType) => {
+    return await axios({
+      method: 'PATCH',
+      url: `${PRODUCT_URL}`,
+      data: editProduct
+    })
+  }
 
 }
 
-export default ProductService;
+export default ProductService

@@ -1,53 +1,39 @@
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {Dispatch, SetStateAction, useState} from "react";
-import {FormControl, InputLabel, MenuItem, OutlinedInput} from "@mui/material";
-import ErrorComponentComponent from "./ErrorComponent.component";
+import Select, { type SelectChangeEvent } from '@mui/material/Select'
+import React, { type Dispatch, type ReactElement, type SetStateAction } from 'react'
+import { FormControl, InputLabel, MenuItem, OutlinedInput } from '@mui/material'
+import ErrorComponentComponent from './ErrorComponent.component'
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
 const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
-
-const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-];
-
-interface Props {
-    label: string,
-    menuItems: any,
-    setValues: Dispatch<SetStateAction<any>>,
-    value: string[],
-    textField: string,
-    isError: boolean,
-    errorMsg: string,
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250
+    }
+  }
 }
 
-const MultipleSelect = ({label, menuItems, setValues, textField, value, isError, errorMsg}: Props) => {
+interface Props {
+  label: string
+  menuItems: any
+  setValues: Dispatch<SetStateAction<any>>
+  value: string[]
+  textField: string
+  isError: boolean
+  errorMsg: string
+}
 
-    const handleChange = (event: SelectChangeEvent<any>) => {
-        const {target: { value }} = event;
-        setValues((prevState: any) => ({
-            ...prevState,
-            [textField]: typeof value === 'string' ? value.split(',') : value,
-        }))
-    };
-    const menuItemsProper = menuItems.map((item: any) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)
-    return (
+const MultipleSelect = ({ label, menuItems, setValues, textField, value, isError, errorMsg }: Props): ReactElement => {
+  const handleChange = (event: SelectChangeEvent<any>): void => {
+    const { target: { value } } = event
+    setValues((prevState: any) => ({
+      ...prevState,
+      [textField]: typeof value === 'string' ? value.split(',') : value
+    }))
+  }
+  const menuItemsProper = menuItems.map((item: any) => <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>)
+  return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
                 <InputLabel id="demo-multiple-name-label">{label}</InputLabel>
@@ -65,7 +51,7 @@ const MultipleSelect = ({label, menuItems, setValues, textField, value, isError,
                 {isError && <ErrorComponentComponent errorMsg={errorMsg} />}
             </FormControl>
         </div>
-    );
+  )
 }
 
-export default MultipleSelect;
+export default MultipleSelect

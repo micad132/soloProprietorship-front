@@ -1,48 +1,46 @@
-import styles from '../Layout.module.scss';
-import { Button } from "@mui/material";
-import {useNavigate} from "react-router-dom";
-import NavigationComponent from "../nav/Navigation.component";
-import HomeIcon from '@mui/icons-material/Home';
-import {useAppSelector} from "../../utils/hooks";
-import {getUserDetails} from "../../store/reducers/utilsReducer";
-import LoggedUserData from "./components/LoggedUserData";
+import styles from '../Layout.module.scss'
+import { Button } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import NavigationComponent from '../nav/Navigation.component'
+import { useAppSelector } from '../../utils/hooks'
+import { getUserDetails } from '../../store/reducers/utilsReducer'
+import LoggedUserData from './components/LoggedUserData'
+import React, { type ReactElement } from 'react'
 
-const Header = () => {
-    const navigate = useNavigate();
-    const isLogged = useAppSelector(getUserDetails);
-    console.log(isLogged);
+const Header = (): ReactElement => {
+  const navigate = useNavigate()
+  const isLogged = useAppSelector(getUserDetails)
+  console.log(isLogged)
 
-    const properButton = isLogged
-        ? (
+  const properButton = isLogged
+    ? (
             <form method='post' action='http://localhost:8080/logout'>
                 <Button
                     variant="contained"
                     type='submit'
-                    style={{ width: '10rem'}}
+                    style={{ width: '10rem' }}
                 >
                     Wyloguj się
                 </Button>
             </form>
-        )
-        : (
+      )
+    : (
         <Button
             variant="contained"
-            onClick={() => navigate('/login', { replace: true})}
+            onClick={() => { navigate('/login', { replace: true }) }}
         >
             Zaloguj się
         </Button>
-        );
+      )
 
-
-
-    return(
+  return (
         <header className={styles.header}>
             <h1 data-testid='header' className={styles.title}>Witaj na portalu wlasnej firmy!</h1>
             <LoggedUserData />
             {properButton}
             <NavigationComponent />
         </header>
-    )
+  )
 }
 
-export default Header;
+export default Header

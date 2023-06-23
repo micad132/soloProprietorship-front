@@ -1,9 +1,9 @@
-import SinglePreviewWrapper from "./SinglePreviewWrapper.component";
-import styles from "../OrdersPage.module.scss";
+import React from 'react'
+import SinglePreviewWrapper from './SinglePreviewWrapper.component'
+import { type ReactElement } from 'react'
 
-const PreviewProduct = () => {
-
-    return(
+const PreviewProduct = (): ReactElement => {
+  return (
         <SinglePreviewWrapper>
             <div>
                 <p>ID: 1</p>
@@ -12,7 +12,7 @@ const PreviewProduct = () => {
                 <p>Waga: 120kg</p>
             </div>
         </SinglePreviewWrapper>
-    )
+  )
 }
 
-export default  PreviewProduct;
+export default PreviewProduct
