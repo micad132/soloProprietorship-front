@@ -11,7 +11,13 @@ import DeletingComponent from '../components/DeletingComponent.component'
 import AuthorizationWrapperComponent from '../components/AuthorizationWrapper.component'
 import AddingComponent from '../components/AddingComponent'
 import HomeComponent from '../pages/Home/components/HomeComponent.component'
-const MockedHeaderPage = () => <BrowserRouter><Header /></BrowserRouter>
+import { store } from '../store'
+import { Provider } from 'react-redux'
+const MockedHeaderPage = () => <Provider store={store}>
+  <BrowserRouter>
+    <Header />
+  </BrowserRouter>
+</Provider>
 
 it('should render error component with proper text', () => {
   render(<ErrorComponentComponent errorMsg={'Test blad'} />)
@@ -54,7 +60,7 @@ it('should model contain header', () => {
 // })
 
 it('should deleting component contain proper text', () => {
-  render(<DeletingComponent id={1} name='marchewka' onClick={() => {}} />)
+  render(<DeletingComponent id={1} name='marchewka' onClick={() => {}} code={''} isUsing2FA={false} qrURL={''} setCode={{}} />)
   const text = screen.getByTestId('deletingWrapperText')
   const expectedText = 'Aby usunac marchewka wpisz odpowiedni kod'
   expect(text).toHaveTextContent(expectedText)
@@ -68,7 +74,7 @@ it('should authorization wrapper contain proper elements', () => {
 })
 
 it('should adding component have proper content', () => {
-  render(<AddingComponent text={'Dodaj klienta'} isOpen={true} setIsOpen={() => {}} modalContent={<h1 data-testid='test'>Test</h1>} />)
+  render(<AddingComponent text={'Dodaj klienta'} isOpen={true} setIsOpen={jest.fn()} modalContent={<h1 data-testid='test'>Test</h1>} />)
   const addingButton = screen.getByTestId('addingComponentButton')
   const modalComponent = screen.getByTestId('modal')
   const heading = screen.getByTestId('test')
@@ -78,10 +84,16 @@ it('should adding component have proper content', () => {
   expect(modalComponent).toBeInTheDocument()
 })
 
+// it('should adding modal have proper text', () => {
+//   render(<AddingComponent text={'Dodaj klienta'} isOpen={true} setIsOpen={jest.fn()} modalContent={<p>X</p>} />)
+//   const modalContentText = screen.getByTestId('modalContentText')
+//   expect(modalContentText).toBeInTheDocument()
+// })
+
 it('should display proper text when you are not logged', () => {
   render(<HomeComponent isLogged={false} itemsAmount={{}} />)
   const homeComponent = screen.getByTestId('homeComponent')
-  expect(homeComponent).toHaveTextContent('Nie jesteś zalogowany. Zaloguj się aby w pełni korzystać z portalu!')
+  expect(homeComponent).toHaveTextContent('Nie jesteś zalogowany!Zaloguj się aby w pełni korzystać z portalu!')
 })
 
 it('should display card wrapper', () => {

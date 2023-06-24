@@ -5,8 +5,12 @@ import DeletingComponent from '../components/DeletingComponent.component'
 import ModalComponentComponent from '../components/ModalComponent.component'
 import { validateCode } from '../services/validators'
 import { toast } from 'react-toastify'
-import { useAppSelector } from '../utils/hooks'
-import { getQRURL } from '../store/reducers/utilsReducer'
+import { useAppDispatch, useAppSelector } from '../utils/hooks'
+import { getQRURL, getUserDetails } from '../store/reducers/utilsReducer'
+import ConfirmDeleteComponent from './components/ConfirmDelete.component'
+import { deletingProductThunk } from '../store/reducers/productReducer'
+import { deletingJobThunk } from '../store/reducers/jobReducer'
+import { deletingCustomerThunk } from '../store/reducers/customerReducer'
 
 interface Props {
   id: number
@@ -18,19 +22,22 @@ const DeletingContainer = ({ id, name, operationName }: Props): ReactElement => 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [code, setCode] = useState<string>('')
   const qrURL = useAppSelector(getQRURL)
+  const userDetails = useAppSelector(getUserDetails)
+  const dispatch = useAppDispatch()
 
   const onClick = (): void => {
     const result = validateCode(code)
     if (result.success) {
+      const dataWithCode = { id, code }
       switch (operationName) {
         case 'job':
-          console.log('JOB', id)
+          void dispatch(deletingJobThunk(dataWithCode))
           break
         case 'product':
-          console.log('product')
+          void dispatch(deletingProductThunk(dataWithCode))
           break
         case 'customer':
-          console.log('customer')
+          void dispatch(deletingCustomerThunk(dataWithCode))
           break
       }
     } else {
@@ -38,8 +45,23 @@ const DeletingContainer = ({ id, name, operationName }: Props): ReactElement => 
     }
   }
 
+  const deleteWithout2FA = (): void => {
+    const data = { id, code }
+    switch (operationName) {
+      case 'job':
+        break
+      case 'product':
+        void dispatch(deletingProductThunk(data))
+        break
+      case 'customer':
+        break
+    }
+  }
+
   const modalContent = (
-        <DeletingComponent id={id} name={name} onClick={onClick} code={code} setCode={setCode} qrURL={qrURL} />
+    userDetails.using2FA
+      ? <DeletingComponent id={id} name={name} onClick={onClick} code={code} setCode={setCode} qrURL={qrURL} isUsing2FA={userDetails.using2FA} />
+      : <ConfirmDeleteComponent onClick={deleteWithout2FA} text={name} />
   )
   return (
         <div>
@@ -50,7 +72,6 @@ const DeletingContainer = ({ id, name, operationName }: Props): ReactElement => 
                     data-testid='tableDeleteProductButton'
                     onClick={() => {
                       setIsModalOpen(true)
-                      console.log('ID', id)
                     }}
                 >
                     Usuń

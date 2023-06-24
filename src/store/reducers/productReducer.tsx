@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { type RootState } from '../index'
-import { type ProductAddRequestType, type ProductEditRequestType } from '../../types/RequestTypes'
+import { type DeletingType, type ProductAddRequestType, type ProductEditRequestType } from '../../types/RequestTypes'
 import ProductService from '../../services/api/ProductService'
 import { type ProductResponseType } from '../../types/ResponseTypes'
 
@@ -41,7 +41,6 @@ export const fetchingAllProductsThunk = createAsyncThunk(
   'product/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      console.log('EJJ')
       const data = await ProductService.getAllProducts()
       return { data }
     } catch (e) {
@@ -50,21 +49,23 @@ export const fetchingAllProductsThunk = createAsyncThunk(
   }
 )
 
-// export const deletingProductThunk = createAsyncThunk(
-//   'product/deleteProduct',
-//   async (data, { rejectWithValue }) => {
-//     try {
-//     } catch (e) {
-//       return rejectWithValue(e)
-//     }
-//   }
-// )
+export const deletingProductThunk = createAsyncThunk(
+  'product/deleteProduct',
+  async (newData: DeletingType, { rejectWithValue }) => {
+    try {
+      await ProductService.deleteProduct(newData)
+      const data = await ProductService.getAllProducts()
+      return { data }
+    } catch (e) {
+      return rejectWithValue(e)
+    }
+  }
+)
 
 export const editingProductThunk = createAsyncThunk(
   'product/editProduct',
   async (editData: ProductEditRequestType, { rejectWithValue }) => {
     try {
-      console.log('DANE', editData)
       await ProductService.editProduct(editData)
       const data = await ProductService.getAllProducts()
       return { data }
@@ -93,16 +94,17 @@ const productSlice = createSlice({
   extraReducers (builder) {
     builder.addCase(addingProductThunk.fulfilled, (state, action) => {
       state.products = action.payload.data
-      state.isProductsLoaded = true
     })
     builder.addCase(fetchingAllProductsThunk.fulfilled, (state, action) => {
       state.products = action.payload.data
-      state.isProductsLoaded = true
     })
     builder.addCase(fetchingAllProductsThunk.pending, (state, action) => {
       state.isProductsLoaded = false
     })
     builder.addCase(editingProductThunk.fulfilled, (state, action) => {
+      state.products = action.payload.data
+    })
+    builder.addCase(deletingProductThunk.fulfilled, (state, action) => {
       state.products = action.payload.data
     })
   }

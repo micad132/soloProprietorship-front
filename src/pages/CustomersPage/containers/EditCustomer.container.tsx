@@ -28,7 +28,6 @@ const EditCustomerContainer = ({ id }: Props): ReactElement => {
       setIsOpen(false)
     } else {
       const errorArray = result.error.errors.map(error => error.path[0])
-      console.log('ABC', errorArray)
       setErrorValues(errorArray as string[])
       toast.error('Niepoprawne dane!')
     }
@@ -47,7 +46,6 @@ const EditCustomerContainer = ({ id }: Props): ReactElement => {
                     data-testid='tableButton'
                     onClick={() => {
                       setIsOpen(true)
-                      console.log('ID', id)
                     }}
                 >
                     Edytuj

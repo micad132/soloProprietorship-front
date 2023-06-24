@@ -1,16 +1,19 @@
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
 import SinglePreviewWrapper from './SinglePreviewWrapper.component'
 import React, { type ReactElement } from 'react'
 
-const PreviewJob = (): ReactElement => {
+interface Props {
+  id: number
+  name: string
+  price: number
+}
+
+const PreviewJob = ({ id, name, price }: Props): ReactElement => {
   return (
         <SinglePreviewWrapper>
             <div>
-                <p>ID: 1</p>
-                <p>Nazwa: koszenie</p>
-                <p>Koszt: 2500</p>
-                <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
+                <p>ID: {id}</p>
+                <p>Nazwa: {name}</p>
+                <p>Koszt: {price}</p>
             </div>
         </SinglePreviewWrapper>
   )

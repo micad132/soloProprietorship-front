@@ -15,6 +15,7 @@ import { addingTransactionThunk, getAllTransactions } from '../../store/reducers
 import { getAllJobs } from '../../store/reducers/jobReducer'
 import { getAllProducts } from '../../store/reducers/productReducer'
 import { getAllCustomers } from '../../store/reducers/customerReducer'
+import moment from 'moment'
 
 const OrdersPage = (): ReactElement => {
   const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false)
@@ -30,7 +31,7 @@ const OrdersPage = (): ReactElement => {
 
   const properOrders = orders.map(order => ({
     id: order.idTransaction,
-    orderDate: order.date,
+    orderDate: moment(order.date).format('MM/DD/YYYY'),
     productNames: order.products.map(order => order.name),
     jobsNames: order.jobs.map(job => job.name)
 
@@ -53,7 +54,6 @@ const OrdersPage = (): ReactElement => {
 
   const onClick = (): void => {
     const result = validateAddOrder(addingOrderValues)
-    console.log(result)
     if (result.success) {
       void dispatch(addingTransactionThunk(addingOrderValues))
       toast.success('Dodano')
@@ -63,7 +63,6 @@ const OrdersPage = (): ReactElement => {
     } else {
       toast.error('Niepoprawne dane!')
       const errorArray = result.error.errors.map(error => error.path[0])
-      console.log('ABC', errorArray)
       setErrorValues(errorArray as string[])
     }
   }

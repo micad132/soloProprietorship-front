@@ -24,7 +24,7 @@ const ProductService = {
   },
 
   deleteProduct: async (deletingData: DeletingType) => {
-    const res = await axios.delete(PRODUCT_URL)
+    const res = await axios.delete(PRODUCT_URL, { params: { idProduct: deletingData.id, verifyCode: deletingData.code } })
     return res.data
   },
 

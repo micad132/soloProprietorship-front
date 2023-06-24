@@ -13,7 +13,6 @@ interface Props {
 }
 
 const ProductFieldsComponent = ({ data, setProductValues, onClick, errorValues, id }: Props): ReactElement => {
-  console.log('ID', id)
   const { name, price, weight } = data
   return (
         <>

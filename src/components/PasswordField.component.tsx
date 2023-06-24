@@ -14,6 +14,8 @@ interface Props {
 }
 const PasswordFieldComponent = ({ value, setPasswordValue, isError, errorMsg, onInputChange, fieldName, label }: Props): ReactElement => {
   const handleInputChange = (e: any): void => {
+    const { value } = e.target
+
     setPasswordValue((prevState: any) => ({
       ...prevState,
       [fieldName]: sanitizeData(value)

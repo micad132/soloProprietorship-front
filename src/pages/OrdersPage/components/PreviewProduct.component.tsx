@@ -2,14 +2,21 @@ import React from 'react'
 import SinglePreviewWrapper from './SinglePreviewWrapper.component'
 import { type ReactElement } from 'react'
 
-const PreviewProduct = (): ReactElement => {
+interface Props {
+  id: number
+  name: string
+  price: number
+  weight: number
+}
+
+const PreviewProduct = ({ id, name, price, weight }: Props): ReactElement => {
   return (
         <SinglePreviewWrapper>
             <div>
-                <p>ID: 1</p>
-                <p>Nazwa: marchewka</p>
-                <p>Cena: 1733</p>
-                <p>Waga: 120kg</p>
+                <p>ID: {id}</p>
+                <p>Nazwa: {name}</p>
+                <p>Cena: {price}</p>
+                <p>Waga: {weight}</p>
             </div>
         </SinglePreviewWrapper>
   )

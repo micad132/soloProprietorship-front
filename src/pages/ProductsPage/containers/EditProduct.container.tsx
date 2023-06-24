@@ -21,7 +21,6 @@ const EditProductContainer = ({ id }: Props): ReactElement => {
   const dispatch = useAppDispatch()
 
   const onClickEdit = (): void => {
-    console.log('DANE ADD PRODUCT', editProductValue)
     const results = validateAddProduct(editProductValue)
     if (results.success) {
       const data = { ...editProductValue, idProduct: id }
@@ -32,7 +31,6 @@ const EditProductContainer = ({ id }: Props): ReactElement => {
       setIsOpen(false)
     } else {
       const errorArray = results.error.errors.map(error => error.path[0])
-      console.log('ABC', errorArray)
       setErrorValues(errorArray as string[])
       toast.error('Niepoprawne dane!')
     }

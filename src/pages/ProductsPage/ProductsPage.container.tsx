@@ -28,10 +28,8 @@ const ProductsPage = (): ReactElement => {
     productPrice: product.price,
     productWeight: product.weight
   }))
-  console.log('PRODUKTY', products)
 
   const onClickAdd = (): void => {
-    console.log('DANE ADD PRODUCT', productValues)
     const results = validateAddProduct(productValues)
     if (results.success) {
       void dispatch(addingProductThunk(productValues))
@@ -41,7 +39,6 @@ const ProductsPage = (): ReactElement => {
       setIsAddingOpen(false)
     } else {
       const errorArray = results.error.errors.map(error => error.path[0])
-      console.log('ABC', errorArray)
       setErrorValues(errorArray as string[])
       toast.error('Niepoprawne dane!')
     }

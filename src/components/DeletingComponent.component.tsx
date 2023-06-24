@@ -13,6 +13,7 @@ interface Props {
   code: string
   setCode: any
   qrURL: string
+  isUsing2FA: boolean
 
 }
 

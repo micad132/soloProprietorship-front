@@ -1,8 +1,9 @@
+/* eslint-disable indent */
 import { type JobType } from '../../types/ResponseTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { type RootState } from '../index'
 import JobService from '../../services/api/JobService'
-import { type JobAddRequestType, type JobEditRequestType } from '../../types/RequestTypes'
+import { type DeletingType, type JobAddRequestType, type JobEditRequestType } from '../../types/RequestTypes'
 
 interface JobReducerType {
   isLoaded: boolean
@@ -19,7 +20,6 @@ export const fetchAllJobsThunk = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const data = await JobService.getAllJobs()
-      console.log(data)
       return { data }
     } catch (e) {
       return rejectWithValue(e)
@@ -44,8 +44,20 @@ export const editingJobThunk = createAsyncThunk(
   'api/editJob',
   async (newData: JobEditRequestType, { rejectWithValue }) => {
     try {
-      console.log('DATA EDIT JOB', newData)
       await JobService.editJob(newData)
+      const data = await JobService.getAllJobs()
+      return { data }
+    } catch (e) {
+      return rejectWithValue(e)
+    }
+  }
+)
+
+export const deletingJobThunk = createAsyncThunk(
+  'epi/deleteJob',
+  async (newData: DeletingType, { rejectWithValue }) => {
+    try {
+      await JobService.deleteJob(newData)
       const data = await JobService.getAllJobs()
       return { data }
     } catch (e) {
@@ -68,6 +80,9 @@ const jobSlice = createSlice({
       state.jobs = action.payload.data
     })
     builder.addCase(editingJobThunk.fulfilled, (state, action) => {
+      state.jobs = action.payload.data
+    })
+    builder.addCase(deletingJobThunk.fulfilled, (state, action) => {
       state.jobs = action.payload.data
     })
   }

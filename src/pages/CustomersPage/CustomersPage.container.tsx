@@ -21,7 +21,6 @@ const CustomersPage = (): ReactElement => {
   const dispatch = useAppDispatch()
   const customers = useAppSelector(getAllCustomers)
   const userDetails = useAppSelector(getUserDetails)
-  console.log('CUSTOMERS', customers)
 
   const properCustomers = customers.map(customer => ({
     id: customer.idCustomer,
@@ -41,7 +40,6 @@ const CustomersPage = (): ReactElement => {
       setIsAddingOpen(false)
     } else {
       const errorArray = result.error.errors.map(error => error.path[0])
-      console.log('ABC', errorArray)
       setErrorValues(errorArray as string[])
       toast.error('Niepoprawne dane!')
     }
@@ -49,7 +47,6 @@ const CustomersPage = (): ReactElement => {
   const addingContent = (
         <CustomerFieldsComponent data={customerValues} setJobValues={setCustomerValues} onClick={onClick} errorValues={errorValues} buttonText='Dodaj' />
   )
-  console.log(properCustomers)
 
   const properContent = userDetails
     ? (

@@ -10,7 +10,6 @@ import React, { type ReactElement } from 'react'
 const Header = (): ReactElement => {
   const navigate = useNavigate()
   const isLogged = useAppSelector(getUserDetails)
-  console.log(isLogged)
 
   const properButton = isLogged
     ? (

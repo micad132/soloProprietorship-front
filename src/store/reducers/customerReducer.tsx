@@ -3,7 +3,7 @@ import { type CustomerType } from '../../types/ResponseTypes'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { type RootState } from '../index'
 import CustomerService from '../../services/api/CustomerService'
-import { type CustomerAddRequestType, type CustomerEditRequestType } from '../../types/RequestTypes'
+import { type CustomerAddRequestType, type CustomerEditRequestType, type DeletingType } from '../../types/RequestTypes'
 
 interface CustomerReducerType {
   isLoaded: boolean
@@ -53,6 +53,19 @@ export const editingCustomerThunk = createAsyncThunk(
   }
 )
 
+export const deletingCustomerThunk = createAsyncThunk(
+  'api/deleteCustomer',
+  async (newData: DeletingType, { rejectWithValue }) => {
+    try {
+      await CustomerService.deleteCustomer(newData)
+      const data = await CustomerService.getAllCustomers()
+      return { data }
+    } catch (e) {
+      return rejectWithValue(e)
+    }
+  }
+)
+
 export const getAllCustomers = (state: RootState): CustomerType[] => state.customer.customers
 
 const customerSlice = createSlice({
@@ -67,6 +80,9 @@ const customerSlice = createSlice({
       state.customers = action.payload.data
     })
     builder.addCase(editingCustomerThunk.fulfilled, (state, action) => {
+      state.customers = action.payload.data
+    })
+    builder.addCase(deletingCustomerThunk.fulfilled, (state, action) => {
       state.customers = action.payload.data
     })
   }

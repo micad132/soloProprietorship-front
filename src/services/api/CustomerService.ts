@@ -1,4 +1,4 @@
-import { type CustomerAddRequestType, type CustomerEditRequestType } from '../../types/RequestTypes'
+import { type CustomerAddRequestType, type CustomerEditRequestType, type DeletingType } from '../../types/RequestTypes'
 import axios from 'axios'
 import { API_REQUEST_PATH } from '../../utils/GlobalVariables'
 import { type CustomerType } from '../../types/ResponseTypes'
@@ -17,7 +17,6 @@ const CustomerService = {
 
   getAllCustomers: async (): Promise<CustomerType[]> => {
     const data = await axios.get(`${CUSTOMER_URL}/user`)
-    console.log('DATA DATA', data.data)
     return data.data
   },
 
@@ -25,7 +24,11 @@ const CustomerService = {
     method: 'PATCH',
     url: CUSTOMER_URL,
     data: editData
-  })
+  }),
+
+  deleteCustomer: async (data: DeletingType) => {
+    return await axios.delete(CUSTOMER_URL, { params: { idCustomer: data.id, verifyCode: data.code } })
+  }
 
 }
 

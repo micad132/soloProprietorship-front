@@ -30,7 +30,6 @@ const JobsPage = (): ReactElement => {
   }))
 
   const onClick = (): void => {
-    console.log('TYP', jobValues.price)
     const validateResult = validateAddJob(jobValues)
     if (validateResult.success) {
       void dispatch(addingJobThunk(jobValues))
@@ -39,7 +38,6 @@ const JobsPage = (): ReactElement => {
       setJobValues(INITIAL_ADD_JOB_REQUEST_VALUES)
     } else {
       const errorArray = validateResult.error.errors.map(error => error.path[0])
-      console.log(errorArray)
       setErrorValues(errorArray as string[])
       toast.error('Podano niepoprawne dane!')
     }

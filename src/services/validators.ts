@@ -111,7 +111,6 @@ export const validateAddOrder = (values: TransactionAddRequestType): SafeParseRe
     idOfJobs: values.idOfJobs.map(value => value.toString()),
     idOfProducts: values.idOfProducts.map(value => value.toString())
   }
-  console.log(properData)
   return AddingOrderSchema.safeParse(properData)
 }
 

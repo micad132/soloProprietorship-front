@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { API_REQUEST_PATH } from '../../utils/GlobalVariables'
-import { type JobAddRequestType, type JobEditRequestType } from '../../types/RequestTypes'
+import { type DeletingType, type JobAddRequestType, type JobEditRequestType } from '../../types/RequestTypes'
 import { type JobType } from '../../types/ResponseTypes'
 
 const JOB_URL = `${API_REQUEST_PATH}/job`
@@ -29,8 +29,8 @@ const JobService = {
     })
   },
 
-  deleteJob: async (jobId: number) => {
-    return await axios.delete(`${JOB_URL}/${jobId}`)
+  deleteJob: async (data: DeletingType) => {
+    return await axios.delete(`${JOB_URL}`, { params: { idJob: data.id, verifyCode: data.code } })
   }
 }
 
