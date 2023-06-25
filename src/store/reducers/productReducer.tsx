@@ -3,6 +3,7 @@ import { type RootState } from '../index'
 import { type DeletingType, type ProductAddRequestType, type ProductEditRequestType } from '../../types/RequestTypes'
 import ProductService from '../../services/api/ProductService'
 import { type ProductResponseType } from '../../types/ResponseTypes'
+import { toast } from 'react-toastify'
 
 interface ProductReducerType {
   errorMsg: string
@@ -105,7 +106,11 @@ const productSlice = createSlice({
       state.products = action.payload.data
     })
     builder.addCase(deletingProductThunk.fulfilled, (state, action) => {
+      toast.success('Pomyslnie usunieto!')
       state.products = action.payload.data
+    })
+    builder.addCase(deletingProductThunk.rejected, (state, action: any) => {
+      toast.error(action.payload.response.data)
     })
   }
 })

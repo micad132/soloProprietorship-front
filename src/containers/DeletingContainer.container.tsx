@@ -49,11 +49,13 @@ const DeletingContainer = ({ id, name, operationName }: Props): ReactElement => 
     const data = { id, code }
     switch (operationName) {
       case 'job':
+        void dispatch(deletingJobThunk(data))
         break
       case 'product':
         void dispatch(deletingProductThunk(data))
         break
       case 'customer':
+        void dispatch(deletingCustomerThunk(data))
         break
     }
   }

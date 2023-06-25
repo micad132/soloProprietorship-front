@@ -1,22 +1,31 @@
 import React, { type ReactElement, useState } from 'react'
 import styles from './../Authorization.module.scss'
 import { Button, TextField } from '@mui/material'
-import { useAppSelector } from '../../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 import { getQRURL, getUserData } from '../../../store/reducers/utilsReducer'
 import { AuthService } from '../../../services/api/AuthService'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { fetchingAllProductsThunk } from '../../../store/reducers/productReducer'
+import { fetchAllJobsThunk } from '../../../store/reducers/jobReducer'
+import { fetchAllCustomersThunk } from '../../../store/reducers/customerReducer'
+import { fetchingTransactionsThunk } from '../../../store/reducers/transactionReducer'
 
 const CodeComponent = (): ReactElement => {
   const [code, setCode] = useState<string>('')
   const qrCode = useAppSelector(getQRURL)
   const userData = useAppSelector(getUserData)
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   const onClick = async (): Promise<any> => {
     const data = { ...userData, code }
     try {
       await AuthService.loginUser(data)
+      void dispatch(fetchingAllProductsThunk())
+      void dispatch(fetchAllJobsThunk())
+      void dispatch(fetchAllCustomersThunk())
+      void dispatch(fetchingTransactionsThunk())
       toast.success('Pomyslnie zalogowano!')
       navigate('/', { replace: true })
     } catch (e: any) {

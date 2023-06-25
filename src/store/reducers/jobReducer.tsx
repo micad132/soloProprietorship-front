@@ -4,6 +4,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { type RootState } from '../index'
 import JobService from '../../services/api/JobService'
 import { type DeletingType, type JobAddRequestType, type JobEditRequestType } from '../../types/RequestTypes'
+import { toast } from 'react-toastify'
 
 interface JobReducerType {
   isLoaded: boolean
@@ -84,6 +85,9 @@ const jobSlice = createSlice({
     })
     builder.addCase(deletingJobThunk.fulfilled, (state, action) => {
       state.jobs = action.payload.data
+    })
+    builder.addCase(deletingJobThunk.rejected, (state, action: any) => {
+      toast.error(action.payload.response.data)
     })
   }
 

@@ -4,6 +4,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { type RootState } from '../index'
 import CustomerService from '../../services/api/CustomerService'
 import { type CustomerAddRequestType, type CustomerEditRequestType, type DeletingType } from '../../types/RequestTypes'
+import { toast } from 'react-toastify'
 
 interface CustomerReducerType {
   isLoaded: boolean
@@ -84,6 +85,9 @@ const customerSlice = createSlice({
     })
     builder.addCase(deletingCustomerThunk.fulfilled, (state, action) => {
       state.customers = action.payload.data
+    })
+    builder.addCase(deletingCustomerThunk.rejected, (state, action: any) => {
+      toast.error(action.payload.response.data)
     })
   }
 
