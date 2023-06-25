@@ -6,8 +6,9 @@ const NoAccount = (): ReactElement => {
   const navigate = useNavigate()
   return (
         <div>
-            <p>Nie masz konta? Zarejestruj się</p>
+            <p data-testid='noAccountText'>Nie masz konta? Zarejestruj się</p>
             <Button
+                data-testid='navigateToRegisterButton'
                 onClick={() => { navigate('/register', { replace: true }) }}
                 variant='contained'
             >Zarejestruj się</Button>

@@ -33,7 +33,7 @@ const Header = (): ReactElement => {
       )
 
   return (
-        <header className={styles.header}>
+        <header className={styles.header} data-testid='headerWrapper'>
             <h1 data-testid='header' className={styles.title}>Witaj na portalu wlasnej firmy!</h1>
             <LoggedUserData />
             {properButton}

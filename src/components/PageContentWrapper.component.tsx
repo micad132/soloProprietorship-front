@@ -7,7 +7,7 @@ interface Props {
 
 const PageContentWrapper = ({ children }: Props): ReactElement => {
   return (
-        <div className={styles.pageContentWrapper}>
+        <div className={styles.pageContentWrapper} data-testid='pageContentWrapper'>
             {children}
         </div>
   )

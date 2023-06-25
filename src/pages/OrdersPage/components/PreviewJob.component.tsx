@@ -10,7 +10,7 @@ interface Props {
 const PreviewJob = ({ id, name, price }: Props): ReactElement => {
   return (
         <SinglePreviewWrapper>
-            <div>
+            <div data-testid='singlePreviewWrapper'>
                 <p>ID: {id}</p>
                 <p>Nazwa: {name}</p>
                 <p>Koszt: {price}</p>

@@ -25,8 +25,8 @@ const CodeComponent = (): ReactElement => {
   }
 
   return (
-        <div className={styles.codeWrapper}>
-                <h4>Wprowadź kod 2FA aby się zalogować!</h4>
+        <div className={styles.codeWrapper} data-testid='codeWrapper'>
+                <h4 data-testid='codeText'>Wprowadź kod 2FA aby się zalogować!</h4>
                 <TextField
                     value={code}
                     onChange={({ target: { value } }) => { setCode(value) }}

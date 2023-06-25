@@ -13,11 +13,26 @@ import AddingComponent from '../components/AddingComponent'
 import HomeComponent from '../pages/Home/components/HomeComponent.component'
 import { store } from '../store'
 import { Provider } from 'react-redux'
+import PageContentWrapper from '../components/PageContentWrapper.component'
+import CodeComponent from '../pages/authorization/login/Code.component'
+import PreviewJob from '../pages/OrdersPage/components/PreviewJob.component'
+import PreviewProduct from '../pages/OrdersPage/components/PreviewProduct.component'
+import NoAccount from '../pages/authorization/login/NoAccount'
 const MockedHeaderPage = () => <Provider store={store}>
   <BrowserRouter>
     <Header />
   </BrowserRouter>
 </Provider>
+
+const MockedCodeComponent = () => <Provider store={store}>
+  <BrowserRouter>
+    <CodeComponent />
+  </BrowserRouter>
+</Provider>
+
+const MockedNoAccount = () => <BrowserRouter>
+  <NoAccount />
+</BrowserRouter>
 
 it('should render error component with proper text', () => {
   render(<ErrorComponentComponent errorMsg={'Test blad'} />)
@@ -133,4 +148,55 @@ it('should display proper amount of procuts', () => {
   textElements.forEach((element, index) => {
     expect(element).toHaveTextContent(texts[index])
   })
+})
+
+it('should contain proper page content', () => {
+  render(<PageContentWrapper children={<h1 data-testid='testText'>TEST</h1>} />)
+  const pageContentWrapper = screen.getByTestId('pageContentWrapper')
+  const testText = screen.getByTestId('testText')
+  expect(testText).toBeInTheDocument()
+  expect(pageContentWrapper).toBeInTheDocument()
+})
+
+it('should render code component', () => {
+  render(<MockedCodeComponent />)
+  const codeText = screen.getByTestId('codeText')
+  const codeWrapper = screen.getByTestId('codeWrapper')
+  expect(codeText).toHaveTextContent('Wprowadź kod 2FA aby się zalogować!')
+  expect(codeWrapper).toBeInTheDocument()
+})
+
+it('should previewJob compoment contain proper values', () => {
+  const id = 1
+  const name = 'mycie'
+  const price = 10
+
+  render(<PreviewJob id={id} name={name} price={price} />)
+
+  expect(screen.getByText(`ID: ${id}`)).toBeInTheDocument()
+  expect(screen.getByText(`Nazwa: ${name}`)).toBeInTheDocument()
+  expect(screen.getByText(`Koszt: ${price}`)).toBeInTheDocument()
+})
+
+it('should previewProduct compoment contain proper values', () => {
+  const id = 1
+  const name = 'mycie'
+  const price = 10
+  const weight = 150
+
+  render(<PreviewProduct id={id} name={name} price={price} weight={weight} />)
+
+  expect(screen.getByText(`ID: ${id}`)).toBeInTheDocument()
+  expect(screen.getByText(`Nazwa: ${name}`)).toBeInTheDocument()
+  expect(screen.getByText(`Cena: ${price}`)).toBeInTheDocument()
+  expect(screen.getByText(`Waga: ${weight}`)).toBeInTheDocument()
+})
+
+it('should navigate to register', () => {
+  render(<MockedNoAccount />)
+  const mockedAccountText = screen.getByTestId('noAccountText')
+  const navigateButton = screen.getByTestId('navigateToRegisterButton')
+  fireEvent.click(navigateButton)
+  expect(mockedAccountText).toHaveTextContent('Nie masz konta? Zarejestruj się')
+  expect(window.location.pathname).toBe('/register')
 })
