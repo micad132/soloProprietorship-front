@@ -25,6 +25,7 @@ const RegistrationSchema = z.object({
   confirmPassword: z.string().min(5).max(20),
   postalCode: z.string().regex(/^\d{2}-\d{3}$/),
   phoneNumber: z.string().min(9).max(9).refine(isDigitsOnly),
+  pesel: z.string().min(11).max(11).refine(isDigitsOnly),
   address: z.string().min(5).max(20)
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match"

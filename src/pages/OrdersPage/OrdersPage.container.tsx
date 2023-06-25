@@ -16,6 +16,7 @@ import { getAllJobs } from '../../store/reducers/jobReducer'
 import { getAllProducts } from '../../store/reducers/productReducer'
 import { getAllCustomers } from '../../store/reducers/customerReducer'
 import moment from 'moment'
+import PageContentWrapperComponent from '../../components/PageContentWrapper.component'
 
 const OrdersPage = (): ReactElement => {
   const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false)
@@ -84,17 +85,17 @@ const OrdersPage = (): ReactElement => {
 
   const properContent = userDetails
     ? (
-            <div>
-                <h1>Zamówienia przedsiębiorcy:</h1>
+            <>
+                <h1>Zamówienia przedsiębiorcy: ({orders.length})</h1>
                 <TableComponentComponent columns={OrdersTableColumns} rows={properOrders} />
                 <AddingComponent text='Dodaj zamówienie' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingContent} />
-            </div>
+            </>
       )
     : <NotLoggedComponent />
   return (
-        <>
+        <PageContentWrapperComponent>
             {properContent}
-        </>
+        </PageContentWrapperComponent>
   )
 }
 

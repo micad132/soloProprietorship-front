@@ -5,13 +5,14 @@ import { ProductTableColumns } from '../../utils/TableColumns'
 import { type ReactElement, useState } from 'react'
 import { type ProductAddRequestType } from '../../types/RequestTypes'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-// import { getUserDetails } from '../../store/reducers/utilsReducer'
+import { getUserDetails } from '../../store/reducers/utilsReducer'
 import { INITIAL_ADD_PRODUCT_REQUEST_TYPE } from '../../types/InitialValues'
 import ProductFieldsComponent from './components/ProductFields.component'
 import { validateAddProduct } from '../../services/validators'
 import { toast } from 'react-toastify'
 import { addingProductThunk, getAllProducts } from '../../store/reducers/productReducer'
-// import NotLoggedComponent from '../../components/NotLogged.component'
+import NotLoggedComponent from '../../components/NotLogged.component'
+import PageContentWrapperComponent from '../../components/PageContentWrapper.component'
 
 const ProductsPage = (): ReactElement => {
   const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false)
@@ -19,7 +20,7 @@ const ProductsPage = (): ReactElement => {
   const [errorValues, setErrorValues] = useState<string[]>([])
 
   const dispatch = useAppDispatch()
-  // const userDetails = useAppSelector(getUserDetails)
+  const userDetails = useAppSelector(getUserDetails)
   const products = useAppSelector(getAllProducts)
 
   const properProducts = products.map(product => ({
@@ -48,25 +49,21 @@ const ProductsPage = (): ReactElement => {
         <ProductFieldsComponent data={productValues} setProductValues={setProductValues} onClick={onClickAdd} errorValues={errorValues} />
   )
 
-  // const properContent =
-  //       userDetails
-  //         ? (
-  //               <div>
-  //                   <h1>Produkty które oferuje zalogowany przedsiębiorca</h1>
-  //                   <TableComponentComponent columns={ProductTableColumns} rows={properProducts}/>
-  //                   <AddingComponent text='Dodaj produkt' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={productModalAddContent}/>
-  //               </div>
-  //           )
-  //         : <NotLoggedComponent />
+  const properContent =
+        userDetails
+          ? (
+                <>
+                    <h1>Produkty które oferuje zalogowany przedsiębiorca ({products.length})</h1>
+                    <TableComponentComponent columns={ProductTableColumns} rows={properProducts}/>
+                    <AddingComponent text='Dodaj produkt' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={productModalAddContent}/>
+                </>
+            )
+          : <NotLoggedComponent />
 
   return (
-        <>
-            <div>
-                <h1>Produkty które oferuje zalogowany przedsiębiorca</h1>
-                <TableComponentComponent columns={ProductTableColumns} rows={properProducts}/>
-                <AddingComponent text='Dodaj produkt' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={productModalAddContent}/>
-            </div>
-        </>
+        <PageContentWrapperComponent>
+          {properContent}
+        </PageContentWrapperComponent>
   )
 }
 

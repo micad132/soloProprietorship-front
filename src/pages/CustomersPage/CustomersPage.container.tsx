@@ -12,6 +12,7 @@ import CustomerFieldsComponent from './components/CustomerFields.component'
 import { INITIAL_ADD_CUSTOMER_REQUEST_TYPE } from '../../types/InitialValues'
 import { addingCustomerThunk, getAllCustomers } from '../../store/reducers/customerReducer'
 import NotLoggedComponent from '../../components/NotLogged.component'
+import PageContentWrapperComponent from '../../components/PageContentWrapper.component'
 
 const CustomersPage = (): ReactElement => {
   const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false)
@@ -50,18 +51,18 @@ const CustomersPage = (): ReactElement => {
 
   const properContent = userDetails
     ? (
-            <div>
+            <>
                 <h1>Klienci zalogowanego przedsiębiorcy: ({customers.length})</h1>
                 <TableComponentComponent columns={CustomersTableColumns} rows={properCustomers} />
                 <AddingComponent text='Dodaj klienta' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingContent} />
                 <ModalComponentComponent isOpen={isModalOpen} onClose={() => dispatch(setIsModalOpen(false))} children={<h1>TEST CUSTOMER</h1>}/>
-            </div>
+            </>
       )
     : <NotLoggedComponent />
   return (
-        <>
+        <PageContentWrapperComponent>
             {properContent}
-        </>
+        </PageContentWrapperComponent>
   )
 }
 

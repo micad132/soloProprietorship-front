@@ -8,7 +8,9 @@ const CardWrapper = ({ children }: Props): ReactElement => {
   return (
     <div className={styles.cardWrapper} data-testid='cardWrapper'>
         <h1>Ilosc elementow na portalu:</h1>
-        {children}
+        <div>
+            {children}
+        </div>
     </div>
   )
 }

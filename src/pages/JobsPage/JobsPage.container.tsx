@@ -13,6 +13,7 @@ import JobFieldsComponent from './components/JobFields.component'
 // import JobService from '../../services/api/JobService'
 import NotLoggedComponent from '../../components/NotLogged.component'
 import { addingJobThunk, getAllJobs } from '../../store/reducers/jobReducer'
+import PageContentWrapperComponent from '../../components/PageContentWrapper.component'
 
 const JobsPage = (): ReactElement => {
   const [isAddingOpen, setIsAddingOpen] = useState<boolean>(false)
@@ -50,17 +51,17 @@ const JobsPage = (): ReactElement => {
 
   const properContent = userDetails
     ? (
-            <div>
+            <>
                 <h1>Usługi oferowane przez przedsiębiorce ({jobs.length})</h1>
                 <TableComponentComponent columns={JobsTableColumns} rows={properJobs} />
                 <AddingComponent text='Dodaj usługę' isOpen={isAddingOpen} setIsOpen={setIsAddingOpen} modalContent={addingJobContent} />
-            </div>
+            </>
       )
     : <NotLoggedComponent />
   return (
-        <>
+        <PageContentWrapperComponent>
             {properContent}
-        </>
+        </PageContentWrapperComponent>
   )
 }
 

@@ -28,12 +28,12 @@
 }
 
 .tableWrapper{
-  width: 80%;
   margin: 20px auto;
   max-width: 1200px;
   border: 2px solid red;
   min-height: min-content;
   max-height: 700px;
+  width: 70%;
 }
 
 .modalContent {
@@ -60,4 +60,8 @@
 .notLoggedWrapper {
   max-width: 600px;
   margin: 30px auto;
+}
+
+.pageContentWrapper {
+  width: 100vw;
 }

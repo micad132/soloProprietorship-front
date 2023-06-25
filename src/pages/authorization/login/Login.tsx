@@ -15,6 +15,7 @@ import { fetchingAllProductsThunk } from '../../../store/reducers/productReducer
 import { fetchAllJobsThunk } from '../../../store/reducers/jobReducer'
 import { fetchAllCustomersThunk } from '../../../store/reducers/customerReducer'
 import { fetchingTransactionsThunk } from '../../../store/reducers/transactionReducer'
+import axios from 'axios'
 
 const initialLoginValues: LoginType = {
   nick: '',
@@ -84,6 +85,10 @@ const Login = (): ReactElement => {
     }
   }
   const { nick, password } = loginValues
+
+  const config = {
+    headers: { Authorization: 'Bearer  eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYW5pZWwiLCJpYXQiOjE2ODc2ODk2MDAsImV4cCI6MTY4Nzc3NjAwMH0.EFqUxk8Sc6coaWJdTCXPNSFToOYRrq4PSar8L-VIog-J1_kdAGniy5K51NVB7aH6seZysOQItHtM7zrylJO9xw' }
+  }
   return (
         <AuthorizationWrapperComponent>
             {/* eslint-disable-next-line no-void */}
@@ -108,6 +113,14 @@ const Login = (): ReactElement => {
                 />
                 <Button variant="contained" type="submit">Zaloguj się</Button>
                 <NoAccount />
+                <Button
+                  onClick={() => {
+                    void axios.get('http://localhost:8080/api/product/products', config).then(res => { console.log(res) })
+                  }
+                  }
+                >
+                  TEST
+                </Button>
             </form>
         </AuthorizationWrapperComponent>
   )
