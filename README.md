@@ -18,6 +18,56 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
+## Podział na katalogii 
+
+### `__tests__`
+
+Znajdują się tu testy jednostkowe wybranych komponentów oraz funkcjonalności
+
+### `components`
+
+Znajduja się tu wszystkie reużywalne komponenty
+
+### `containers`
+
+Znajdują się tu wszystkie reużywalne kontenery
+
+### `layout`
+
+Główny layout całej aplikacji (Można powiedzieć ze to wrapper całego projektu,
+znajduje się tu header, footer, nawigacja oraz dynamiczny content strony uzupełniany przez
+odpowiedni ,,routing”
+
+### `pages`
+
+Strony (adresy i ich content) aplikacji. Paczka ta zawiera inne paczki, każda
+odpowiada za osobna stronę i jej content. W srodku paczek mogą znajdować się również
+foldery componentow w ramach tej strony oraz kontenery. Kontenery w założeniu posiadają ,,stan" i przekazują dane do komponentów.
+
+### `routes`
+
+Znajdują się tu ścieżki wraz z odpowiadającymi im stronami z folderów z ,,pages”
+
+### `services`
+
+Znajdują się tu serwisy odpowiedzialne za m.in. walidacje danych oraz pliki
+znajdujące się w folderze ,,api” odpowiedzialne za requesty komunikujące się z częścią
+backendową.
+
+### `store`
+
+Reduxowy store aplikacji przechowujący stan globalny (wykorzystane są reducery
+oraz createAsyncThunki)
+
+### `types`
+
+Znajdują się tu typy danych, oraz m.in. początkowe wartości stanów. Planowo w
+ramach kolejnego kamienia przeniesione zostaną tu wszystkie typy i stany początkowe
+
+### `utils`
+
+Znajdują się tu globalne zmienne, globalne hooki(używane głownie do reduxa) oraz
+kolumny DataGrid(MUI).
 
 ## Działanie aplikacji
 
