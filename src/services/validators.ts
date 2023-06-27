@@ -19,7 +19,7 @@ const RegistrationSchema = z.object({
     message: 'Forbidden chars!',
     path: ['forbiddenName']
   }),
-  userSecondName: z.string().min(5).max(15),
+  userSecondName: z.string().min(5).max(15).refine(isLettersOnly),
   email: z.string().email(),
   password: z.string().min(5).max(20),
   confirmPassword: z.string().min(5).max(20),
@@ -43,7 +43,7 @@ const AddingUserSchema = z.object({
   surName: z.string().min(5).max(15).refine(isLettersOrDigitsOnly),
   address: z.string().min(5).max(20).refine(isLettersOrDigitsOnly),
   email: z.string().email(),
-  phoneNumber: z.string().min(9).max(9)
+  phoneNumber: z.string().min(9).max(9).refine(isDigitsOnly)
 })
 
 const AddingProductSchema = z.object({
@@ -59,7 +59,7 @@ const AddingJobSchema = z.object({
 
 const AddingOrderSchema = z.object({
   price: z.number().refine(val => val > 0),
-  description: z.string().min(5).max(30).refine((val) => !isDigitsOnly(val)),
+  description: z.string().min(5).max(30).refine((val) => isLettersOnly(val) && (!val.includes('&') && !val.includes('<'))),
   idCustomer: z.string().min(1).max(1),
   idOfProducts: z.array(z.string()).min(1),
   idOfJobs: z.array(z.string()).min(1)
@@ -68,13 +68,6 @@ const AddingOrderSchema = z.object({
 const DeletingCodeSchema = z.string().min(6).max(6).refine(isDigitsOnly)
 
 export const validateRegister = (registerValues: RegisterCreationType): SafeParseReturnType<any, any> => {
-  // try {
-  //     RegistrationSchema.parse(registerValues);
-  // } catch (e: any) {
-  //     if (e instanceof z.ZodError) {
-  //         console.log(e.issues);
-  //     }
-  // }
   return RegistrationSchema.safeParse(registerValues)
 }
 
